@@ -7,6 +7,7 @@
 
 import type { RawLiveEvent } from '@dance-arena/contracts';
 
+import { EulerStreamNormalizer } from './eulerstream.js';
 import { MockNormalizer } from './mock.js';
 import { ignored, type EventNormalizer, type NormalizeResult } from './types.js';
 
@@ -16,7 +17,7 @@ export interface NormalizerRegistry {
 }
 
 export function createNormalizerRegistry(
-  normalizers: readonly EventNormalizer[] = [new MockNormalizer()],
+  normalizers: readonly EventNormalizer[] = [new MockNormalizer(), new EulerStreamNormalizer()],
 ): NormalizerRegistry {
   const byProvider = new Map<string, EventNormalizer>();
 

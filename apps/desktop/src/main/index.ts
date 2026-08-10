@@ -9,7 +9,12 @@
 
 import { join } from 'node:path';
 
-import { createRealScheduler, MockConnector, type Scheduler } from '@dance-arena/connectors';
+import {
+  createRealScheduler,
+  EulerStreamConnector,
+  MockConnector,
+  type Scheduler,
+} from '@dance-arena/connectors';
 import type { LiveConnector } from '@dance-arena/contracts';
 import { createSequentialIdGenerator, type Clock } from '@dance-arena/core-engine';
 import { app, BrowserWindow } from 'electron';
@@ -34,8 +39,19 @@ function createConnectorFactory(scheduler: Scheduler): (provider: string) => Liv
   return (provider) => {
     if (provider === 'mock') return new MockConnector({ scheduler });
 
-    // Task 07 registers the EulerStream connector here.
-    throw new Error(`connector provider "${provider}" is not available yet`);
+    if (provider === 'eulerstream') {
+      return new EulerStreamConnector({
+        scheduler,
+        heartbeatIntervalMs: 20_000,
+        // Messages are already redacted by the connector; this only chooses the sink.
+        log: (level, message) => {
+          if (level === 'error') console.error(`[connector] ${message}`);
+          else console.warn(`[connector] ${message}`);
+        },
+      });
+    }
+
+    throw new Error(`connector provider "${provider}" is not available`);
   };
 }
 

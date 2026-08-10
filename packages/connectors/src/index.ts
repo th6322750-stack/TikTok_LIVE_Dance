@@ -35,6 +35,25 @@ export {
   type ReplaySpeed,
 } from './replay/replayConnector.js';
 
+export {
+  EulerStreamConnector,
+  DEFAULT_EULERSTREAM_ENDPOINT,
+  type EulerStreamConnectorOptions,
+} from './eulerstream/eulerStreamConnector.js';
+export {
+  baseBackoffDelay,
+  computeBackoffDelay,
+  type BackoffOptions,
+} from './eulerstream/backoff.js';
+export {
+  createWebSocketTransport,
+  redactUrl,
+  type Transport,
+  type TransportConnection,
+  type TransportHandlers,
+} from './eulerstream/transport.js';
+
+export { EulerStreamNormalizer } from './normalizer/eulerstream.js';
 export { MockNormalizer, MockPayloadSchema, type MockPayload } from './normalizer/mock.js';
 export {
   ignored,
