@@ -32,6 +32,7 @@ export * from './game/events.js';
 export * from './stage/events.js';
 
 export * from './ipc/channels.js';
+export * from './ipc/bridge.js';
 
 import { CONTRACTS_SCHEMA_VERSION } from './common.js';
 

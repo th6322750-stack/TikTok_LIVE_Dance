@@ -63,9 +63,18 @@ importers:
 
   apps/desktop:
     dependencies:
+      '@dance-arena/connectors':
+        specifier: workspace:*
+        version: link:../../packages/connectors
       '@dance-arena/contracts':
         specifier: workspace:*
         version: link:../../packages/contracts
+      '@dance-arena/core-engine':
+        specifier: workspace:*
+        version: link:../../packages/core-engine
+      '@dance-arena/simulator':
+        specifier: workspace:*
+        version: link:../../packages/simulator
     devDependencies:
       '@types/node':
         specifier: ^26.2.0

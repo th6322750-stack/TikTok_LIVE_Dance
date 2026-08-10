@@ -40,8 +40,16 @@ export class MockConnector implements LiveConnector {
     this.target = config.target;
     this.setStatus('connecting');
 
+    const delay = this.options.connectDelayMs ?? 0;
+
+    // Without a configured latency, connect completes immediately. Scheduling a 0ms task instead
+    // would deadlock any caller that awaits connect() while driving a virtual-time scheduler.
+    if (delay <= 0) {
+      this.setStatus('connected');
+      return Promise.resolve();
+    }
+
     return new Promise((resolve) => {
-      const delay = this.options.connectDelayMs ?? 0;
       this.options.scheduler.schedule(delay, () => {
         this.setStatus('connected');
         resolve();
