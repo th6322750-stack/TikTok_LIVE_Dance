@@ -52,7 +52,11 @@ export const DEFAULT_COMMAND_ALIASES: Readonly<Record<GameCommand, readonly stri
   MOVE_VIP: ['VIP', 'LEN VIP'],
 };
 
-export const CommandAliasConfigSchema = z.record(GameCommandSchema, z.array(z.string()));
+/**
+ * Aliases are partially configurable: an operator may override only JOIN_STAGE and inherit the
+ * rest, so every key is optional.
+ */
+export const CommandAliasConfigSchema = z.partialRecord(GameCommandSchema, z.array(z.string()));
 
 export type CommandAliasConfig = z.infer<typeof CommandAliasConfigSchema>;
 
