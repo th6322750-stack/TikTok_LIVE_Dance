@@ -72,6 +72,14 @@ export interface RuntimeHarness {
 export interface RuntimeHarnessOptions {
   readonly apiKey?: string;
   readonly startAt?: number;
+  /**
+   * Overrides connector construction so a test can drive the runtime with the REAL EulerStream
+   * connector over a fake transport instead of the mock connector.
+   */
+  readonly createConnector?: (
+    provider: string,
+    scheduler: ManualScheduler,
+  ) => LiveConnector | undefined;
 }
 
 export function createRuntimeHarness(options: RuntimeHarnessOptions = {}): RuntimeHarness {
@@ -101,7 +109,10 @@ export function createRuntimeHarness(options: RuntimeHarnessOptions = {}): Runti
     hasApiKey: () => options.apiKey !== undefined,
   };
 
-  const createConnector = (): LiveConnector => {
+  const createConnector = (provider: string): LiveConnector => {
+    const override = options.createConnector?.(provider, scheduler);
+    if (override !== undefined) return override;
+
     const connector = new MockConnector({ scheduler: scheduler as Scheduler });
     connectors.push(connector);
     return connector;

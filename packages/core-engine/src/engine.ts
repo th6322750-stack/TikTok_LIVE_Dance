@@ -791,6 +791,17 @@ export function createGameEngine(options: GameEngineOptions): GameEngine {
       gifts.setWindowMs(config.giftDedupWindowMs);
       slots.setSlots(config.slots);
       vip = { ...vip, capacity: config.vipCapacity };
+
+      // Keep live party goal state in step with its configuration; progress is preserved so a
+      // mid-session target change never discards diamonds already contributed.
+      if (patch.partyGoal !== undefined) {
+        partyGoal = {
+          ...partyGoal,
+          enabled: config.partyGoal.enabled,
+          target: config.partyGoal.target,
+        };
+      }
+
       return config;
     },
     subscribe: (listener: (event: EngineEvent) => void): Unsubscribe => {
