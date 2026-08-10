@@ -1,0 +1,25 @@
+# Normalize line endings to LF everywhere.
+# Without this, Git's core.autocrlf=true on Windows checks files out as CRLF and
+# `pnpm format:check` fails (Prettier is configured with endOfLine: lf).
+* text=auto eol=lf
+
+# Binary assets must never be normalized.
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.webp binary
+*.ico binary
+*.icns binary
+*.mp3 binary
+*.wav binary
+*.ogg binary
+*.woff binary
+*.woff2 binary
+*.ttf binary
+*.zip binary
+*.exe binary
+*.dll binary
+
+# Generated — keep out of diff noise and language stats.
+pnpm-lock.yaml linguist-generated=true

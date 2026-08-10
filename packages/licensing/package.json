@@ -1,0 +1,19 @@
+{
+  "name": "@dance-arena/licensing",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Machine identity, signature verification, trial and entitlement resolution.",
+  "license": "UNLICENSED",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "types": "./src/index.ts",
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "typecheck": "tsc -p tsconfig.json"
+  },
+  "dependencies": {
+    "@dance-arena/contracts": "workspace:*"
+  }
+}

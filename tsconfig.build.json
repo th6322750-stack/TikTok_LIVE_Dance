@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "display": "Dance Arena V2 — package build overrides",
+  "_comment": [
+    "Workspace packages are consumed FROM SOURCE by typecheck and by the Vite/electron-vite",
+    "bundlers (see the 'exports' field of each package.json).",
+    "'pnpm build' additionally compiles every package standalone with tsc so that each one is",
+    "provably compilable on its own, against the *emitted declarations* of its dependencies.",
+    "pnpm runs recursive scripts in topological order, so dependencies are always built first."
+  ],
+  "compilerOptions": {
+    "noEmit": false,
+    "paths": {
+      "@dance-arena/*": ["./packages/*/dist/index.d.ts"]
+    }
+  },
+  "exclude": ["**/*.test.ts", "**/*.test.tsx", "**/dist/**"]
+}

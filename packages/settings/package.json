@@ -1,0 +1,19 @@
+{
+  "name": "@dance-arena/settings",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Settings load/validate/migrate/export with a versioned config schema.",
+  "license": "UNLICENSED",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "types": "./src/index.ts",
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "typecheck": "tsc -p tsconfig.json"
+  },
+  "dependencies": {
+    "@dance-arena/contracts": "workspace:*"
+  }
+}

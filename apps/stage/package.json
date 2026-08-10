@@ -1,0 +1,21 @@
+{
+  "name": "@dance-arena/stage",
+  "version": "0.0.0",
+  "private": true,
+  "description": "STAGE renderer (PixiJS): renders dancers and effects from stage events. No gameplay logic.",
+  "license": "UNLICENSED",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "typecheck": "tsc -p tsconfig.json"
+  },
+  "dependencies": {
+    "@dance-arena/contracts": "workspace:*",
+    "pixi.js": "^8.19.0"
+  },
+  "devDependencies": {
+    "vite": "^7.3.6"
+  }
+}

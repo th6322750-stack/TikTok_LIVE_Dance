@@ -1,0 +1,41 @@
+# Dependencies
+node_modules/
+.pnpm-store/
+
+# Build output
+dist/
+out/
+build/
+release/
+coverage/
+*.tsbuildinfo
+
+# Caches
+.vite/
+.cache/
+.eslintcache
+.turbo/
+
+# Secrets / local configuration (never commit credentials — see docs/handoff/CLAUDE_READ_FIRST.md)
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+secrets.json
+local.settings.json
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+pnpm-debug.log*
+
+# Editors / OS
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/*
+!.vscode/extensions.json
