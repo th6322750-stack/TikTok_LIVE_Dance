@@ -104,6 +104,13 @@ importers:
       '@dance-arena/contracts':
         specifier: workspace:*
         version: link:../contracts
+      zod:
+        specifier: ^4.4.3
+        version: 4.4.3
+    devDependencies:
+      '@types/node':
+        specifier: ^26.2.0
+        version: 26.2.0
 
   packages/contracts:
     dependencies:
@@ -143,6 +150,10 @@ importers:
       '@dance-arena/contracts':
         specifier: workspace:*
         version: link:../contracts
+    devDependencies:
+      '@dance-arena/core-engine':
+        specifier: workspace:*
+        version: link:../core-engine
 
 packages:
 
