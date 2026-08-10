@@ -1,31 +1,46 @@
 /**
- * `@dance-arena/contracts` — Shared contracts: normalized event schemas, game state types and typed IPC channel definitions.
+ * `@dance-arena/contracts` — the shared language of Dance Arena V2.
  *
- * Blueprint: §9–§12, §30, §38–§41
+ * Blueprint: §9–§12 (events), §15–§27 (state), §29–§31 (stage), §38–§42 (IPC), §43–§48
+ * (settings/license).
  *
  * Responsibility
- * - Normalized event schemas (`GiftEvent`, `CommentEvent`, …) and their Zod validators.
- * - Game state / stage event types shared by Main, CONTROL and STAGE.
- * - Typed IPC channel names and payload types.
+ * - Normalized event schemas and their Zod validators.
+ * - Canonical game state / stage render types shared by Main, CONTROL and STAGE.
+ * - Typed IPC channel names, request schemas and response types.
  *
  * Boundaries
- * - No runtime behaviour beyond validation helpers.
+ * - No runtime behaviour beyond validation and pure helpers.
  * - No Node built-ins, Electron, React or PixiJS — every layer depends on this package.
- *
- * Task 00 status: workspace skeleton only. Task 01 adds the real contracts and Zod schemas.
+ * - No ranking/queue/tier RULES here; those belong to the Core Engine (thresholds are config).
  */
 
-/** Version of the internal Dance Arena event/state contracts (Blueprint §9). */
-export const CONTRACTS_SCHEMA_VERSION = 1 as const;
+export * from './common.js';
+export * from './connector.js';
+export * from './license.js';
+export * from './settings.js';
+
+export * from './live/user.js';
+export * from './live/events.js';
+export * from './live/raw.js';
+
+export * from './game/commands.js';
+export * from './game/config.js';
+export * from './game/state.js';
+export * from './game/events.js';
+
+export * from './stage/events.js';
+
+export * from './ipc/channels.js';
+
+import { CONTRACTS_SCHEMA_VERSION } from './common.js';
 
 /** Where a workspace module sits in the dependency direction of Blueprint §67. */
 export type ModuleLayer = 'contracts' | 'domain' | 'platform' | 'app';
 
 /**
- * Self-description of a workspace module.
- *
- * Exists so every package has a typed public entry point from day one and so diagnostics can
- * report which modules are loaded and which contract version they were built against.
+ * Self-description of a workspace module, used by diagnostics to report which modules are loaded
+ * and which contract version they were built against.
  */
 export interface WorkspaceModuleInfo {
   readonly id: `@dance-arena/${string}`;
