@@ -1,0 +1,23 @@
+:root {
+  color-scheme: dark;
+  font-family:
+    system-ui,
+    -apple-system,
+    'Segoe UI',
+    sans-serif;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: #101018;
+  color: #e8e8f0;
+}
+
+.control-shell {
+  padding: 24px 32px;
+}
+
+.control-note {
+  color: #9a9ab0;
+}

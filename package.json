@@ -1,0 +1,41 @@
+{
+  "name": "dance-arena-v2",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Dance Arena V2 — TikTok LIVE interactive dance game (Electron + TypeScript monorepo)",
+  "license": "UNLICENSED",
+  "type": "module",
+  "packageManager": "pnpm@10.34.5",
+  "engines": {
+    "node": ">=22.12.0",
+    "pnpm": ">=10.0.0"
+  },
+  "scripts": {
+    "dev": "pnpm -r --parallel run dev",
+    "dev:control": "pnpm --filter @dance-arena/control run dev",
+    "dev:stage": "pnpm --filter @dance-arena/stage run dev",
+    "dev:desktop": "pnpm --filter @dance-arena/desktop run dev",
+    "build": "pnpm -r run build",
+    "typecheck": "pnpm -r run typecheck",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "arch:check": "node scripts/check-dependency-direction.mjs",
+    "validate": "pnpm run format:check && pnpm run lint && pnpm run arch:check && pnpm run typecheck && pnpm run test && pnpm run build",
+    "clean": "node scripts/clean.mjs"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@vitest/coverage-v8": "^4.1.10",
+    "eslint": "^10.8.1",
+    "eslint-config-prettier": "^10.1.8",
+    "globals": "^17.9.0",
+    "prettier": "^3.9.6",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.67.0",
+    "vitest": "^4.1.10"
+  }
+}

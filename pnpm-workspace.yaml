@@ -1,0 +1,13 @@
+packages:
+  - 'apps/*'
+  - 'packages/*'
+
+# pnpm >= 10 blocks dependency lifecycle scripts by default. Only toolchain packages that
+# genuinely need one are approved here.
+#
+# Note: Electron >= 43 no longer ships a postinstall script — it downloads its binary lazily the
+# first time the `electron` module is required (see apps/desktop). It stays listed so a future
+# version that reintroduces a build script does not silently break `pnpm dev:desktop`.
+onlyBuiltDependencies:
+  - electron
+  - esbuild
