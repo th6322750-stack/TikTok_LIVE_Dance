@@ -5,19 +5,226 @@
     -apple-system,
     'Segoe UI',
     sans-serif;
+  font-size: 14px;
 }
 
 body {
   margin: 0;
   min-height: 100vh;
-  background: #101018;
+  background: #0d0d14;
   color: #e8e8f0;
 }
 
-.control-shell {
-  padding: 24px 32px;
+button {
+  font: inherit;
+  padding: 6px 12px;
+  border-radius: 6px;
+  border: 1px solid #34344a;
+  background: #1c1c28;
+  color: inherit;
+  cursor: pointer;
 }
 
-.control-note {
+button:hover {
+  background: #26263a;
+}
+
+input {
+  font: inherit;
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: 1px solid #34344a;
+  background: #14141e;
+  color: inherit;
+}
+
+.shell {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  min-height: 100vh;
+}
+
+.sidebar {
+  background: #14141e;
+  border-right: 1px solid #24243a;
+  padding: 16px;
+}
+
+.brand {
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.sidebar ul {
+  list-style: none;
+  margin: 16px 0 0;
+  padding: 0;
+  display: grid;
+  gap: 8px;
   color: #9a9ab0;
+}
+
+.main {
+  padding: 16px 24px 32px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #24243a;
+}
+
+.header-title {
+  font-weight: 600;
+  margin-right: 12px;
+}
+
+.header-meta {
+  display: flex;
+  gap: 16px;
+  color: #9a9ab0;
+}
+
+.status {
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: #24243a;
+  font-size: 12px;
+}
+
+.status-connected {
+  background: #14432a;
+  color: #6ee7a8;
+}
+
+.status-error {
+  background: #431414;
+  color: #ff9a9a;
+}
+
+.status-reconnecting {
+  background: #433314;
+  color: #ffd28a;
+}
+
+.warning {
+  margin: 12px 0;
+  padding: 8px 12px;
+  border-radius: 6px;
+  background: #3a2a12;
+  color: #ffd28a;
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 12px;
+  margin: 16px 0;
+}
+
+.card {
+  background: #14141e;
+  border: 1px solid #24243a;
+  border-radius: 8px;
+  padding: 12px;
+  display: grid;
+  gap: 4px;
+}
+
+.card-label {
+  color: #9a9ab0;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.card-value {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 12px;
+}
+
+.panel {
+  background: #14141e;
+  border: 1px solid #24243a;
+  border-radius: 8px;
+  padding: 12px 16px;
+}
+
+.panel h2 {
+  margin: 0 0 8px;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #9a9ab0;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 6px;
+  max-height: 260px;
+  overflow-y: auto;
+}
+
+.list li {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.rank {
+  color: #ffd28a;
+  min-width: 32px;
+}
+
+.feed {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 4px;
+  max-height: 260px;
+  overflow-y: auto;
+  font-family: ui-monospace, 'Cascadia Code', monospace;
+  font-size: 12px;
+}
+
+.feed li {
+  display: flex;
+  gap: 8px;
+}
+
+.feed-warn {
+  color: #ffd28a;
+}
+
+.feed-error {
+  color: #ff9a9a;
+}
+
+.muted {
+  color: #9a9ab0;
+}
+
+.empty {
+  color: #6a6a80;
+  margin: 0;
 }
