@@ -1,0 +1,19 @@
+{
+  "task": 9,
+  "status": "NOT_STARTED",
+  "consumedVisualRevision": null,
+  "consumedVisualCommit": null,
+  "consumedLockCommit": null,
+  "implementationCommit": null,
+  "implementedAssetIds": [],
+  "implementedComponents": [],
+  "validation": {
+    "typecheck": "NOT_RUN",
+    "test": "NOT_RUN",
+    "build": "NOT_RUN",
+    "validate": "NOT_RUN"
+  },
+  "openRequests": [],
+  "knownLimitations": [],
+  "notesForChatGPT": []
+}
