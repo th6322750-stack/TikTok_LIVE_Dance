@@ -1,0 +1,56 @@
+{
+  "protocolVersion": 1,
+  "manifestVersion": 1,
+  "visualRevision": "DA-VISUAL-R1",
+  "status": "DRAFT",
+  "productionRoot": "assets/production",
+  "sourceRoot": "assets/source",
+  "assets": [
+    { "id": "avatar-default-happy", "category": "avatar-fallback", "status": "PLANNED", "production": "assets/production/avatar/avatar-default-happy.webp", "width": 512, "height": 512, "alpha": true, "usedBy": ["DancerView"] },
+
+    { "id": "dancer-regular-01", "category": "body", "status": "PLANNED", "production": "assets/production/dancers/regular/regular-01.webp", "width": 512, "height": 768, "alpha": true, "usedBy": ["DancerView"] },
+    { "id": "dancer-regular-02", "category": "body", "status": "PLANNED", "production": "assets/production/dancers/regular/regular-02.webp", "width": 512, "height": 768, "alpha": true, "usedBy": ["DancerView"] },
+    { "id": "dancer-regular-03", "category": "body", "status": "PLANNED", "production": "assets/production/dancers/regular/regular-03.webp", "width": 512, "height": 768, "alpha": true, "usedBy": ["DancerView"] },
+    { "id": "dancer-regular-04", "category": "body", "status": "PLANNED", "production": "assets/production/dancers/regular/regular-04.webp", "width": 512, "height": 768, "alpha": true, "usedBy": ["DancerView"] },
+    { "id": "dancer-regular-05", "category": "body", "status": "PLANNED", "production": "assets/production/dancers/regular/regular-05.webp", "width": 512, "height": 768, "alpha": true, "usedBy": ["DancerView"] },
+    { "id": "dancer-regular-06", "category": "body", "status": "PLANNED", "production": "assets/production/dancers/regular/regular-06.webp", "width": 512, "height": 768, "alpha": true, "usedBy": ["DancerView"] },
+
+    { "id": "dancer-vip-01", "category": "vip-body", "status": "PLANNED", "production": "assets/production/dancers/vip/vip-01.webp", "width": 560, "height": 840, "alpha": true, "usedBy": ["DancerView", "VIPLayer"] },
+    { "id": "dancer-vip-02", "category": "vip-body", "status": "PLANNED", "production": "assets/production/dancers/vip/vip-02.webp", "width": 560, "height": 840, "alpha": true, "usedBy": ["DancerView", "VIPLayer"] },
+    { "id": "dancer-vip-03", "category": "vip-body", "status": "PLANNED", "production": "assets/production/dancers/vip/vip-03.webp", "width": 560, "height": 840, "alpha": true, "usedBy": ["DancerView", "VIPLayer"] },
+    { "id": "dancer-vip-04", "category": "vip-body", "status": "PLANNED", "production": "assets/production/dancers/vip/vip-04.webp", "width": 560, "height": 840, "alpha": true, "usedBy": ["DancerView", "VIPLayer"] },
+
+    { "id": "rank-crown-gold", "category": "rank-badge", "status": "PLANNED", "production": "assets/production/rank/crown-gold.webp", "width": 384, "height": 256, "alpha": true, "usedBy": ["DancerView"] },
+    { "id": "rank-crown-silver", "category": "rank-badge", "status": "PLANNED", "production": "assets/production/rank/crown-silver.webp", "width": 384, "height": 256, "alpha": true, "usedBy": ["DancerView"] },
+    { "id": "rank-crown-bronze", "category": "rank-badge", "status": "PLANNED", "production": "assets/production/rank/crown-bronze.webp", "width": 384, "height": 256, "alpha": true, "usedBy": ["DancerView"] },
+    { "id": "rank-vip-star", "category": "rank-badge", "status": "PLANNED", "production": "assets/production/rank/vip-star.webp", "width": 256, "height": 256, "alpha": true, "usedBy": ["DancerView"] },
+    { "id": "vip-wings", "category": "vip-effect", "status": "PLANNED", "production": "assets/production/vip/wings.webp", "width": 1024, "height": 768, "alpha": true, "usedBy": ["VIPLayer", "DancerView"] },
+
+    { "id": "fx-tier1-spark", "category": "effect", "status": "PLANNED", "production": "assets/production/fx/tier1-spark.webp", "width": 512, "height": 512, "alpha": true, "usedBy": ["GiftFXLayer"] },
+    { "id": "fx-tier2-heart-rain", "category": "effect", "status": "PLANNED", "production": "assets/production/fx/tier2-heart-rain.webp", "width": 768, "height": 768, "alpha": true, "usedBy": ["GiftFXLayer"] },
+    { "id": "fx-tier3-wings-ring", "category": "effect", "status": "PLANNED", "production": "assets/production/fx/tier3-wings-ring.webp", "width": 1024, "height": 1024, "alpha": true, "usedBy": ["GiftFXLayer"] },
+    { "id": "fx-tier4-crown-takeover", "category": "effect", "status": "PLANNED", "production": "assets/production/fx/tier4-crown-takeover.webp", "width": 1080, "height": 1080, "alpha": true, "usedBy": ["GiftFXLayer"] },
+    { "id": "fx-tier5-cosmic-takeover", "category": "effect", "status": "PLANNED", "production": "assets/production/fx/tier5-cosmic-takeover.webp", "width": 1080, "height": 1920, "alpha": true, "usedBy": ["GiftFXLayer"] },
+
+    { "id": "face-happy", "category": "reaction", "status": "PLANNED", "production": "assets/production/reactions/face-happy.webp", "width": 256, "height": 256, "alpha": true, "usedBy": ["OverlayLayer"] },
+    { "id": "face-love", "category": "reaction", "status": "PLANNED", "production": "assets/production/reactions/face-love.webp", "width": 256, "height": 256, "alpha": true, "usedBy": ["OverlayLayer"] },
+    { "id": "face-wow", "category": "reaction", "status": "PLANNED", "production": "assets/production/reactions/face-wow.webp", "width": 256, "height": 256, "alpha": true, "usedBy": ["OverlayLayer"] },
+    { "id": "face-fire", "category": "reaction", "status": "PLANNED", "production": "assets/production/reactions/face-fire.webp", "width": 256, "height": 256, "alpha": true, "usedBy": ["OverlayLayer"] },
+    { "id": "face-dance", "category": "reaction", "status": "PLANNED", "production": "assets/production/reactions/face-dance.webp", "width": 256, "height": 256, "alpha": true, "usedBy": ["OverlayLayer"] },
+
+    { "id": "bubble-go", "category": "command-bubble", "status": "PLANNED", "production": "assets/production/bubbles/go.webp", "width": 512, "height": 320, "alpha": true, "usedBy": ["OverlayLayer"] },
+    { "id": "bubble-join", "category": "command-bubble", "status": "PLANNED", "production": "assets/production/bubbles/join.webp", "width": 512, "height": 320, "alpha": true, "usedBy": ["OverlayLayer"] },
+    { "id": "bubble-vip", "category": "command-bubble", "status": "PLANNED", "production": "assets/production/bubbles/vip.webp", "width": 512, "height": 320, "alpha": true, "usedBy": ["OverlayLayer"] },
+
+    { "id": "stage-bg-neon-kawaii", "category": "background", "status": "PLANNED", "production": "assets/production/stage/neon-kawaii-bg.webp", "width": 1080, "height": 1920, "alpha": false, "usedBy": ["BackgroundLayer"] },
+    { "id": "stage-vip-podium", "category": "environment", "status": "PLANNED", "production": "assets/production/stage/vip-podium.webp", "width": 1080, "height": 720, "alpha": true, "usedBy": ["EnvironmentLayer", "VIPLayer"] },
+    { "id": "stage-dj-booth", "category": "dj", "status": "PLANNED", "production": "assets/production/stage/dj-booth.webp", "width": 960, "height": 640, "alpha": true, "usedBy": ["DJLayer"] },
+    { "id": "party-goal-frame", "category": "ui", "status": "PLANNED", "production": "assets/production/ui/party-goal-frame.webp", "width": 900, "height": 220, "alpha": true, "usedBy": ["OverlayLayer"] }
+  ],
+  "rules": [
+    "Production assets are ChatGPT-owned visual truth.",
+    "Claude may not replace a PLANNED/MISSING asset with a stylistically different final asset.",
+    "Until status becomes APPROVED, these entries reserve IDs and geometry only.",
+    "Approved files should later add sha256, byteSize and mime before DANCE_LOCK becomes LOCKED."
+  ]
+}
