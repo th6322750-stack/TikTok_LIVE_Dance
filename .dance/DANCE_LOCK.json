@@ -1,9 +1,10 @@
 {
   "protocolVersion": 1,
   "visualRevision": "DA-VISUAL-R2",
-  "status": "LOCKED",
-  "locked": true,
+  "status": "QA_FAILED_SUPERSEDED_PENDING_R3",
+  "locked": false,
   "lockedAt": "2026-08-11T20:04:00+07:00",
+  "qaFailedAt": "2026-08-11T21:36:00+07:00",
   "visualCommit": "31714b3571f04615e215deeab53fc65d54f2cde5",
   "baseImplementationCommit": "c569780b8b328fdaa91e02ad2fca630ff99d6af6",
   "contractFiles": [
@@ -16,7 +17,8 @@
     "sha256": "42b2b47554def73a6fd611fa6cf449106e01cb0f432b582f2e1f59f1961c3559",
     "byteSize": 35870901,
     "logicalAssetCount": 104,
-    "libraryFileId": "libfile_c4420f5e7cd88191b4478e23b77e7e2b"
+    "libraryFileId": "libfile_c4420f5e7cd88191b4478e23b77e7e2b",
+    "approvedForNewConsumption": false
   },
   "approvedGeometry": {
     "stageAspect": "9:16",
@@ -28,10 +30,16 @@
     "lowTier4CoverageMin": 0.82,
     "lowTier5CoverageMin": 1.0
   },
+  "qaResult": {
+    "round": 2,
+    "implementationPassed": ["DA-QA-001", "DA-QA-003", "DA-QA-005"],
+    "assetDefectsReopened": ["DA-QA-002", "DA-QA-004"],
+    "reason": "Exact R2 package still contains baked VIP-male facial identity and source-sheet/tile contamination in production sprites. R2 must not be consumed by new work."
+  },
   "notes": [
-    "DA-VISUAL-R2 supersedes R1 for Task 09 visual QA remediation.",
-    "Claude must replace R1 runtime assets with the exact R2 package and verify SHA256 before extraction.",
-    "Per-asset headSocket metadata is authoritative.",
-    "Any further production visual replacement requires DA-VISUAL-R3 or explicit System Architect unlock."
+    "DA-VISUAL-R2 is retained for audit/history only and is no longer an approved production visual revision.",
+    "PR #3 implementation remediation is accepted, but merge is blocked by System Architect-owned artwork defects.",
+    "Claude must not attempt to repair visual artwork in code.",
+    "The next consumable visual revision must be DA-VISUAL-R3 with a new package hash and manifest."
   ]
 }
