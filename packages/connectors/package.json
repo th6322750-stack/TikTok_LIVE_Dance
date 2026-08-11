@@ -16,6 +16,7 @@
   },
   "dependencies": {
     "@dance-arena/contracts": "workspace:*",
+    "@eulerstream/euler-websocket-sdk": "^1.0.0",
     "zod": "^4.4.3"
   },
   "devDependencies": {

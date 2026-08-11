@@ -246,10 +246,15 @@ export function createGameEngine(options: GameEngineOptions): GameEngine {
   }
 
   function rescoreQueue(): void {
-    for (const entry of queue) {
-      entry.priorityScore = computePriorityScore(entry, config.priorityMode, { users, random });
+    // `random` keeps the score it was given on insert, otherwise every re-sort would reshuffle
+    // the queue. Every other mode refreshes the informational score before sorting.
+    if (config.priorityMode !== 'random') {
+      for (const entry of queue) {
+        entry.priorityScore = computePriorityScore(entry, config.priorityMode, { users, random });
+      }
     }
-    queue = sortQueue(queue);
+
+    queue = sortQueue(queue, config.priorityMode, { users, random });
   }
 
   function joinStage(user: UserState, at: number): CommandRejection | undefined {
@@ -261,10 +266,13 @@ export function createGameEngine(options: GameEngineOptions): GameEngine {
       id: ids.next('queue'),
       userId: user.id,
       joinedAt: at,
+      // Assigned once here so `random` mode has a stable shuffle key.
       priorityScore: 0,
       diamondsWhileWaiting: 0,
       ...(user.lastGiftAt === undefined ? {} : { lastGiftAt: user.lastGiftAt }),
     };
+
+    entry.priorityScore = computePriorityScore(entry, config.priorityMode, { users, random });
 
     queue.push(entry);
     user.queueEntryId = entry.id;

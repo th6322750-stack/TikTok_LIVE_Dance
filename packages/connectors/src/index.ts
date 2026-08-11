@@ -38,8 +38,22 @@ export {
 export {
   EulerStreamConnector,
   DEFAULT_EULERSTREAM_ENDPOINT,
+  EULERSTREAM_FEATURES,
   type EulerStreamConnectorOptions,
 } from './eulerstream/eulerStreamConnector.js';
+export {
+  decodeFrame,
+  decodeParsedFrame,
+  isTransportOnlyKind,
+  type DecodedFrame,
+  type DecodedFrameMessage,
+} from './eulerstream/frames.js';
+export {
+  ClientCloseCode,
+  describeCloseCode,
+  isKnownCloseCode,
+  isTerminalCloseCode,
+} from './eulerstream/closeCodes.js';
 export {
   baseBackoffDelay,
   computeBackoffDelay,

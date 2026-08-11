@@ -33,7 +33,13 @@ export {
   type GiftCreditInput,
 } from './modules/giftDeduplication.js';
 export { computeRanking, resolveGiftTier, type RankingComputation } from './modules/ranking.js';
-export { computePriorityScore, sortQueue } from './modules/queue.js';
+export {
+  computePriorityScore,
+  createQueueComparator,
+  sortQueue,
+  type PriorityContext,
+  type QueueComparator,
+} from './modules/queue.js';
 export { neighbourSlot, positionOf, SlotAllocator } from './modules/slots.js';
 
 export const CORE_ENGINE_MODULE = {

@@ -7,6 +7,15 @@
  * It has no idea what a gift is worth, who is VIP or what a queue is. Diamonds, ranking and stage
  * effects are the Core Engine's business (Blueprint §6).
  *
+ * LIFECYCLE SAFETY
+ * - Every socket carries a generation number. Callbacks from a superseded socket are ignored, so a
+ *   late `close` from an old socket can never mutate the state of the current one.
+ * - `error` followed by `close` schedules exactly ONE reconnect (`reconnectPending`).
+ * - The initial `connect()` promise is always settled — including when the socket closes or errors
+ *   before it ever opened.
+ * - Documented terminal close codes (invalid auth, no permission, not live, stream ended) stop the
+ *   loop instead of retrying forever.
+ *
  * SECURITY: the API key is used to build the connection url and is never logged, never included
  * in a status event and never sent to a renderer (Blueprint §45).
  */
@@ -19,10 +28,13 @@ import type {
   RawLiveEvent,
   Unsubscribe,
 } from '@dance-arena/contracts';
+import { createWebSocketUrl, SchemaVersion } from '@eulerstream/euler-websocket-sdk';
 
 import { Emitter } from '../support/emitter.js';
 import type { Scheduler } from '../support/scheduler.js';
 import { computeBackoffDelay } from './backoff.js';
+import { describeCloseCode, isTerminalCloseCode } from './closeCodes.js';
+import { decodeFrame, isTransportOnlyKind } from './frames.js';
 import {
   createWebSocketTransport,
   redactUrl,
@@ -32,12 +44,27 @@ import {
 
 export const DEFAULT_EULERSTREAM_ENDPOINT = 'wss://ws.eulerstream.com';
 
+/**
+ * Gateway mode is PINNED rather than inherited from provider defaults, so a change of defaults
+ * upstream cannot silently alter the frame shape we parse.
+ */
+export const EULERSTREAM_FEATURES = {
+  /** Bundled frames (`{timestamp, messages[]}`) — the gateway default; handled by `decodeFrame`. */
+  bundleEvents: true,
+  /** We want the full gateway feature set, not raw pass-through. */
+  rawMessages: false,
+  /** Let the gateway accept `@handle`, plain handle and profile-url forms. */
+  normalizeUniqueId: true,
+  /** Protobuf schema version our normalizer was written against. */
+  schemaVersion: SchemaVersion.v2,
+} as const;
+
 export interface EulerStreamConnectorOptions {
   readonly scheduler: Scheduler;
   readonly transport?: Transport;
   /** Injected entropy for reconnect jitter; defaults to Math.random. */
   readonly random?: () => number;
-  /** 0 disables the heartbeat. */
+  /** 0 disables the app-level heartbeat (the gateway has its own inactivity timeout). */
   readonly heartbeatIntervalMs?: number;
   readonly maxReconnectAttempts?: number;
   /** Structured logger; receives redacted messages only. */
@@ -52,6 +79,10 @@ export class EulerStreamConnector implements LiveConnector {
   private config: ConnectorConfig | undefined;
   private attempt = 0;
   private intentionalDisconnect = false;
+  /** Incremented per socket; stale callbacks compare against it and bail. */
+  private generation = 0;
+  /** Guards against `error` and `close` both scheduling a reconnect for the same socket. */
+  private reconnectPending = false;
   private cancelReconnect: (() => void) | undefined;
   private cancelHeartbeat: (() => void) | undefined;
   private openResolvers: { resolve: () => void; reject: (error: Error) => void } | undefined;
@@ -80,13 +111,15 @@ export class EulerStreamConnector implements LiveConnector {
   disconnect(): Promise<void> {
     // Intentional disconnect must NEVER trigger the reconnect loop (Task 07 requirement).
     this.intentionalDisconnect = true;
-    this.cancelReconnect?.();
-    this.cancelReconnect = undefined;
+    this.generation += 1; // orphan every in-flight socket callback
+    this.clearReconnect();
     this.stopHeartbeat();
 
     this.setStatus('disconnecting');
     this.connection?.close();
     this.connection = undefined;
+
+    this.settleConnect(new Error('disconnected before the connection was established'));
     this.setStatus('idle');
 
     return Promise.resolve();
@@ -111,21 +144,31 @@ export class EulerStreamConnector implements LiveConnector {
 
   // ── internals ───────────────────────────────────────────────────────────────────────────────
 
+  /** Official SDK URL construction, with every feature flag pinned explicitly. */
   private buildUrl(config: ConnectorConfig): string {
-    const endpoint = config.endpoint ?? DEFAULT_EULERSTREAM_ENDPOINT;
-    const url = new URL(endpoint);
+    const url = createWebSocketUrl({
+      uniqueId: config.target,
+      ...(config.apiKey === undefined || config.apiKey.length === 0
+        ? {}
+        : { apiKey: config.apiKey }),
+      features: { ...EULERSTREAM_FEATURES },
+    });
 
-    url.searchParams.set('uniqueId', config.target.replace(/^@/, ''));
-    if (config.apiKey !== undefined && config.apiKey.length > 0) {
-      url.searchParams.set('apiKey', config.apiKey);
-    }
+    if (config.endpoint === undefined) return url;
 
-    return url.toString();
+    // Custom gateway (self-hosted / test): keep the officially built query string.
+    const official = new URL(url);
+    const override = new URL(config.endpoint);
+    override.search = official.search;
+    return override.toString();
   }
 
   private openSocket(): void {
     const config = this.config;
     if (config === undefined) return;
+
+    this.generation += 1;
+    const generation = this.generation;
 
     this.setStatus(this.attempt === 0 ? 'connecting' : 'reconnecting');
 
@@ -134,18 +177,29 @@ export class EulerStreamConnector implements LiveConnector {
 
     try {
       this.connection = this.transport.connect(url, {
-        onOpen: () => this.handleOpen(),
-        onMessage: (data) => this.handleMessage(data),
-        onClose: (code, reason) => this.handleClose(code, reason),
-        onError: (message) => this.handleError(message),
+        onOpen: () => this.handleOpen(generation),
+        onMessage: (data) => this.handleMessage(generation, data),
+        onClose: (code, reason) => this.handleClose(generation, code, reason),
+        onError: (message) => this.handleError(generation, message),
       });
     } catch (error) {
-      this.handleError(error instanceof Error ? error.message : 'transport failed to open');
+      this.handleError(
+        generation,
+        error instanceof Error ? error.message : 'transport failed to open',
+      );
     }
   }
 
-  private handleOpen(): void {
+  /** True when the callback belongs to the socket we currently care about. */
+  private isCurrent(generation: number): boolean {
+    return generation === this.generation && !this.intentionalDisconnect;
+  }
+
+  private handleOpen(generation: number): void {
+    if (!this.isCurrent(generation)) return;
+
     this.attempt = 0;
+    this.reconnectPending = false;
     this.setStatus('connected');
     this.startHeartbeat();
 
@@ -153,87 +207,116 @@ export class EulerStreamConnector implements LiveConnector {
     this.openResolvers = undefined;
   }
 
-  private handleMessage(data: string): void {
-    let parsed: unknown;
+  private handleMessage(generation: number, data: string): void {
+    if (!this.isCurrent(generation)) return;
 
-    try {
-      parsed = JSON.parse(data);
-    } catch {
-      // A frame we cannot parse is a provider concern, not a crash (Task 07: no crash on garbage).
-      this.log('warn', 'dropped unparseable transport frame');
-      return;
+    const frame = decodeFrame(data);
+
+    for (const error of frame.errors) this.log('warn', `dropped frame: ${error}`);
+
+    const receivedAt = this.options.scheduler.now();
+
+    // Bundle order is preserved so the engine sees events in the order TikTok produced them.
+    for (const message of frame.messages) {
+      if (isTransportOnlyKind(message.kind)) continue;
+
+      this.events.emit({
+        provider: 'eulerstream',
+        kind: message.kind,
+        receivedAt,
+        payload: message.payload,
+      });
     }
-
-    const kind = readKind(parsed);
-    if (kind === undefined) {
-      this.log('warn', 'dropped transport frame without a message type');
-      return;
-    }
-
-    // Heartbeat/ack frames stay inside the connector.
-    if (kind === 'pong' || kind === 'ping' || kind === 'ack') return;
-
-    this.events.emit({
-      provider: 'eulerstream',
-      kind,
-      receivedAt: this.options.scheduler.now(),
-      payload: readPayload(parsed),
-    });
   }
 
-  private handleClose(code: number, reason: string): void {
+  private handleClose(generation: number, code: number, reason: string): void {
+    if (!this.isCurrent(generation)) return;
+
     this.stopHeartbeat();
     this.connection = undefined;
 
-    if (this.intentionalDisconnect) return;
+    const description = describeCloseCode(code, reason);
 
-    this.log('warn', `connection closed (${code}) ${reason}`);
-    this.scheduleReconnect(`closed: ${code}`);
-  }
-
-  private handleError(message: string): void {
-    this.stopHeartbeat();
-
-    if (this.openResolvers !== undefined && this.attempt === 0) {
-      // Surface the first failure to the caller; later failures live in the reconnect loop.
-      this.openResolvers.reject(new Error(message));
-      this.openResolvers = undefined;
+    if (isTerminalCloseCode(code)) {
+      this.log('warn', `connection closed permanently: ${description}`);
+      this.setStatus('error', { reason: description });
+      this.settleConnect(new Error(description));
+      return;
     }
 
-    if (this.intentionalDisconnect) return;
+    this.log('warn', `connection closed: ${description}`);
+    this.scheduleReconnect(description);
+
+    // The first attempt never opened: settle the caller now and let the retry loop continue in
+    // the background, reporting progress through status events.
+    this.settleConnect(new Error(description));
+  }
+
+  private handleError(generation: number, message: string): void {
+    if (!this.isCurrent(generation)) return;
+
+    this.stopHeartbeat();
 
     this.setStatus('error', { reason: message });
     this.scheduleReconnect(message);
+    this.settleConnect(new Error(message));
   }
 
+  /**
+   * Schedules at most one reconnect per dropped socket. `error` immediately followed by `close`
+   * is the normal browser/Node sequence and must not produce two pending timers.
+   */
   private scheduleReconnect(reason: string): void {
+    if (this.intentionalDisconnect || this.reconnectPending) return;
+
     const maxAttempts = this.options.maxReconnectAttempts ?? Number.POSITIVE_INFINITY;
 
     if (this.attempt >= maxAttempts) {
-      this.setStatus('error', { reason: `giving up after ${this.attempt} attempts` });
+      const message = `giving up after ${this.attempt} attempts`;
+      this.setStatus('error', { reason: message });
+      this.settleConnect(new Error(message));
       return;
     }
 
     const delay = computeBackoffDelay({ attempt: this.attempt, random: this.random() });
     this.attempt += 1;
+    this.reconnectPending = true;
 
     this.setStatus('reconnecting', { reason, attempt: this.attempt, nextRetryInMs: delay });
 
     this.cancelReconnect = this.options.scheduler.schedule(delay, () => {
       this.cancelReconnect = undefined;
+      this.reconnectPending = false;
       if (this.intentionalDisconnect) return;
 
       this.openSocket();
     });
   }
 
+  private clearReconnect(): void {
+    this.cancelReconnect?.();
+    this.cancelReconnect = undefined;
+    this.reconnectPending = false;
+  }
+
+  /** Rejects a still-pending `connect()` so no caller is left awaiting forever. */
+  private settleConnect(error: Error): void {
+    if (this.openResolvers === undefined) return;
+
+    const { reject } = this.openResolvers;
+    this.openResolvers = undefined;
+    reject(error);
+  }
+
   private startHeartbeat(): void {
     const interval = this.options.heartbeatIntervalMs ?? 0;
     if (interval <= 0) return;
 
+    const generation = this.generation;
+
     const tick = (): void => {
       this.cancelHeartbeat = this.options.scheduler.schedule(interval, () => {
-        if (this.status !== 'connected') return;
+        if (!this.isCurrent(generation) || this.status !== 'connected') return;
 
         try {
           this.connection?.send(JSON.stringify({ type: 'ping' }));
@@ -272,30 +355,4 @@ export class EulerStreamConnector implements LiveConnector {
   private log(level: 'info' | 'warn' | 'error', message: string): void {
     this.options.log?.(level, message);
   }
-}
-
-/** Message kind under any of the field names providers use. */
-function readKind(frame: unknown): string | undefined {
-  if (typeof frame !== 'object' || frame === null) return undefined;
-
-  const record = frame as Record<string, unknown>;
-  for (const key of ['type', 'event', 'eventType', 'name', 'method']) {
-    const value = record[key];
-    if (typeof value === 'string' && value.length > 0) return value;
-  }
-
-  return undefined;
-}
-
-/** The payload envelope, tolerating providers that nest it or send it flat. */
-function readPayload(frame: unknown): unknown {
-  if (typeof frame !== 'object' || frame === null) return frame;
-
-  const record = frame as Record<string, unknown>;
-  for (const key of ['data', 'payload', 'body']) {
-    const value = record[key];
-    if (typeof value === 'object' && value !== null) return value;
-  }
-
-  return frame;
 }

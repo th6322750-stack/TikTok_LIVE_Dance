@@ -463,6 +463,57 @@ describe('real connector path with fixture transport (Task 08, credential-free)'
     expect(stage.giftEffects[0]?.tierId).toBe('tier-4');
   });
 
+  it('delivers a BUNDLED production frame through normalizer → engine in order', async () => {
+    const { harness, transport } = eulerHarness();
+    const stage = withStage(harness);
+
+    const connecting = harness.runtime.handleControlInvoke('connector:connect', {
+      target: '@dancer',
+      provider: 'eulerstream',
+    });
+    await openSocketWhenReady(transport);
+    await connecting;
+
+    const user = { userId: '88001', uniqueId: 'bundle_fan', nickname: 'Bundle Fan' };
+
+    // One WebSocket frame, four messages — the default gateway shape (bundleEvents=true).
+    // The GO must be processed before the gift, otherwise the gift would land on a user who is
+    // not on stage yet.
+    transport.lastSocket()?.message({
+      timestamp: 1_700_000_000_000,
+      messages: [
+        { type: 'WebcastMemberMessage', data: { user } },
+        { type: 'WebcastChatMessage', data: { user, comment: 'GO' } },
+        {
+          type: 'WebcastGiftMessage',
+          data: {
+            user,
+            giftName: 'Galaxy',
+            diamondCount: 500,
+            repeatCount: 1,
+            repeatEnd: true,
+            giftType: 1,
+            msgId: 'bundle-tx-1',
+          },
+        },
+        { type: 'WebcastLikeMessage', data: { user, likeCount: 4 } },
+      ],
+    });
+
+    drainStage(harness, stage);
+
+    const state = harness.runtime.engine.getState();
+    expect(state.counters.eventCount).toBe(4);
+    expect(state.counters.joinCount).toBe(1);
+    expect(state.counters.likeCount).toBe(4);
+
+    // Ordering proof: the dancer exists AND the gift effect is attached to that dancer.
+    const dancer = stage.dancerFor('88001');
+    expect(dancer).toBeDefined();
+    expect(state.users['88001']?.totalDiamonds).toBe(500);
+    expect(stage.giftEffects[0]?.dancerId).toBe(dancer?.dancerId);
+  });
+
   it('survives a short reconnect without resetting the canonical session', async () => {
     const { harness, transport } = eulerHarness();
 
