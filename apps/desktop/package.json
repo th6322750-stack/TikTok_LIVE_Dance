@@ -12,7 +12,10 @@
     "typecheck": "tsc -p tsconfig.json"
   },
   "dependencies": {
-    "@dance-arena/contracts": "workspace:*"
+    "@dance-arena/connectors": "workspace:*",
+    "@dance-arena/contracts": "workspace:*",
+    "@dance-arena/core-engine": "workspace:*",
+    "@dance-arena/simulator": "workspace:*"
   },
   "devDependencies": {
     "@types/node": "^26.2.0",

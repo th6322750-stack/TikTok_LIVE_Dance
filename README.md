@@ -31,7 +31,7 @@ Connector -> Normalizer -> Core Engine -> CONTROL / STAGE
 
 | Công cụ | Phiên bản |
 | --- | --- |
-| Node.js | `>= 22.12.0` (xem `.nvmrc`) |
+| Node.js | `^22.13.0 \|\| >= 24` (xem `.nvmrc`; ESLint 10 không chạy trên 22.12) |
 | pnpm | `>= 10` (`corepack enable pnpm` hoặc `npm i -g pnpm@10`) |
 
 `engine-strict=true` nên install sẽ fail sớm nếu sai phiên bản Node/pnpm.

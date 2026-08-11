@@ -14,7 +14,10 @@
     "typecheck": "tsc -p tsconfig.json"
   },
   "dependencies": {
-    "@dance-arena/contracts": "workspace:*",
-    "@dance-arena/connectors": "workspace:*"
+    "@dance-arena/connectors": "workspace:*",
+    "@dance-arena/contracts": "workspace:*"
+  },
+  "devDependencies": {
+    "@dance-arena/core-engine": "workspace:*"
   }
 }

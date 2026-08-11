@@ -1,5 +1,5 @@
 /**
- * `@dance-arena/core-engine` — Canonical game state and gameplay rules. Pure TypeScript domain layer.
+ * `@dance-arena/core-engine` — canonical game state and gameplay rules.
  *
  * Blueprint: §14–§27
  *
@@ -10,13 +10,37 @@
  *
  * Boundaries
  * - No Electron, React or PixiJS imports.
- * - No I/O, no Node built-ins, no timers hidden inside domain logic — time is passed in.
+ * - No I/O, no Node built-ins, no hidden timers — clock, ids and randomness are injected ports.
  * - Never accepts raw provider payloads; only normalized contracts.
- *
- * Task 00 status: workspace skeleton only. Implementation lands in its own task.
  */
 
 import { CONTRACTS_SCHEMA_VERSION, type WorkspaceModuleInfo } from '@dance-arena/contracts';
+
+export { createGameEngine, type GameEngine, type GameEngineOptions } from './engine.js';
+export { DEFAULT_ENGINE_CONFIG, resolveEngineConfig } from './config.js';
+export {
+  createFixedClock,
+  createSeededRandom,
+  createSequentialIdGenerator,
+  type Clock,
+  type IdGenerator,
+  type RandomSource,
+} from './ports.js';
+export { CooldownTracker, parseCommand, type CommandMatch } from './modules/commandParser.js';
+export {
+  GiftDeduplicationService,
+  type GiftCredit,
+  type GiftCreditInput,
+} from './modules/giftDeduplication.js';
+export { computeRanking, resolveGiftTier, type RankingComputation } from './modules/ranking.js';
+export {
+  computePriorityScore,
+  createQueueComparator,
+  sortQueue,
+  type PriorityContext,
+  type QueueComparator,
+} from './modules/queue.js';
+export { neighbourSlot, positionOf, SlotAllocator } from './modules/slots.js';
 
 export const CORE_ENGINE_MODULE = {
   id: '@dance-arena/core-engine',
