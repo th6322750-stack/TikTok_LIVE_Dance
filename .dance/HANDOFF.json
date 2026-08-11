@@ -1,0 +1,27 @@
+{
+  "protocolVersion": 1,
+  "handoffId": "DA-T09-R1-DRAFT",
+  "task": 9,
+  "title": "Asset, Theme & Visual System",
+  "visualRevision": "DA-VISUAL-R1",
+  "baseImplementationCommit": "c569780b8b328fdaa91e02ad2fca630ff99d6af6",
+  "visualCommit": null,
+  "createdBy": "ChatGPT/System Architect",
+  "status": "DRAFT",
+  "visualSetupComplete": false,
+  "requiredFiles": [
+    ".dance/PROJECT_STATE.yaml",
+    ".dance/HANDOFF.json",
+    ".dance/DANCE_LOCK.json",
+    ".dance/VISUAL_CONTRACT.json",
+    ".dance/ASSET_MANIFEST.json"
+  ],
+  "implementationBranch": "claude/task-09-asset-theme-visual-system",
+  "hardGate": {
+    "claudeMayStart": false,
+    "reason": "Production visual assets are still being prepared by ChatGPT."
+  },
+  "knownBlockers": [
+    "Production dancer/costume/FX/background assets not yet locked."
+  ]
+}
