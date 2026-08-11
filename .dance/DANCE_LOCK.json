@@ -1,0 +1,17 @@
+{
+  "protocolVersion": 1,
+  "visualRevision": "DA-VISUAL-R1",
+  "status": "DRAFT",
+  "locked": false,
+  "visualCommit": null,
+  "baseImplementationCommit": "c569780b8b328fdaa91e02ad2fca630ff99d6af6",
+  "contractFiles": [
+    ".dance/VISUAL_CONTRACT.json",
+    ".dance/ASSET_MANIFEST.json"
+  ],
+  "assetManifestVersion": 1,
+  "notes": [
+    "This lock becomes authoritative only when status is LOCKED and locked is true.",
+    "Claude must not consume this DRAFT lock for Task 09 implementation."
+  ]
+}
