@@ -14,7 +14,7 @@ Execution plan: **B — approved**
 | 06 | STAGE Pixi Minimal | DONE — PR #2 merged |
 | 07 | EulerStream Connector & Normalizer | DONE — PR #2 merged |
 | 08 | End-to-End Gameplay Integration | DONE — PR #2 merged |
-| 09 | Asset, Theme & Visual System | IN PROGRESS — ChatGPT visual prep / Claude gated |
+| 09 | Asset, Theme & Visual System | READY — DA-VISUAL-R1 locked, awaiting Claude implementation |
 | 10 | Auto Host & TTS | TODO |
 | 11 | DJ & Audio Reactive | TODO |
 | 12 | Settings, Secrets & Licensing | TODO |
@@ -23,20 +23,22 @@ Execution plan: **B — approved**
 
 Trạng thái hợp lệ: `TODO`, `READY`, `IN PROGRESS`, `PR OPEN`, `BLOCKED`, `DONE`.
 
-## Task 00
-- PR #1 merged.
-- pnpm monorepo, strict TypeScript, architecture guards và validation baseline hoàn tất.
+## Tasks 00 → 08
+- PR #1 và PR #2 đã merge.
+- Core vertical slice hoàn chỉnh: Connector → Normalizer → Core Engine → CONTROL / STAGE.
+- GitHub Actions Validate PASS sau review-fix; tổng regression suite tại thời điểm merge batch là 294 test.
+- Real EulerStream credential smoke test vẫn pending owner; không block Task 09.
 
-## Tasks 01 → 08
-- PR #2 `Tasks 01-08: Core vertical slice` đã được System Architect review vòng cuối và merge bằng merge commit `c569780b8b328fdaa91e02ad2fca630ff99d6af6`.
-- GitHub Actions `Validate` PASS trên head `0514e3e9d47a3a2f81b20dea58b3e081b7529abc`.
-- Tổng test sau review-fix: **294 test**; `pnpm validate` PASS.
-- Core vertical slice đã hoàn chỉnh: Connector → Normalizer → Core Engine → CONTROL / STAGE.
-- Các blocker review đã đóng: EulerStream bundle/SDK mapping, reconnect race + close-code policy, finalized gift dedup ledger, queue priority lexicographic.
-- Real EulerStream credential smoke test vẫn pending owner; đây là known limitation, không phải blocker cho Task 09.
-
-## Task 09 — Visual ownership gate
-- ChatGPT/System Architect sở hữu visual truth và production assets.
-- Claude không được tự thiết kế hoặc thay thế visual đang chờ.
-- Task 09 chỉ được handoff sang Claude khi `.dance/HANDOFF.json` có `visualSetupComplete: true` và `.dance/DANCE_LOCK.json` khóa đúng visual revision.
-- Protocol Task 09 dùng `.dance/` gồm project state, handoff, lock, asset manifest, visual contract, request loop, implementation receipt và QA defects.
+## Task 09 — DA-VISUAL-R1
+- Theme: **Neon Kawaii Arena**.
+- Visual owner: ChatGPT/System Architect.
+- Production pack đã được tách/chuẩn hóa/đóng gói: **104 logical assets**.
+- Asset groups: 12 regular dancer, 10 VIP dancer, 24 reaction, 14 command bubble, gift/FX tiers, Top/rank/accessories, stage/UI/background, fallback avatar.
+- Regular canvas: 512×768; VIP canvas: 560×840; stage: 9:16.
+- Head sockets chuẩn hóa và được khóa trong manifest để avatar TikTok render theo mask thay vì hard-code theo costume.
+- Runtime distribution ưu tiên WebP atlases + JSON frame metadata; individual PNG/WebP được giữ trong production source package.
+- Locked package: `DA-VISUAL-R1-production.zip`, SHA256 `e297760bb8f1d5d6b7b28cb98f0dc08bccdeceb350511d3fed1b60c2676ebef1`, 40,076,049 bytes.
+- `.dance/ASSET_MANIFEST.json`: APPROVED_LOCKED.
+- `.dance/DANCE_LOCK.json`: LOCKED.
+- `.dance/HANDOFF.json`: visualSetupComplete=true; Claude implementation gate OPEN once the exact locked ZIP is available in the local repository and its SHA is verified.
+- Claude must implement Task 09 on branch `claude/task-09-asset-theme-visual-system`, publish implementation receipt, open PR, and stop for ChatGPT visual QA.
