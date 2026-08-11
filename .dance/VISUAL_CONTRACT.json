@@ -1,0 +1,81 @@
+{
+  "protocolVersion": 1,
+  "visualRevision": "DA-VISUAL-R1",
+  "status": "DRAFT",
+  "themeId": "neon-kawaii-arena",
+  "themeName": "Neon Kawaii Arena",
+  "direction": "Cute chibi dance-club energy with a dark premium stage, neon cyan/magenta accents and gold VIP hierarchy. TikTok avatar remains the visual identity; body/costume artwork supports it rather than replacing it.",
+  "stage": {
+    "aspectRatio": "9:16",
+    "referenceSize": { "width": 1080, "height": 1920 },
+    "safeArea": { "left": 48, "right": 48, "top": 80, "bottom": 96 },
+    "background": "dark nightclub / concert stage, readable under bright avatars and effects",
+    "normalZone": { "yMin": 0.48, "yMax": 0.91 },
+    "vipZone": { "yMin": 0.23, "yMax": 0.48 },
+    "djZone": { "yMin": 0.08, "yMax": 0.28 }
+  },
+  "palette": {
+    "stageBase": "#090B18",
+    "stageRaised": "#13172D",
+    "cyan": "#40E9FF",
+    "magenta": "#FF4FD8",
+    "violet": "#8C63FF",
+    "gold": "#FFD75A",
+    "silver": "#D7E5F4",
+    "bronze": "#E8A16A",
+    "success": "#71F5A6",
+    "white": "#FFFFFF"
+  },
+  "dancerVisual": {
+    "referenceBodySize": { "width": 512, "height": 768 },
+    "transparentBackground": true,
+    "avatarIdentity": "TikTok avatar is composited as the character head",
+    "headSocket": {
+      "shape": "circle",
+      "centerNormalized": { "x": 0.5, "y": 0.205 },
+      "diameterNormalizedToBodyWidth": 0.37,
+      "avatarCrop": "cover",
+      "fallback": "asset:avatar-default-happy"
+    },
+    "bodyStyle": "rounded chibi proportions, upbeat dance pose, large sneakers/hands, clean silhouette, premium game-sticker finish",
+    "mustNot": [
+      "do not bake a realistic human face into production bodies",
+      "do not cover the avatar socket with hair/hat artwork",
+      "do not use thin fragile details that disappear at 720x1280",
+      "do not change avatar identity based on costume"
+    ]
+  },
+  "rankVisual": {
+    "top1": { "badge": "asset:rank-crown-gold", "aura": "gold", "costumePool": "vip" },
+    "top2": { "badge": "asset:rank-crown-silver", "aura": "silver", "costumePool": "vip" },
+    "top3": { "badge": "asset:rank-crown-bronze", "aura": "bronze", "costumePool": "vip" },
+    "top4to10": { "badge": "asset:rank-vip-star", "aura": "violet", "costumePool": "vip" }
+  },
+  "giftEffects": {
+    "tier-1": { "asset": "asset:fx-tier1-spark", "durationMs": 1000, "visualWeight": 1 },
+    "tier-2": { "asset": "asset:fx-tier2-heart-rain", "durationMs": 1800, "visualWeight": 2 },
+    "tier-3": { "asset": "asset:fx-tier3-wings-ring", "durationMs": 2500, "visualWeight": 3 },
+    "tier-4": { "asset": "asset:fx-tier4-crown-takeover", "durationMs": 3600, "visualWeight": 4 },
+    "tier-5": { "asset": "asset:fx-tier5-cosmic-takeover", "durationMs": 5200, "visualWeight": 5 }
+  },
+  "reactionVisual": {
+    "faces": [
+      "asset:face-happy",
+      "asset:face-love",
+      "asset:face-wow",
+      "asset:face-fire",
+      "asset:face-dance"
+    ],
+    "commandBubbles": ["asset:bubble-go", "asset:bubble-join", "asset:bubble-vip"]
+  },
+  "performanceModes": {
+    "LOW": { "maxRecommendedDancers": 15, "particleScale": 0.35, "largeTakeovers": true },
+    "BALANCED": { "maxRecommendedDancers": 25, "particleScale": 0.7, "largeTakeovers": true },
+    "ULTRA": { "maxRecommendedDancers": 30, "particleScale": 1.0, "largeTakeovers": true }
+  },
+  "ownership": {
+    "visualTruth": "ChatGPT",
+    "implementationTruth": "Claude",
+    "rule": "Claude may implement composition, animation and performance behavior but may not redesign or silently substitute approved visual assets."
+  }
+}
