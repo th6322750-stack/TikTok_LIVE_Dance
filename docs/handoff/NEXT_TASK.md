@@ -1,47 +1,34 @@
 # NEXT TASK
 
-**Current phase:** Task 09 — Visual R2 remediation on PR #3  
+**Current phase:** Task 09 — Visual QA remediation  
 **Visual owner:** ChatGPT / System Architect  
 **Implementation owner:** Claude  
-**Status:** READY — `DA-VISUAL-R2` LOCKED
+**Status:** BLOCKED — waiting for `DA-VISUAL-R3`
 
-## Gate status
-Visual R2 is authoritative:
+## QA round 2 result
+Claude's R2 implementation remediation is accepted:
 
-- `.dance/HANDOFF.json`: `visualSetupComplete: true`
-- `.dance/DANCE_LOCK.json`: `status: LOCKED`, `visualRevision: DA-VISUAL-R2`
-- `.dance/VISUAL_CONTRACT.json`: `status: APPROVED_LOCKED`
-- `.dance/ASSET_MANIFEST.json`: `status: APPROVED_LOCKED`
+- DA-QA-001 CLOSED — per-asset headSocket path works.
+- DA-QA-003 CLOSED — crown/badge scale and placement accepted.
+- DA-QA-005 CLOSED — LOW Tier-4/Tier-5 coverage logic accepted.
 
-## Required binary package
-Claude must have locally:
+The exact locked R2 artwork failed production QA:
 
-`DA-VISUAL-R2-production.zip`
+- DA-QA-002 REOPENED — VIP male artwork still exposes baked source facial identity around the avatar opening.
+- DA-QA-004 REOPENED — production sprites still contain source-sheet/tile contamination (confirmed on crowns / tier-5 FX and detached fragments on some VIP crops).
 
-SHA256:
+## Gate
+`.dance/HANDOFF.json` has `claudeMayStart: false`.
 
-`42b2b47554def73a6fd611fa6cf449106e01cb0f432b582f2e1f59f1961c3559`
+Claude must STOP. Do not start Task 10 and do not attempt to repair artwork in renderer code.
 
-Expected size: `35,870,901` bytes.  
-Expected extraction root: `assets/production/DA-VISUAL-R2`.
+## Next action owner
+ChatGPT/System Architect will produce `DA-VISUAL-R3` with:
 
-## Task 09 PR #3 remediation
-Do not start a new Task 09 implementation from scratch. Continue branch:
+1. clean VIP male avatar sockets with no baked facial identity;
+2. isolated transparent crown / gift-FX / VIP sprites with no tile bleed or detached fragments;
+3. rebuilt WebP atlases + JSON metadata;
+4. updated manifest and SHA256 lock;
+5. same stable logical asset IDs wherever possible so PR #3 only needs a visual revision/package swap.
 
-`claude/task-09-asset-theme-visual-system`
-
-1. Merge/rebase the latest `main` visual-owner metadata into the branch without rewriting the existing 01→09 history unnecessarily.
-2. Verify R2 ZIP SHA256 before extraction.
-3. Replace R1 production runtime assets with R2 and update theme revision/path to `DA-VISUAL-R2`.
-4. Consume exact per-asset `headSocket.normalized` metadata.
-5. Apply crown width `0.44 × body width` and rank badge width `0.27 × body width`.
-6. LOW mode with `largeTakeovers=true`: Tier 4 coverage must be at least `0.82 × stage width`; Tier 5 at least `1.00 × stage width`.
-7. Keep dedicated DJ artwork deferred to Task 11.
-8. Mark `DA-REQ-001` CONSUMED after integration.
-9. Run `pnpm validate`, update implementation receipt, push PR #3, then STOP for ChatGPT visual QA round 2.
-
-## Prohibited
-- No visual redesign.
-- No global head-socket fallback when per-asset geometry exists.
-- No R1 asset substitution after R2 is consumed.
-- No Task 10 work before Task 09 visual QA closes.
+After R3 is locked, Claude will consume it on the existing branch `claude/task-09-asset-theme-visual-system`, run `pnpm validate`, push PR #3 and stop for final visual QA.
