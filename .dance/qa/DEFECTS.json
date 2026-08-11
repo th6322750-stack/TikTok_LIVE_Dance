@@ -1,66 +1,72 @@
 {
   "protocolVersion": 1,
   "visualRevision": "DA-VISUAL-R2",
-  "implementationCommit": "a90a6eb6d541e5663bd857d67200d68d2bde93ee",
+  "implementationCommit": "9ac4fab8ec109325182bafae9370e8f6b91d3ca0",
+  "qaRound": 2,
   "defects": [
     {
       "defectId": "DA-QA-001",
-      "implementationCommit": "a90a6eb6d541e5663bd857d67200d68d2bde93ee",
+      "implementationCommit": "9ac4fab8ec109325182bafae9370e8f6b91d3ca0",
       "viewport": "720x1280 and 1080x1920",
       "componentId": "DancerView/headSocket",
       "severity": "BLOCKER",
       "observed": "R1 global/standardized socket metadata did not match actual openings.",
-      "expected": "Use the R2 per-asset headSocket.normalized values.",
-      "status": "FIXED_PENDING_QA",
-      "fixedInVisualRevision": "DA-VISUAL-R2"
+      "expected": "Use authoritative per-asset headSocket.normalized values.",
+      "status": "CLOSED",
+      "fixedInVisualRevision": "DA-VISUAL-R2",
+      "qaEvidence": "Round-2 compositor using the exact locked R2 package and PR #3 layout confirms per-asset socket placement works on Regular extremes (including x=0.4551 and x=0.5781) and VIP female variants at both supported aspect-equivalent sizes."
     },
     {
       "defectId": "DA-QA-002",
-      "implementationCommit": "a90a6eb6d541e5663bd857d67200d68d2bde93ee",
+      "implementationCommit": "9ac4fab8ec109325182bafae9370e8f6b91d3ca0",
       "viewport": "720x1280 and 1080x1920",
       "componentId": "DA-VISUAL-R2/vip-male",
       "severity": "BLOCKER",
-      "observed": "R1 VIP male contained baked faces/source artifacts.",
-      "expected": "R2 VIP male bodies have clean avatar openings and no source labels.",
-      "status": "FIXED_PENDING_QA",
-      "fixedInVisualRevision": "DA-VISUAL-R2"
+      "observed": "R2 VIP male artwork still contains the original baked facial features around the avatar opening. Example dancer-vip-male-01 leaves the original eyes/hair-face region visibly surrounding the inserted TikTok avatar. This violates avatar-as-identity and is not clean production artwork.",
+      "expected": "VIP male bodies must expose a clean avatar socket with no baked eyes/nose/mouth/face visible around the composed avatar; hair/costume may frame the socket, but facial identity must come only from the TikTok avatar.",
+      "status": "REOPENED",
+      "fixedInVisualRevision": null,
+      "owner": "ChatGPT/System Architect",
+      "qaEvidence": "Exact R2 ZIP SHA 42b2b475...c3559 inspected directly; dancer-vip-male-01 visibly retains the source character eyes above the circular avatar hole."
     },
     {
       "defectId": "DA-QA-003",
-      "implementationCommit": "a90a6eb6d541e5663bd857d67200d68d2bde93ee",
+      "implementationCommit": "9ac4fab8ec109325182bafae9370e8f6b91d3ca0",
       "viewport": "1080x1920 reference",
       "componentId": "DancerView/rank accessory",
       "severity": "HIGH",
-      "observed": "PR #3 currently uses crown 0.8x body width and badge 0.42x body width.",
-      "expected": "R2 contract requires crown 0.44x and rank badge 0.27x body width.",
-      "status": "FIXED_PENDING_QA",
+      "observed": "R1 implementation used crown 0.8x body width and badge 0.42x body width.",
+      "expected": "Crown 0.44x and rank badge 0.27x body width, positioned relative to the per-asset avatar socket.",
+      "status": "CLOSED",
       "fixedInVisualRevision": "DA-VISUAL-R2",
       "fixedBy": "Claude",
-      "fixDetail": "Ratios moved out of the renderer into theme data (ThemeDefinition.rankLayout, sourced from VISUAL_CONTRACT.rankVisual.layout): crownWidthBodyRatio 0.44, badgeWidthBodyRatio 0.27. DancerView now scales crown/badge from those values, crown centred above the head silhouette and badge on the head side clear of the avatar circle. Regression test: 'hands the renderer the approved crown/badge ratios (DA-QA-003)'."
+      "qaEvidence": "Round-2 compositor confirms the new scale and placement are proportionally appropriate even on strongly off-centre sockets. Any remaining visual contamination seen around crowns comes from the R2 crown artwork itself and is tracked under DA-QA-004, not renderer placement."
     },
     {
       "defectId": "DA-QA-004",
-      "implementationCommit": "a90a6eb6d541e5663bd857d67200d68d2bde93ee",
+      "implementationCommit": "9ac4fab8ec109325182bafae9370e8f6b91d3ca0",
       "viewport": "asset QA",
       "componentId": "DA-VISUAL-R2/gifts-fx-accessories-rank",
       "severity": "BLOCKER",
-      "observed": "R1 had source-sheet/tile-edge contamination.",
-      "expected": "R2 cleaned sprites and rebuilt rank badges/atlases are used.",
-      "status": "FIXED_PENDING_QA",
-      "fixedInVisualRevision": "DA-VISUAL-R2"
+      "observed": "R2 still contains source-sheet/tile contamination in production sprites. Confirmed examples: crown-gold and crown-pink retain colored neighboring/background regions; fx-tier5-cosmic-purple contains a visible fragment of the adjacent lower sprite. Several VIP female source crops also show small detached edge fragments outside the intended silhouette.",
+      "expected": "Every production sprite and atlas frame must be isolated on transparency with no neighboring cell, tile-edge, detached fragment or sheet background contamination.",
+      "status": "REOPENED",
+      "fixedInVisualRevision": null,
+      "owner": "ChatGPT/System Architect",
+      "qaEvidence": "Direct inspection of the exact locked R2 package, not fixture images. R2 package hash matches DANCE_LOCK, so this is an asset-pack defect rather than a stale local file."
     },
     {
       "defectId": "DA-QA-005",
-      "implementationCommit": "a90a6eb6d541e5663bd857d67200d68d2bde93ee",
+      "implementationCommit": "9ac4fab8ec109325182bafae9370e8f6b91d3ca0",
       "viewport": "LOW performance mode",
       "componentId": "GiftFXLayer/tier4-tier5",
       "severity": "MEDIUM",
-      "observed": "PR #3 applies one coverage formula to all gift tiers.",
-      "expected": "When largeTakeovers=true, LOW tier-4 coverage >=0.82 stage width and tier-5 >=1.00 stage width; particleScale may reduce density/concurrency, not takeover coverage below those minima.",
-      "status": "FIXED_PENDING_QA",
+      "observed": "R1 implementation applied one particleScale-derived coverage formula to all gift tiers.",
+      "expected": "When largeTakeovers=true, LOW tier-4 coverage >=0.82 stage width and tier-5 >=1.00 stage width; tiers 1-3 remain <=0.62.",
+      "status": "CLOSED",
       "fixedInVisualRevision": "DA-VISUAL-R2",
       "fixedBy": "Claude",
-      "fixDetail": "Coverage is now resolved per tier by apps/stage/src/stage/effectCoverage.ts against PerformanceProfile.coverage (LOW tier1to3Max 0.62, tier4Min 0.82, tier5Min 1.00). particleScale only shapes the base ramp and can no longer scale a takeover below its floor; the renderer applies the resolved coverage verbatim. Regression tests: apps/stage/src/stage/effectCoverage.test.ts (12) plus two scene-level assertions."
+      "qaEvidence": "effectCoverage.ts enforces contract floors/cap and pixiRenderer consumes resolved coverage without multiplying particleScale a second time; CI regression suite is green on head 9ac4fab."
     }
   ],
   "lifecycle": ["OPEN", "FIXED_PENDING_QA", "CLOSED", "REOPENED"],
