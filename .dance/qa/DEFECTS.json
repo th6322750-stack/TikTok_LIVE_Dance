@@ -1,6 +1,6 @@
 {
   "protocolVersion": 1,
-  "visualRevision": "DA-VISUAL-R1",
+  "visualRevision": "DA-VISUAL-R2",
   "implementationCommit": "a90a6eb6d541e5663bd857d67200d68d2bde93ee",
   "defects": [
     {
@@ -9,20 +9,21 @@
       "viewport": "720x1280 and 1080x1920",
       "componentId": "DancerView/headSocket",
       "severity": "BLOCKER",
-      "observed": "The locked R1 headSocket metadata does not match the actual transparent face openings for multiple dancer assets. Regular bodies vary materially by variant, and VIP female openings are much lower than the manifest values; using the current metadata places the TikTok avatar outside or only partly inside the intended face opening.",
-      "expected": "Each dancer asset must carry a per-asset socket matching its real face opening; the avatar circle must sit fully inside the opening at both supported stage sizes without exposing the empty hole.",
-      "status": "OPEN",
-      "evidence": "System Architect QA compositor using the exact locked package and current DancerView layout. Examples from alpha-hole analysis: regular variants center around y~0.28-0.30 with radius~0.20-0.23 body width, while VIP female variants center around y~0.47-0.56 with radius~0.11-0.13; current manifest uses approximately y=0.245/r=0.164 regular and y=0.270/r=0.161 VIP female."
+      "observed": "R1 global/standardized socket metadata did not match actual openings.",
+      "expected": "Use the R2 per-asset headSocket.normalized values.",
+      "status": "FIXED_PENDING_QA",
+      "fixedInVisualRevision": "DA-VISUAL-R2"
     },
     {
       "defectId": "DA-QA-002",
       "implementationCommit": "a90a6eb6d541e5663bd857d67200d68d2bde93ee",
       "viewport": "720x1280 and 1080x1920",
-      "componentId": "DA-VISUAL-R1/vip-male",
+      "componentId": "DA-VISUAL-R2/vip-male",
       "severity": "BLOCKER",
-      "observed": "The five R1 VIP male WebP assets still contain baked character faces and source-sheet artifacts/labels. This conflicts with the avatar-as-identity visual rule and cannot be treated as final production artwork.",
-      "expected": "VIP male production bodies must have a clean circular avatar socket, no baked face visible around the avatar, no source labels, and transparent surroundings.",
-      "status": "OPEN"
+      "observed": "R1 VIP male contained baked faces/source artifacts.",
+      "expected": "R2 VIP male bodies have clean avatar openings and no source labels.",
+      "status": "FIXED_PENDING_QA",
+      "fixedInVisualRevision": "DA-VISUAL-R2"
     },
     {
       "defectId": "DA-QA-003",
@@ -30,19 +31,20 @@
       "viewport": "1080x1920 reference",
       "componentId": "DancerView/rank accessory",
       "severity": "HIGH",
-      "observed": "Current layout scales crown accessory to 0.8x body width and rank badge to 0.42x body width. QA composition makes Top 1-3 crowns/badges visually dominate and detach from the head/body silhouette.",
-      "expected": "Crowns should read as head accessories, approximately 0.38-0.48x body width depending on asset padding; rank badges should be approximately 0.24-0.30x body width and remain close to the upper shoulder/head area without obscuring the avatar.",
+      "observed": "PR #3 currently uses crown 0.8x body width and badge 0.42x body width.",
+      "expected": "R2 contract requires crown 0.44x and rank badge 0.27x body width.",
       "status": "OPEN"
     },
     {
       "defectId": "DA-QA-004",
       "implementationCommit": "a90a6eb6d541e5663bd857d67200d68d2bde93ee",
       "viewport": "asset QA",
-      "componentId": "DA-VISUAL-R1/gifts-fx-accessories",
+      "componentId": "DA-VISUAL-R2/gifts-fx-accessories-rank",
       "severity": "BLOCKER",
-      "observed": "Several R1 gift/effect/accessory crops contain neighboring source-sheet content or tile-edge contamination. Example: fx-tier5-cosmic-purple includes part of the adjacent asset at its lower edge; the QA contact sheet shows similar contamination on multiple gift/FX/accessory cells.",
-      "expected": "Every production sprite must be isolated on transparency with no neighboring cell content or source-sheet tile remnants before it is packed into the runtime atlas.",
-      "status": "OPEN"
+      "observed": "R1 had source-sheet/tile-edge contamination.",
+      "expected": "R2 cleaned sprites and rebuilt rank badges/atlases are used.",
+      "status": "FIXED_PENDING_QA",
+      "fixedInVisualRevision": "DA-VISUAL-R2"
     },
     {
       "defectId": "DA-QA-005",
@@ -50,21 +52,12 @@
       "viewport": "LOW performance mode",
       "componentId": "GiftFXLayer/tier4-tier5",
       "severity": "MEDIUM",
-      "observed": "All gift tiers currently share the same coverage formula. In LOW mode particleScale reduces a tier-5 visual to roughly 61% of stage width even though largeTakeovers remains enabled, weakening the intended mega/cosmic takeover hierarchy.",
-      "expected": "Performance mode may reduce density/concurrency, but when largeTakeovers=true tier-4 and especially tier-5 must retain visibly larger coverage than tiers 1-3; tier-5 should remain a dominant takeover treatment.",
+      "observed": "PR #3 applies one coverage formula to all gift tiers.",
+      "expected": "When largeTakeovers=true, LOW tier-4 coverage >=0.82 stage width and tier-5 >=1.00 stage width; particleScale may reduce density/concurrency, not takeover coverage below those minima.",
       "status": "OPEN"
     }
   ],
   "lifecycle": ["OPEN", "FIXED_PENDING_QA", "CLOSED", "REOPENED"],
   "severity": ["BLOCKER", "HIGH", "MEDIUM", "LOW"],
-  "requiredFields": [
-    "defectId",
-    "implementationCommit",
-    "viewport",
-    "componentId",
-    "severity",
-    "observed",
-    "expected",
-    "status"
-  ]
+  "requiredFields": ["defectId", "implementationCommit", "viewport", "componentId", "severity", "observed", "expected", "status"]
 }
