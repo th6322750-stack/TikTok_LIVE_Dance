@@ -1,41 +1,28 @@
 {
   "protocolVersion": 1,
-  "handoffId": "DA-T09-R2-REMEDIATION",
+  "handoffId": "DA-T09-R3-PENDING",
   "task": 9,
-  "title": "Asset, Theme & Visual System — R2 remediation",
+  "title": "Asset, Theme & Visual System — waiting for clean R3 artwork",
   "visualRevision": "DA-VISUAL-R2",
-  "baseImplementationCommit": "c569780b8b328fdaa91e02ad2fca630ff99d6af6",
-  "targetImplementationHead": "a90a6eb6d541e5663bd857d67200d68d2bde93ee",
-  "visualCommit": "31714b3571f04615e215deeab53fc65d54f2cde5",
   "createdBy": "ChatGPT/System Architect",
-  "status": "READY_FOR_IMPLEMENTATION",
-  "visualSetupComplete": true,
-  "requiredFiles": [
-    ".dance/PROJECT_STATE.yaml",
-    ".dance/HANDOFF.json",
-    ".dance/DANCE_LOCK.json",
-    ".dance/VISUAL_CONTRACT.json",
-    ".dance/ASSET_MANIFEST.json"
-  ],
-  "assetPackage": {
-    "fileName": "DA-VISUAL-R2-production.zip",
-    "sha256": "42b2b47554def73a6fd611fa6cf449106e01cb0f432b582f2e1f59f1961c3559",
-    "libraryFileId": "libfile_c4420f5e7cd88191b4478e23b77e7e2b",
-    "expectedExtractRoot": "assets/production/DA-VISUAL-R2"
-  },
+  "status": "BLOCKED_VISUAL_OWNER",
+  "visualSetupComplete": false,
   "implementationBranch": "claude/task-09-asset-theme-visual-system",
-  "hardGate": {
-    "claudeMayStart": true,
-    "precondition": "Owner places DA-VISUAL-R2-production.zip in the local repo/workspace; Claude verifies SHA256 before replacing R1 assets.",
-    "reason": "R2 fixes the visual QA blockers found on PR #3."
+  "currentImplementationHead": "9ac4fab8ec109325182bafae9370e8f6b91d3ca0",
+  "qaRound2": {
+    "implementationAccepted": true,
+    "closedDefects": ["DA-QA-001", "DA-QA-003", "DA-QA-005"],
+    "reopenedAssetDefects": ["DA-QA-002", "DA-QA-004"]
   },
-  "requiredRemediation": [
-    "consume R2 package and update theme revision/path from R1 to R2",
-    "use per-asset headSocket values from manifest",
-    "set crown width to 0.44 body width and rank badge width to 0.27 body width",
-    "when LOW.largeTakeovers=true keep tier-4 coverage >=0.82 stage width and tier-5 coverage >=1.00 stage width",
-    "keep DJ artwork deferred to Task 11",
-    "run pnpm validate and update implementation receipt"
+  "hardGate": {
+    "claudeMayStart": false,
+    "reason": "DA-VISUAL-R2 failed final artwork QA. Wait for System Architect to publish DA-VISUAL-R3."
+  },
+  "doNotDo": [
+    "do not start Task 10",
+    "do not redesign or paint over R2 assets in code",
+    "do not create a local R3 substitute",
+    "do not merge PR #3 until visual QA closes"
   ],
-  "stopCondition": "Push R2 remediation commit(s) to PR #3, CI green, then stop for ChatGPT visual QA round 2."
+  "nextOwnerAction": "ChatGPT/System Architect must produce DA-VISUAL-R3 correcting DA-QA-002 and DA-QA-004, rebuild atlases/manifest/hash, then reopen the handoff gate."
 }
