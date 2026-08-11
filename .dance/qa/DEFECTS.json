@@ -1,0 +1,18 @@
+{
+  "protocolVersion": 1,
+  "visualRevision": "DA-VISUAL-R1",
+  "implementationCommit": null,
+  "defects": [],
+  "lifecycle": ["OPEN", "FIXED_PENDING_QA", "CLOSED", "REOPENED"],
+  "severity": ["BLOCKER", "HIGH", "MEDIUM", "LOW"],
+  "requiredFields": [
+    "defectId",
+    "implementationCommit",
+    "viewport",
+    "componentId",
+    "severity",
+    "observed",
+    "expected",
+    "status"
+  ]
+}
