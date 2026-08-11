@@ -1,11 +1,20 @@
 {
   "requestId": "DA-REQ-001",
-  "status": "OPEN",
+  "status": "ACKNOWLEDGED",
   "requestedBy": "Claude",
   "createdAt": "2026-08-11T18:40:00+07:00",
+  "acknowledgedAt": "2026-08-11T18:53:00+07:00",
   "need": "VISUAL_CONTRACT.json (status DRAFT) names asset ids and head-socket geometry that the APPROVED_LOCKED DA-VISUAL-R1 package does not ship. Task 09 was implemented against the locked manifest; please either update the contract to R1 ids or ship the named artwork in a future revision.",
   "blockedComponent": null,
-  "whyBlocked": "Not blocking. Implementation proceeded against .dance/ASSET_MANIFEST.json (APPROVED_LOCKED) because it outranks a DRAFT contract, and no artwork was invented, recoloured or substituted outside its own category.",
+  "whyBlocked": "Not an architecture blocker, but final visual QA found that R1 itself needs a corrected visual revision before Task 09 can merge.",
+  "systemArchitectDecision": {
+    "assetNaming": "Do not create legacy-named duplicate artwork solely to satisfy the draft contract. The next approved visual contract will use the actual production asset ids/category model already introduced by R1/R2.",
+    "rankMapping": "Top 1/2/3 keep position-specific rank badges plus gold/blue/pink crown accessories; Top 4-10 keep rank-badge-04..10 without a crown accessory.",
+    "giftMapping": "Use the approved tier families (tier3 crystal, tier4 crown/podium/vortex, tier5 cosmic/vortex). The contract will be updated to those ids rather than inventing fx-tier3-wings-ring / fx-tier4-crown-takeover / fx-tier5-cosmic-takeover aliases.",
+    "reactions": "Use reaction-* ids; face-* draft aliases will be removed from the approved contract.",
+    "headSocket": "A single global socket is rejected. The approved contract will declare per-asset headSocket metadata as authoritative. R2 must correct the inaccurate R1 socket values before merge.",
+    "dj": "Dedicated DJ artwork remains deferred to Task 11. Task 09 may keep a neutral primitive placeholder only; it is not a final production visual."
+  },
   "requiredGeometry": {
     "conflict": "headSocket",
     "visualContract": {
@@ -14,61 +23,62 @@
     },
     "lockedManifest": {
       "regularHeadSocket": [0.5, 0.245, 0.165],
-      "vipHeadSocket": [0.5, 0.27, 0.16],
-      "note": "radius 0.165 => diameter 0.33, and y differs by 0.04"
+      "vipHeadSocket": [0.5, 0.27, 0.16]
     },
-    "implemented": "per-asset headSocket.normalized from ASSET_MANIFEST.json (most precise source; differs per body)"
+    "qaFinding": "Both draft contract and R1 standardized geometry are insufficient; actual openings vary by asset. R2 will publish corrected per-asset sockets."
   },
   "requiredAssetIds": [
     {
       "contractId": "rank-crown-silver",
-      "slot": "rankVisual.top2.badge",
-      "boundTo": "crown-blue + rank-badge-02",
-      "note": "R1 ships crown-gold / crown-blue / crown-pink only; no silver/bronze crown."
+      "slot": "rankVisual.top2",
+      "decision": "replace draft reference with crown-blue + rank-badge-02"
     },
     {
       "contractId": "rank-crown-bronze",
-      "slot": "rankVisual.top3.badge",
-      "boundTo": "crown-pink + rank-badge-03"
+      "slot": "rankVisual.top3",
+      "decision": "replace draft reference with crown-pink + rank-badge-03"
     },
     {
       "contractId": "rank-vip-star",
-      "slot": "rankVisual.top4to10.badge",
-      "boundTo": "rank-badge-04..10 (badge only, no accessory)"
+      "slot": "rankVisual.top4to10",
+      "decision": "replace draft reference with rank-badge-04..10"
     },
     {
       "contractId": "fx-tier3-wings-ring",
-      "slot": "giftEffects.tier-3.asset",
-      "boundTo": "fx-tier3-crystal-rainbow",
-      "note": "R1 tier-3 effects are crystal-blue / crystal-pink / crystal-rainbow / confetti-burst."
+      "slot": "giftEffects.tier-3",
+      "decision": "replace draft reference with approved tier-3 crystal family"
     },
     {
       "contractId": "fx-tier4-crown-takeover",
-      "slot": "giftEffects.tier-4.asset",
-      "boundTo": "fx-tier4-crystal-crown"
+      "slot": "giftEffects.tier-4",
+      "decision": "replace draft reference with approved tier-4 crown/podium/vortex family"
     },
     {
       "contractId": "fx-tier5-cosmic-takeover",
-      "slot": "giftEffects.tier-5.asset",
-      "boundTo": "fx-tier5-cosmic-purple"
+      "slot": "giftEffects.tier-5",
+      "decision": "replace draft reference with approved tier-5 cosmic/vortex family"
     },
     {
-      "contractId": "face-happy | face-love | face-wow | face-fire | face-dance",
+      "contractId": "face-*",
       "slot": "reactionVisual.faces",
-      "boundTo": "reaction-happy | reaction-heart-eyes | reaction-wow | reaction-fire-angry | reaction-party"
+      "decision": "replace draft aliases with reaction-* production ids"
     },
     {
       "contractId": "dj booth artwork",
       "slot": "theme.environment.dj",
-      "boundTo": "none — STAGE keeps a primitive DJ placeholder on the dj layer",
-      "note": "R1 ships no DJ asset; Blueprint §28 reserves the layer. Needed for Task 11 (DJ/audio)."
+      "decision": "defer production DJ art to Task 11"
     }
   ],
   "resolution": {
-    "status": "UNRESOLVED",
-    "visualRevision": null,
+    "status": "PLANNED_IN_DA-VISUAL-R2",
+    "visualRevision": "DA-VISUAL-R2",
     "resolutionCommit": null,
-    "files": []
+    "files": [
+      ".dance/VISUAL_CONTRACT.json",
+      ".dance/ASSET_MANIFEST.json",
+      ".dance/DANCE_LOCK.json",
+      "assets/production/DA-VISUAL-R2/**"
+    ]
   },
   "lifecycle": ["OPEN", "ACKNOWLEDGED", "RESOLVED", "CONSUMED", "CLOSED"]
 }
