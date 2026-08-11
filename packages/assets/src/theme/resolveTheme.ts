@@ -12,7 +12,7 @@ import type { AssetCategory, AssetId, PerformanceMode, ThemeSummary } from '@dan
 import { DEFAULT_PERFORMANCE_PROFILES } from '@dance-arena/contracts';
 
 import type { AssetRegistry, ResolvedAsset } from '../registry/assetRegistry.js';
-import type { GiftTierTheme, RankTierTheme, ThemeDefinition } from './themeSchema.js';
+import type { GiftTierTheme, RankLayout, RankTierTheme, ThemeDefinition } from './themeSchema.js';
 
 export interface ResolvedRankTier extends Omit<RankTierTheme, 'badge' | 'accessory'> {
   readonly badge?: ResolvedAsset;
@@ -28,6 +28,8 @@ export interface ResolvedTheme {
   readonly themeId: string;
   readonly themeName: string;
   readonly visualRevision: string;
+  /** Approved crown/badge scale, passed through to renderers verbatim (DA-QA-003). */
+  readonly rankLayout: RankLayout;
   readonly background?: ResolvedAsset;
   readonly vipPodium?: ResolvedAsset;
   readonly dj?: ResolvedAsset;
@@ -157,6 +159,7 @@ export function resolveTheme(theme: ThemeDefinition, registry: AssetRegistry): R
     themeId: theme.themeId,
     themeName: theme.themeName,
     visualRevision: theme.visualRevision,
+    rankLayout: theme.rankLayout,
     ...(background === undefined ? {} : { background }),
     ...(vipPodium === undefined ? {} : { vipPodium }),
     ...(dj === undefined ? {} : { dj }),

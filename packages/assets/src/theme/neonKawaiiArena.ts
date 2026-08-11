@@ -1,17 +1,13 @@
 /**
- * DA-VISUAL-R1 — "Neon Kawaii Arena" theme binding.
+ * DA-VISUAL-R2 — "Neon Kawaii Arena" theme binding.
  *
  * PURE DATA. Every id below exists in the APPROVED_LOCKED manifest; nothing is recoloured, cropped
- * or invented (locked rule 3). Zones and palette are copied from `.dance/VISUAL_CONTRACT.json`.
+ * or invented (locked rule 3). Zones, palette and rank layout are copied from
+ * `.dance/VISUAL_CONTRACT.json`, which is `APPROVED_LOCKED` as of R2.
  *
- * WHERE THE CONTRACT AND THE LOCKED PACKAGE DISAGREE
- * `.dance/VISUAL_CONTRACT.json` is still `status: DRAFT` and names several ids the APPROVED_LOCKED
- * package does not ship (`rank-crown-silver`, `rank-crown-bronze`, `rank-vip-star`,
- * `fx-tier3-wings-ring`, `fx-tier4-crown-takeover`, `fx-tier5-cosmic-takeover`, `face-*`).
- * `.dance/ASSET_MANIFEST.json` is APPROVED_LOCKED, so it wins, and the slots are bound to the
- * nearest APPROVED asset of the same category — never to a modified or newly drawn one.
- * The divergence is filed as `.dance/requests/DA-REQ-001.json` for the System Architect to either
- * update the contract to R1 ids or ship the named artwork in a future revision.
+ * R2 closed DA-REQ-001: the contract now names the real production ids, so every slot below is a
+ * direct binding with no substitution. Per-asset `headSocket` metadata is authoritative (R2 fixed
+ * the sockets that R1 had standardized), and DJ artwork stays deferred to Task 11.
  */
 
 import type { ThemeDefinition } from './themeSchema.js';
@@ -37,12 +33,19 @@ const VIP_POOL = [
 export const NEON_KAWAII_ARENA_THEME: ThemeDefinition = {
   themeId: 'neon-kawaii-arena',
   themeName: 'Neon Kawaii Arena',
-  visualRevision: 'DA-VISUAL-R1',
+  visualRevision: 'DA-VISUAL-R2',
+
+  // VISUAL_CONTRACT.rankVisual.layout / DANCE_LOCK.approvedGeometry (DA-QA-003).
+  rankLayout: {
+    crownWidthBodyRatio: 0.44,
+    badgeWidthBodyRatio: 0.27,
+  },
 
   background: 'stage-bg-neon-kawaii',
   environment: {
     vipPodium: 'stage-vip-podium',
-    // R1 ships no dedicated DJ artwork; STAGE keeps its primitive DJ placeholder (see DA-REQ-001).
+    // `VISUAL_CONTRACT.dj.productionArtwork = DEFERRED_TO_TASK_11`: STAGE keeps a neutral
+    // primitive placeholder on the dj layer and must not treat it as a final asset.
   },
 
   costumePools: {
@@ -53,8 +56,8 @@ export const NEON_KAWAII_ARENA_THEME: ThemeDefinition = {
   avatarFallback: 'avatar-default-happy',
 
   /**
-   * Rank bands. R1 ships `rank-badge-01…10` — one badge per Top 10 position — plus three crowns.
-   * Top 1/2/3 therefore get a crown accessory AND their badge; 4–10 get the badge alone.
+   * Rank bands, exactly as `VISUAL_CONTRACT.rankVisual` specifies for R2:
+   * Top 1/2/3 = rank-badge-01/02/03 + crown-gold/blue/pink; Top 4–10 = badge only.
    */
   rankTiers: [
     {
@@ -114,7 +117,6 @@ export const NEON_KAWAII_ARENA_THEME: ThemeDefinition = {
     {
       tierId: 'tier-3',
       effectPreset: 'stars',
-      // Contract asked for `fx-tier3-wings-ring`, which R1 does not ship.
       asset: 'fx-tier3-crystal-rainbow',
       variants: ['fx-tier3-crystal-blue', 'fx-tier3-crystal-pink', 'fx-tier3-confetti-burst'],
       durationMs: 2500,
@@ -123,7 +125,6 @@ export const NEON_KAWAII_ARENA_THEME: ThemeDefinition = {
     {
       tierId: 'tier-4',
       effectPreset: 'aurora',
-      // Contract asked for `fx-tier4-crown-takeover`.
       asset: 'fx-tier4-crystal-crown',
       variants: ['fx-tier4-heart-podium', 'fx-tier4-heart-vortex', 'fx-tier4-star-vortex'],
       durationMs: 3600,
@@ -132,7 +133,6 @@ export const NEON_KAWAII_ARENA_THEME: ThemeDefinition = {
     {
       tierId: 'tier-5',
       effectPreset: 'mega-cosmic',
-      // Contract asked for `fx-tier5-cosmic-takeover`.
       asset: 'fx-tier5-cosmic-purple',
       variants: ['fx-tier5-cosmic-blue', 'fx-tier5-rainbow-vortex'],
       durationMs: 5200,

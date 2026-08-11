@@ -16,6 +16,23 @@
 
 import { CONTRACTS_SCHEMA_VERSION, type WorkspaceModuleInfo } from '@dance-arena/contracts';
 
+/**
+ * The visual revision this build consumes, pinned by `.dance/DANCE_LOCK.json`.
+ *
+ * Single source of truth for the pack location: bootstrap code needs a path to FIND the manifest,
+ * and every path after that comes from `manifest.productionRoot`. Moving to R3 means changing this
+ * constant and the theme's `visualRevision`, nothing else.
+ */
+export const LOCKED_VISUAL_REVISION = 'DA-VISUAL-R2';
+
+export function productionRootFor(revision: string = LOCKED_VISUAL_REVISION): string {
+  return `assets/production/${revision}`;
+}
+
+export function productionManifestPathFor(revision: string = LOCKED_VISUAL_REVISION): string {
+  return `${productionRootFor(revision)}/ASSET_MANIFEST.json`;
+}
+
 export {
   parseAtlasMeta,
   parseProductionManifest,
@@ -39,8 +56,10 @@ export {
 } from './registry/assetRegistry.js';
 
 export {
+  RankLayoutSchema,
   ThemeDefinitionSchema,
   type GiftTierTheme,
+  type RankLayout,
   type RankTierTheme,
   type ThemeDefinition,
 } from './theme/themeSchema.js';

@@ -118,7 +118,6 @@ export function createPixiStageRenderer(options: PixiStageRendererOptions): Pixi
   const activeEffects = new Map<string, Sprite>();
   let announcementTimer: ReturnType<typeof setTimeout> | undefined;
   let currentTheme: ResolvedTheme | undefined;
-  let currentProfile: PerformanceProfile | undefined;
 
   function effectIdOf(event: StageEventOf<'stage:gift-effect'>): string {
     return `${event.userId}:${event.at}:${event.tierId}`;
@@ -128,9 +127,8 @@ export function createPixiStageRenderer(options: PixiStageRendererOptions): Pixi
     root,
     textures,
 
-    applyTheme(theme: ResolvedTheme, profile: PerformanceProfile): void {
+    applyTheme(theme: ResolvedTheme, _profile: PerformanceProfile): void {
       currentTheme = theme;
-      currentProfile = profile;
 
       void (async (): Promise<void> => {
         const [backgroundTexture, podiumTexture, goalFrameTexture, bannerTexture] =
@@ -207,13 +205,10 @@ export function createPixiStageRenderer(options: PixiStageRendererOptions): Pixi
       sprite.x = design.width / 2;
       sprite.y = design.height * 0.6;
 
-      // Particle scale from the performance profile keeps LOW mode calm without new artwork, and a
-      // profile that forbids takeovers keeps even a tier-5 effect off the whole screen.
-      const takeoversAllowed = currentProfile?.largeTakeovers ?? true;
-      const coverage = takeoversAllowed ? 0.9 : 0.5;
-      const scale = 0.5 + visual.particleScale * 0.5;
-      sprite.width = design.width * coverage * scale;
-      sprite.height = design.width * coverage * scale;
+      // Coverage arrives already resolved against the contract's takeover floors and small-tier
+      // cap (DA-QA-005). The renderer must NOT rescale it by particleScale again.
+      sprite.width = design.width * visual.coverage;
+      sprite.height = design.width * visual.coverage;
       sprite.alpha = 0;
 
       layerOf('giftFx').addChild(sprite);

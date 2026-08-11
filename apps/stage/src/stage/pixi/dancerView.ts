@@ -90,17 +90,23 @@ export function createPixiDancerView(options: PixiDancerViewOptions): DancerView
       .circle(avatar.x, avatar.y, avatarDiameter / 2)
       .fill(0xffffff);
 
-    accessory.width = bodyWidth * 0.8;
-    accessory.height = bodyWidth * 0.8;
+    // Crown/badge scale come from the approved contract, not from renderer constants (DA-QA-003).
+    const crownWidth = bodyWidth * visual.rankLayout.crownWidthBodyRatio;
+    const badgeWidth = bodyWidth * visual.rankLayout.badgeWidthBodyRatio;
+
+    // Crown sits centred above the head silhouette; its bottom anchor keeps it off the avatar.
+    accessory.width = crownWidth;
+    accessory.height = crownWidth;
     accessory.x = avatar.x;
-    accessory.y = avatar.y - avatarDiameter * 0.42;
+    accessory.y = avatar.y - avatarDiameter * 0.5;
 
     name.y = 14;
 
-    badge.width = bodyWidth * 0.42;
-    badge.height = bodyWidth * 0.42;
-    badge.x = bodyWidth * 0.42;
-    badge.y = -bodyHeight * 0.92;
+    // Badge rides the head side, close to the body, clear of the avatar circle.
+    badge.width = badgeWidth;
+    badge.height = badgeWidth;
+    badge.x = avatar.x + avatarDiameter * 0.5 + badgeWidth * 0.35;
+    badge.y = avatar.y;
 
     aura.clear();
     if (visual.auraColor !== undefined) {

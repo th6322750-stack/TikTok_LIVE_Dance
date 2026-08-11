@@ -18,6 +18,7 @@ import {
   NEON_KAWAII_ARENA_THEME,
   parseAtlasMeta,
   parseProductionManifest,
+  productionRootFor,
   resolveTheme,
   type AtlasMeta,
   type ResolvedTheme,
@@ -32,8 +33,8 @@ import { createDefaultSlotLayout } from './slotLayout.js';
 import { createStageScene, type StageScene } from './stageScene.js';
 import { resolveStageSize, type StageSize } from './stageSize.js';
 
-/** Where the approved pack lives, relative to the served STAGE bundle. */
-const PRODUCTION_ROOT = 'assets/production/DA-VISUAL-R1';
+/** Where the approved pack lives, relative to the served STAGE bundle (locked revision). */
+const PRODUCTION_ROOT = productionRootFor();
 
 export interface MountStageOptions {
   readonly container: HTMLElement;

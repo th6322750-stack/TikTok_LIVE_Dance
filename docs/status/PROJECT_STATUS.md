@@ -14,7 +14,7 @@ Execution plan: **B — approved**
 | 06 | STAGE Pixi Minimal | DONE — PR #2 merged |
 | 07 | EulerStream Connector & Normalizer | DONE — PR #2 merged |
 | 08 | End-to-End Gameplay Integration | DONE — PR #2 merged |
-| 09 | Asset, Theme & Visual System | PR OPEN — DA-VISUAL-R1 consumed, awaiting ChatGPT visual QA |
+| 09 | Asset, Theme & Visual System | PR OPEN — DA-VISUAL-R2 consumed, QA round 2 pending |
 | 10 | Auto Host & TTS | TODO |
 | 11 | DJ & Audio Reactive | TODO |
 | 12 | Settings, Secrets & Licensing | TODO |
@@ -51,3 +51,13 @@ Trạng thái hợp lệ: `TODO`, `READY`, `IN PROGRESS`, `PR OPEN`, `BLOCKED`, 
 - STAGE: atlas frame theo metadata (không hard-code toạ độ), avatar đặt tại `headSocket` của manifest, crown/badge/aura cho Top 1–3, effect scheduler chống gift spam theo performance profile, theme switch không đổi gameplay state.
 - Tests: **363** (294 → 363, +69). `pnpm validate` PASS toàn bộ.
 - `.dance/requests/DA-REQ-001.json` OPEN: `VISUAL_CONTRACT.json` (DRAFT) tham chiếu id/geometry không có trong package APPROVED_LOCKED; đã bind sang asset approved cùng category, không tự vẽ hay recolor.
+
+### Task 09 — R2 remediation (chờ visual QA vòng 2)
+- Handoff `DA-T09-R2-REMEDIATION`. ZIP `DA-VISUAL-R2-production.zip` SHA256 khớp lock (`42b2b475…1c3559`, 35,870,901 bytes), verify **trước khi** extract; sau khi đặt vào `assets/production/DA-VISUAL-R2` verify tiếp **104/104 asset + 7/7 atlas**, 0 problem. R1 đã xoá, R2 thay hoàn toàn.
+- DA-REQ-001 được System Architect RESOLVED bằng R2: contract giờ dùng đúng production id nên mọi theme slot là binding trực tiếp, không còn substitution.
+- Defect: cả 5 đều `FIXED_PENDING_QA`. Trong đó phần thuộc implementation:
+  - **DA-QA-003** crown `0.44×` body, rank badge `0.27×` body — lấy từ `ThemeDefinition.rankLayout` (data của contract) thay vì hằng số trong renderer.
+  - **DA-QA-005** LOW mode tier-4 ≥ `0.82×`, tier-5 ≥ `1.00×` stage width, tier 1–3 ≤ `0.62×`; `particleScale` chỉ còn ảnh hưởng base ramp, không kéo takeover xuống dưới sàn.
+- Head socket dùng `headSocket.normalized` **per-asset** của R2 (x 0.455–0.578, y 0.245–0.335) — không có global socket trong code path.
+- Đường dẫn pack rút về một hằng số duy nhất (`LOCKED_VISUAL_REVISION`), đổi revision chỉ cần sửa một chỗ.
+- Tests: **379** (363 → 379, +16). `pnpm validate` PASS toàn bộ.

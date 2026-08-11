@@ -1,5 +1,5 @@
 /**
- * Asset & theme contracts (Blueprint §32–§34, §64–§65; DA-VISUAL-R1 visual protocol).
+ * Asset & theme contracts (Blueprint §32–§34, §64–§65; `.dance` visual protocol).
  *
  * These describe how the system REFERS to artwork, never what the artwork looks like. Visual truth
  * belongs to ChatGPT/System Architect via `.dance/ASSET_MANIFEST.json`; this file only gives the
@@ -21,8 +21,8 @@ export type AssetId = string;
 /**
  * Categories published by the locked manifest.
  *
- * Blueprint §32 lists a smaller set (body/vip-body/effect/background/dj/ui); DA-VISUAL-R1 refines
- * it, and the manifest is the approved authority, so the fuller list is modelled here.
+ * Blueprint §32 lists a smaller set (body/vip-body/effect/background/dj/ui); the approved manifest
+ * refines it, and the manifest is the authority, so the fuller list is modelled here.
  */
 export const ASSET_CATEGORIES = [
   'body',
@@ -72,6 +72,23 @@ export type PerformanceMode = (typeof PERFORMANCE_MODES)[number];
 
 export const PerformanceModeSchema = z.enum(PERFORMANCE_MODES);
 
+/**
+ * Gift effect coverage bounds, as a fraction of STAGE WIDTH
+ * (`VISUAL_CONTRACT.performanceModes.*.coverage`).
+ *
+ * The takeover minima are a floor, not a target: `particleScale` may thin out density and
+ * concurrency, but it must never shrink a tier-4/tier-5 takeover below these values while
+ * `largeTakeovers` is true (defect DA-QA-005).
+ */
+export const EffectCoverageSchema = z.object({
+  /** Upper bound for the small tiers, so a tier-1 spark never fills the stage. */
+  tier1to3Max: z.number().positive().optional(),
+  tier4Min: z.number().positive(),
+  tier5Min: z.number().positive(),
+});
+
+export type EffectCoverage = z.infer<typeof EffectCoverageSchema>;
+
 export const PerformanceProfileSchema = z.object({
   mode: PerformanceModeSchema,
   /** Recommended dancer cap; the engine still owns the authoritative `maxDancers`. */
@@ -82,9 +99,16 @@ export const PerformanceProfileSchema = z.object({
   largeTakeovers: z.boolean(),
   /** Concurrent gift effects allowed on stage before new ones are queued or dropped. */
   maxConcurrentEffects: NonNegativeIntSchema,
+  coverage: EffectCoverageSchema,
 });
 
 export type PerformanceProfile = z.infer<typeof PerformanceProfileSchema>;
+
+/**
+ * Takeover floors that hold in EVERY mode: a higher-fidelity mode may go bigger, never smaller
+ * (`DANCE_LOCK.approvedGeometry.lowTier4CoverageMin` / `lowTier5CoverageMin`).
+ */
+export const TAKEOVER_COVERAGE_MIN = { tier4: 0.82, tier5: 1.0 } as const;
 
 /** Defaults from `.dance/VISUAL_CONTRACT.json`; concurrency caps are an implementation concern. */
 export const DEFAULT_PERFORMANCE_PROFILES: Readonly<Record<PerformanceMode, PerformanceProfile>> = {
@@ -94,6 +118,12 @@ export const DEFAULT_PERFORMANCE_PROFILES: Readonly<Record<PerformanceMode, Perf
     particleScale: 0.35,
     largeTakeovers: true,
     maxConcurrentEffects: 3,
+    // LOW is the only mode the contract caps for the small tiers.
+    coverage: {
+      tier1to3Max: 0.62,
+      tier4Min: TAKEOVER_COVERAGE_MIN.tier4,
+      tier5Min: TAKEOVER_COVERAGE_MIN.tier5,
+    },
   },
   BALANCED: {
     mode: 'BALANCED',
@@ -101,6 +131,7 @@ export const DEFAULT_PERFORMANCE_PROFILES: Readonly<Record<PerformanceMode, Perf
     particleScale: 0.7,
     largeTakeovers: true,
     maxConcurrentEffects: 6,
+    coverage: { tier4Min: TAKEOVER_COVERAGE_MIN.tier4, tier5Min: TAKEOVER_COVERAGE_MIN.tier5 },
   },
   ULTRA: {
     mode: 'ULTRA',
@@ -108,6 +139,7 @@ export const DEFAULT_PERFORMANCE_PROFILES: Readonly<Record<PerformanceMode, Perf
     particleScale: 1,
     largeTakeovers: true,
     maxConcurrentEffects: 10,
+    coverage: { tier4Min: TAKEOVER_COVERAGE_MIN.tier4, tier5Min: TAKEOVER_COVERAGE_MIN.tier5 },
   },
 };
 

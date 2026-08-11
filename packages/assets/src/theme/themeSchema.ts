@@ -39,11 +39,25 @@ export const GiftTierThemeSchema = z.object({
 
 export type GiftTierTheme = z.infer<typeof GiftTierThemeSchema>;
 
+/**
+ * Rank accessory scale, from `VISUAL_CONTRACT.rankVisual.layout` and
+ * `DANCE_LOCK.approvedGeometry`. Data, not code, so a revision can retune it without a rebuild.
+ */
+export const RankLayoutSchema = z.object({
+  /** Crown width as a fraction of the rendered body width (R2: 0.44). */
+  crownWidthBodyRatio: z.number().positive(),
+  /** Rank badge width as a fraction of the rendered body width (R2: 0.27). */
+  badgeWidthBodyRatio: z.number().positive(),
+});
+
+export type RankLayout = z.infer<typeof RankLayoutSchema>;
+
 export const ThemeDefinitionSchema = z.object({
   themeId: NonEmptyStringSchema,
   themeName: z.string(),
   /** Visual revision this theme was authored against; must match the registry at resolve time. */
   visualRevision: NonEmptyStringSchema,
+  rankLayout: RankLayoutSchema,
   background: AssetIdSchema,
   environment: z.object({
     vipPodium: AssetIdSchema.optional(),

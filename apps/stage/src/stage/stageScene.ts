@@ -26,9 +26,10 @@ import type {
   StageSnapshot,
 } from '@dance-arena/contracts';
 import { DEFAULT_PERFORMANCE_PROFILES } from '@dance-arena/contracts';
-import type { ResolvedAsset, ResolvedTheme } from '@dance-arena/assets';
+import type { RankLayout, ResolvedAsset, ResolvedTheme } from '@dance-arena/assets';
 import { costumeFor, giftTierFor, rankTierFor } from '@dance-arena/assets';
 
+import { resolveEffectCoverage } from './effectCoverage.js';
 import { createEffectScheduler, type EffectScheduler } from './effectScheduler.js';
 import type { SlotLayout } from './slotLayout.js';
 
@@ -43,6 +44,8 @@ export interface DancerVisual {
   readonly accessory?: ResolvedAsset;
   /** Palette colour for the rank aura, resolved from the theme palette. */
   readonly auraColor?: string;
+  /** Approved crown/badge scale from the contract (DA-QA-003), never a renderer constant. */
+  readonly rankLayout: RankLayout;
 }
 
 export interface GiftEffectVisual {
@@ -50,6 +53,11 @@ export interface GiftEffectVisual {
   readonly durationMs: number;
   readonly weight: number;
   readonly particleScale: number;
+  /**
+   * Sprite width as a fraction of stage width, already respecting the contract's takeover floors
+   * and small-tier cap (DA-QA-005). The renderer applies it verbatim.
+   */
+  readonly coverage: number;
 }
 
 export interface DancerView {
@@ -148,7 +156,9 @@ export function createStageScene(options: StageSceneOptions): StageScene {
     const aura = tier?.aura === undefined ? undefined : theme.palette[tier.aura];
 
     return {
+      rankLayout: theme.rankLayout,
       ...(body === undefined ? {} : { body }),
+      // R2 sockets differ per body, so this must come from the asset, never from a shared default.
       ...(body?.headSocket === undefined ? {} : { headSocket: body.headSocket }),
       ...(dancer.avatarUrl === undefined ? {} : { avatarUrl: dancer.avatarUrl }),
       ...(theme.avatarFallback === undefined ? {} : { avatarFallback: theme.avatarFallback }),
@@ -242,11 +252,13 @@ export function createStageScene(options: StageSceneOptions): StageScene {
           const tier = giftTierFor(theme, event.tierId, event.effectPreset);
           const effectId = `${event.userId}:${event.at}:${event.tierId}`;
 
+          const weight = tier?.visualWeight ?? event.priority;
           const visual: GiftEffectVisual = {
             ...(tier?.asset === undefined ? {} : { asset: tier.asset }),
             durationMs: tier?.durationMs ?? event.durationMs,
-            weight: tier?.visualWeight ?? event.priority,
+            weight,
             particleScale: profile.particleScale,
+            coverage: resolveEffectCoverage({ weight, profile }),
           };
 
           queuedEffects.set(effectId, { event, visual });

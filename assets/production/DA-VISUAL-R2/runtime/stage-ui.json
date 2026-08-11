@@ -1,0 +1,60 @@
+{
+  "atlas": "stage-ui.webp",
+  "width": 960,
+  "height": 320,
+  "mime": "image/webp",
+  "sha256": "3beebd4e3e8989d1b2805d7d4672bbbf98c1a4dbbd1254572503e4491f438d0e",
+  "byteSize": 75628,
+  "frames": {
+    "stage-vip-podium": {
+      "x": 0,
+      "y": 0,
+      "w": 320,
+      "h": 160,
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "party-goal-frame": {
+      "x": 320,
+      "y": 0,
+      "w": 320,
+      "h": 160,
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "ui-new-vip": {
+      "x": 640,
+      "y": 0,
+      "w": 320,
+      "h": 160,
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "ui-top1-banner": {
+      "x": 0,
+      "y": 160,
+      "w": 320,
+      "h": 160,
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "ui-now-playing": {
+      "x": 320,
+      "y": 160,
+      "w": 320,
+      "h": 160,
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    }
+  }
+}

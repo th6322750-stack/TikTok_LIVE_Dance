@@ -128,11 +128,19 @@ describe('approved artwork binding (Task 09)', () => {
 
     scene.applyEvent({ type: 'stage:dancer-spawn', at: 1, dancer: makeStageDancer('d1') });
     const record = renderer.recordFor('user-d1');
+    const socket = record?.visual.headSocket;
 
-    expect(record?.visual.headSocket).toBeDefined();
-    expect(record?.visual.headSocket?.x).toBeCloseTo(0.5, 3);
-    expect(record?.visual.headSocket?.y).toBeGreaterThan(0.1);
-    expect(record?.visual.headSocket?.radius).toBeGreaterThan(0.1);
+    expect(socket).toBeDefined();
+    // R2 measured each body individually, so the socket is NOT a centred default (DA-QA-001).
+    expect(socket?.x).toBeGreaterThan(0.4);
+    expect(socket?.x).toBeLessThan(0.6);
+    expect(socket?.y).toBeGreaterThan(0.1);
+    expect(socket?.y).toBeLessThan(0.7);
+    expect(socket?.radius).toBeGreaterThan(0.05);
+
+    // It must be the socket of the body that was actually bound to this dancer.
+    expect(socket).toEqual(record?.visual.body?.headSocket);
+
     // Always offers the approved fallback head so a dead avatar url cannot leave a hole.
     expect(record?.visual.avatarFallback?.id).toBe('avatar-default-happy');
   });
@@ -208,6 +216,18 @@ describe('approved artwork binding (Task 09)', () => {
 
     // Aura colour comes from the theme palette, never a literal in renderer code.
     expect(renderer.recordFor('u1')?.visual.auraColor).toBe(theme.palette.gold);
+  });
+
+  it('hands the renderer the approved crown/badge ratios (DA-QA-003)', () => {
+    const { renderer, scene } = setup();
+
+    scene.applyEvent({ type: 'stage:dancer-spawn', at: 1, dancer: makeStageDancer('d1') });
+
+    // Contract values, not renderer constants: crown 0.44x body, rank badge 0.27x body.
+    expect(renderer.recordFor('user-d1')?.visual.rankLayout).toEqual({
+      crownWidthBodyRatio: 0.44,
+      badgeWidthBodyRatio: 0.27,
+    });
   });
 
   it('binds each engine gift tier to its approved effect asset', () => {
@@ -299,6 +319,28 @@ describe('effect scheduler under gift spam (Task 09)', () => {
     expect(low.renderer.effects[0]?.visual.particleScale).toBeLessThan(
       ultra.renderer.effects[0]?.visual.particleScale ?? 1,
     );
+  });
+
+  it('passes full takeover coverage for tier-4/tier-5 even in LOW mode (DA-QA-005)', () => {
+    const low = setup('LOW');
+
+    low.scene.applyEvent(giftEffect({ tierId: 'tier-4', at: 1_100 }));
+    low.advance(6_000);
+    low.scene.applyEvent(giftEffect({ tierId: 'tier-5', at: 9_000 }));
+
+    const tier4 = low.renderer.effects.find((effect) => effect.event.tierId === 'tier-4');
+    const tier5 = low.renderer.effects.find((effect) => effect.event.tierId === 'tier-5');
+
+    expect(tier4?.visual.coverage).toBeGreaterThanOrEqual(0.82);
+    expect(tier5?.visual.coverage).toBeGreaterThanOrEqual(1);
+  });
+
+  it('keeps small tiers under the LOW cap (DA-QA-005)', () => {
+    const low = setup('LOW');
+
+    low.scene.applyEvent(giftEffect({ tierId: 'tier-1' }));
+
+    expect(low.renderer.effects[0]?.visual.coverage).toBeLessThanOrEqual(0.62);
   });
 });
 

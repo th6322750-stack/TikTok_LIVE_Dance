@@ -1,5 +1,5 @@
 /**
- * Builds the REAL resolved theme from the locked DA-VISUAL-R1 package for STAGE tests.
+ * Builds the REAL resolved theme from the locked production package for STAGE tests.
  *
  * STAGE is tested against the approved artwork the System Architect shipped, so a renamed or
  * removed asset id fails these tests instead of silently degrading at runtime.
@@ -16,6 +16,7 @@ import {
   NEON_KAWAII_ARENA_THEME,
   parseAtlasMeta,
   parseProductionManifest,
+  productionRootFor,
   resolveTheme,
   type AssetRegistry,
   type AtlasMeta,
@@ -24,7 +25,7 @@ import {
 
 /** apps/stage/src/stage/testing → repository root. */
 const REPO_ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '../../../../..');
-const PRODUCTION_ROOT = 'assets/production/DA-VISUAL-R1';
+const PRODUCTION_ROOT = productionRootFor();
 
 export function loadLockedTheme(): { theme: ResolvedTheme; registry: AssetRegistry } {
   const manifestJson: unknown = JSON.parse(

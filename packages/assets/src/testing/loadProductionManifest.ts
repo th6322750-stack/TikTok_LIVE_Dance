@@ -1,9 +1,9 @@
 /**
  * Loads the REAL locked manifest from the repository for tests.
  *
- * Testing against the actual approved DA-VISUAL-R1 package (not a hand-written fixture) is what
- * proves the implementation consumes the artwork the System Architect shipped. If ChatGPT lands a
- * new revision with different ids, these tests fail loudly instead of passing against a stale fake.
+ * Testing against the actual approved package (not a hand-written fixture) is what proves the
+ * implementation consumes the artwork the System Architect shipped. If ChatGPT lands a new revision
+ * with different ids, these tests fail loudly instead of passing against a stale fake.
  */
 
 /// <reference types="node" />
@@ -12,13 +12,15 @@ import { readFileSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
+import { productionRootFor } from '../index.js';
 import { parseAtlasMeta, parseProductionManifest } from '../manifest/schema.js';
 import type { AtlasMeta, ProductionManifest } from '../manifest/schema.js';
 
 /** packages/assets/src/testing → repository root. */
 const REPO_ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '../../../..');
 
-export const PRODUCTION_ROOT = 'assets/production/DA-VISUAL-R1';
+/** Derived from the locked revision so a revision bump touches exactly one constant. */
+export const PRODUCTION_ROOT = productionRootFor();
 
 export function repoPath(...segments: string[]): string {
   return join(REPO_ROOT, ...segments);

@@ -1,6 +1,7 @@
 import { DEFAULT_PERFORMANCE_PROFILES } from '@dance-arena/contracts';
 import { describe, expect, it } from 'vitest';
 
+import { LOCKED_VISUAL_REVISION } from './index.js';
 import { parseProductionManifest } from './manifest/schema.js';
 import { createAssetRegistry } from './registry/assetRegistry.js';
 import { NEON_KAWAII_ARENA_THEME } from './theme/neonKawaiiArena.js';
@@ -27,13 +28,24 @@ const registry = createAssetRegistry({
   },
 });
 
-describe('locked manifest (DA-VISUAL-R1)', () => {
+describe('locked manifest (DA-VISUAL-R2)', () => {
   it('parses the approved manifest shipped in the repository', () => {
-    expect(manifest.visualRevision).toBe('DA-VISUAL-R1');
-    expect(manifest.status).toBe('APPROVED');
+    expect(manifest.visualRevision).toBe(LOCKED_VISUAL_REVISION);
+    expect(manifest.status).toBe('APPROVED_LOCKED');
     expect(manifest.assetCount).toBe(104);
     expect(manifest.assets).toHaveLength(104);
     expect(manifest.productionRoot).toBe(PRODUCTION_ROOT);
+  });
+
+  it('carries a DISTINCT head socket per dancer body (DA-QA-001 fix)', () => {
+    const sockets = manifest.assets
+      .filter((asset) => asset.category === 'body' || asset.category === 'vip-body')
+      .map((asset) => asset.headSocket?.normalized.join(','));
+
+    expect(sockets).toHaveLength(22);
+    expect(sockets.every((socket) => socket !== undefined)).toBe(true);
+    // R1 standardized these; R2 must measure each body, so most values differ.
+    expect(new Set(sockets).size).toBeGreaterThan(15);
   });
 
   it('rejects a manifest whose assetCount disagrees with its asset list', () => {
@@ -87,16 +99,21 @@ describe('AssetRegistry', () => {
     expect(asset?.file).toContain(`${PRODUCTION_ROOT}/individual/dancers/regular`);
   });
 
-  it('exposes the normalized head socket from the manifest, not a hard-coded value', () => {
-    const regular = registry.get('dancer-regular-01');
+  it('exposes the per-asset normalized head socket, not a hard-coded value', () => {
+    const first = registry.get('dancer-regular-01');
+    const second = registry.get('dancer-regular-02');
     const vip = registry.get('dancer-vip-female-01');
 
-    expect(regular?.headSocket?.x).toBeCloseTo(0.5, 3);
-    expect(regular?.headSocket?.y).toBeCloseTo(0.2448, 3);
-    expect(regular?.headSocket?.radius).toBeCloseTo(0.1641, 3);
-    expect(vip?.headSocket).toBeDefined();
-    // VIP bodies use their own socket; the two must not be assumed identical.
-    expect(vip?.headSocket?.y).not.toBeCloseTo(regular?.headSocket?.y ?? 0, 4);
+    for (const asset of [first, second, vip]) {
+      expect(asset?.headSocket).toBeDefined();
+      expect(asset?.headSocket?.x).toBeGreaterThan(0);
+      expect(asset?.headSocket?.x).toBeLessThan(1);
+      expect(asset?.headSocket?.radius).toBeGreaterThan(0);
+    }
+
+    // Two different bodies must not share a socket, and VIP differs from regular.
+    expect(first?.headSocket).not.toEqual(second?.headSocket);
+    expect(vip?.headSocket?.y).not.toBeCloseTo(first?.headSocket?.y ?? 0, 3);
   });
 
   it('groups assets by category with the counts the manifest declares', () => {
@@ -243,7 +260,7 @@ describe('theme resolution (Neon Kawaii Arena)', () => {
 
   it('flags a theme authored for a different visual revision', () => {
     const future = resolveTheme(
-      { ...NEON_KAWAII_ARENA_THEME, visualRevision: 'DA-VISUAL-R2' },
+      { ...NEON_KAWAII_ARENA_THEME, visualRevision: 'DA-VISUAL-R3' },
       registry,
     );
 
@@ -268,7 +285,7 @@ describe('theme resolution (Neon Kawaii Arena)', () => {
 
     expect(summary).toMatchObject({
       themeId: 'neon-kawaii-arena',
-      visualRevision: 'DA-VISUAL-R1',
+      visualRevision: LOCKED_VISUAL_REVISION,
       assetCount: 104,
       performanceMode: 'BALANCED',
       unresolvedSlots: [],

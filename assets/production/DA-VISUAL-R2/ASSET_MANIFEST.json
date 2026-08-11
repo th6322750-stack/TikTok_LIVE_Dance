@@ -1,0 +1,2950 @@
+{
+  "protocolVersion": 1,
+  "manifestVersion": 2,
+  "visualRevision": "DA-VISUAL-R2",
+  "status": "APPROVED_LOCKED",
+  "theme": "Neon Kawaii Arena",
+  "productionRoot": "assets/production/DA-VISUAL-R2",
+  "runtimeRoot": "assets/production/DA-VISUAL-R2/runtime",
+  "individualSourcePackage": "DA-VISUAL-R2-production.zip",
+  "assetCount": 104,
+  "assets": [
+    {
+      "id": "dancer-regular-01",
+      "category": "body",
+      "png": "individual/dancers/regular/dancer-regular-01.png",
+      "webp": "individual/dancers/regular/dancer-regular-01.webp",
+      "width": 512,
+      "height": 768,
+      "alpha": true,
+      "sha256": "f5d9cc43b3932c129f293dcf96325327c785e917f0cee3e686e11081c0ed9adf",
+      "byteSize": 82390,
+      "mime": "image/webp",
+      "pivot": {
+        "x": 0.5,
+        "y": 1.0
+      },
+      "usedBy": [
+        "DancerView"
+      ],
+      "headSocket": {
+        "x": 277,
+        "y": 246,
+        "radius": 85,
+        "normalized": [
+          0.541,
+          0.3203,
+          0.1665
+        ]
+      },
+      "notes": "R2 per-asset avatar socket validated from the actual internal transparent opening.",
+      "runtime": {
+        "atlas": "assets/production/DA-VISUAL-R2/runtime/dancers-regular.webp",
+        "meta": "assets/production/DA-VISUAL-R2/runtime/dancers-regular.json",
+        "frame": "dancer-regular-01"
+      },
+      "status": "APPROVED"
+    },
+    {
+      "id": "dancer-regular-02",
+      "category": "body",
+      "png": "individual/dancers/regular/dancer-regular-02.png",
+      "webp": "individual/dancers/regular/dancer-regular-02.webp",
+      "width": 512,
+      "height": 768,
+      "alpha": true,
+      "sha256": "1e7761d2e0f8fd621e6f7d685f32ab405f64f81695bd689fb03f82fb551f5854",
+      "byteSize": 92290,
+      "mime": "image/webp",
+      "pivot": {
+        "x": 0.5,
+        "y": 1.0
+      },
+      "usedBy": [
+        "DancerView"
+      ],
+      "headSocket": {
+        "x": 289,
+        "y": 257,
+        "radius": 82,
+        "normalized": [
+          0.5645,
+          0.3346,
+          0.161
+        ]
+      },
+      "notes": "R2 per-asset avatar socket validated from the actual internal transparent opening.",
+      "runtime": {
+        "atlas": "assets/production/DA-VISUAL-R2/runtime/dancers-regular.webp",
+        "meta": "assets/production/DA-VISUAL-R2/runtime/dancers-regular.json",
+        "frame": "dancer-regular-02"
+      },
+      "status": "APPROVED"
+    },
+    {
+      "id": "dancer-regular-03",
+      "category": "body",
+      "png": "individual/dancers/regular/dancer-regular-03.png",
+      "webp": "individual/dancers/regular/dancer-regular-03.webp",
+      "width": 512,
+      "height": 768,
+      "alpha": true,
+      "sha256": "d367395d41bf4a69d1c75134d2abf81f9235e4608969137f8fe4122987622fbd",
+      "byteSize": 100978,
+      "mime": "image/webp",
+      "pivot": {
+        "x": 0.5,
+        "y": 1.0
+      },
+      "usedBy": [
+        "DancerView"
+      ],
+      "headSocket": {
+        "x": 296,
+        "y": 233,
+        "radius": 79,
+        "normalized": [
+          0.5781,
+          0.3034,
+          0.1537
+        ]
+      },
+      "notes": "R2 per-asset avatar socket validated from the actual internal transparent opening.",
+      "runtime": {
+        "atlas": "assets/production/DA-VISUAL-R2/runtime/dancers-regular.webp",
+        "meta": "assets/production/DA-VISUAL-R2/runtime/dancers-regular.json",
+        "frame": "dancer-regular-03"
+      },
+      "status": "APPROVED"
+    },
+    {
+      "id": "dancer-regular-04",
+      "category": "body",
+      "png": "individual/dancers/regular/dancer-regular-04.png",
+      "webp": "individual/dancers/regular/dancer-regular-04.webp",
+      "width": 512,
+      "height": 768,
+      "alpha": true,
+      "sha256": "a7a25b9de9c5d8b77557856375ca31c72acc08530159ef71911cb0a9fb9495af",
+      "byteSize": 99954,
+      "mime": "image/webp",
+      "pivot": {
+        "x": 0.5,
+        "y": 1.0
+      },
+      "usedBy": [
+        "DancerView"
+      ],
+      "headSocket": {
+        "x": 271,
+        "y": 245,
+        "radius": 86,
+        "normalized": [
+          0.5293,
+          0.319,
+          0.1672
+        ]
+      },
+      "notes": "R2 per-asset avatar socket validated from the actual internal transparent opening.",
+      "runtime": {
+        "atlas": "assets/production/DA-VISUAL-R2/runtime/dancers-regular.webp",
+        "meta": "assets/production/DA-VISUAL-R2/runtime/dancers-regular.json",
+        "frame": "dancer-regular-04"
+      },
+      "status": "APPROVED"
+    },
+    {
+      "id": "dancer-regular-05",
+      "category": "body",
+      "png": "individual/dancers/regular/dancer-regular-05.png",
+      "webp": "individual/dancers/regular/dancer-regular-05.webp",
+      "width": 512,
+      "height": 768,
+      "alpha": true,
+      "sha256": "d7ce5eb0e1ca4182bdce03263ded57323603690bf6d8e13706de6007ae9628d7",
+      "byteSize": 100102,
+      "mime": "image/webp",
+      "pivot": {
+        "x": 0.5,
+        "y": 1.0
+      },
+      "usedBy": [
+        "DancerView"
+      ],
+      "headSocket": {
+        "x": 250,
+        "y": 238,
+        "radius": 77,
+        "normalized": [
+          0.4883,
+          0.3099,
+          0.1507
+        ]
+      },
+      "notes": "R2 per-asset avatar socket validated from the actual internal transparent opening.",
+      "runtime": {
+        "atlas": "assets/production/DA-VISUAL-R2/runtime/dancers-regular.webp",
+        "meta": "assets/production/DA-VISUAL-R2/runtime/dancers-regular.json",
+        "frame": "dancer-regular-05"
+      },
+      "status": "APPROVED"
+    },
+    {
+      "id": "dancer-regular-06",
+      "category": "body",
+      "png": "individual/dancers/regular/dancer-regular-06.png",
+      "webp": "individual/dancers/regular/dancer-regular-06.webp",
+      "width": 512,
+      "height": 768,
+      "alpha": true,
+      "sha256": "b948819258b7e85ff7b2a93d8a46975fa29a620d0b212ae61e09aa5a69a3215a",
+      "byteSize": 102802,
+      "mime": "image/webp",
+      "pivot": {
+        "x": 0.5,
+        "y": 1.0
+      },
+      "usedBy": [
+        "DancerView"
+      ],
+      "headSocket": {
+        "x": 233,
+        "y": 256,
+        "radius": 75,
+        "normalized": [
+          0.4551,
+          0.3333,
+          0.1463
+        ]
+      },
+      "notes": "R2 per-asset avatar socket validated from the actual internal transparent opening.",
+      "runtime": {
+        "atlas": "assets/production/DA-VISUAL-R2/runtime/dancers-regular.webp",
+        "meta": "assets/production/DA-VISUAL-R2/runtime/dancers-regular.json",
+        "frame": "dancer-regular-06"
+      },
+      "status": "APPROVED"
+    },
+    {
+      "id": "dancer-regular-07",
+      "category": "body",
+      "png": "individual/dancers/regular/dancer-regular-07.png",
+      "webp": "individual/dancers/regular/dancer-regular-07.webp",
+      "width": 512,
+      "height": 768,
+      "alpha": true,
+      "sha256": "f55582a2f717c613fdd1f206fc61b4793371210e65ff6b361ec55dcdfc984e69",
+      "byteSize": 92504,
+      "mime": "image/webp",
+      "pivot": {
+        "x": 0.5,
+        "y": 1.0
+      },
+      "usedBy": [
+        "DancerView"
+      ],
+      "headSocket": {
+        "x": 271,
+        "y": 228,
+        "radius": 83,
+        "normalized": [
+          0.5293,
+          0.2969,
+          0.1623
+        ]
+      },
+      "notes": "R2 per-asset avatar socket validated from the actual internal transparent opening.",
+      "runtime": {
+        "atlas": "assets/production/DA-VISUAL-R2/runtime/dancers-regular.webp",
+        "meta": "assets/production/DA-VISUAL-R2/runtime/dancers-regular.json",
+        "frame": "dancer-regular-07"
+      },
+      "status": "APPROVED"
+    },
+    {
+      "id": "dancer-regular-08",
+      "category": "body",
+      "png": "individual/dancers/regular/dancer-regular-08.png",
+      "webp": "individual/dancers/regular/dancer-regular-08.webp",
+      "width": 512,
+      "height": 768,
+      "alpha": true,
+      "sha256": "9b04d95cbbe89ce06d80f866c17b5eb48e96db51e6f49f6ed6173f9e48f82791",
+      "byteSize": 103256,
+      "mime": "image/webp",
+      "pivot": {
+        "x": 0.5,
+        "y": 1.0
+      },
+      "usedBy": [
+        "DancerView"
+      ],
+      "headSocket": {
+        "x": 256,
+        "y": 188,
+        "radius": 73,
+        "normalized": [
+          0.5,
+          0.2448,
+          0.1423
+        ]
+      },
+      "notes": "R2 per-asset avatar socket validated from the actual internal transparent opening.",
+      "runtime": {
+        "atlas": "assets/production/DA-VISUAL-R2/runtime/dancers-regular.webp",
+        "meta": "assets/production/DA-VISUAL-R2/runtime/dancers-regular.json",
+        "frame": "dancer-regular-08"
+      },
+      "status": "APPROVED"
+    },
+    {
+      "id": "dancer-regular-09",
+      "category": "body",
+      "png": "individual/dancers/regular/dancer-regular-09.png",
+      "webp": "individual/dancers/regular/dancer-regular-09.webp",
+      "width": 512,
+      "height": 768,
+      "alpha": true,
+      "sha256": "d90c8eda3749139fcd70c8759216c7917cde4d41f2b50149a157937136c45860",
+      "byteSize": 90296,
+      "mime": "image/webp",
+      "pivot": {
+        "x": 0.5,
+        "y": 1.0
+      },
+      "usedBy": [
+        "DancerView"
+      ],
+      "headSocket": {
+        "x": 257,
+        "y": 239,
+        "radius": 78,
+        "normalized": [
+          0.502,
+          0.3112,
+          0.1522
+        ]
+      },
+      "notes": "R2 per-asset avatar socket validated from the actual internal transparent opening.",
+      "runtime": {
+        "atlas": "assets/production/DA-VISUAL-R2/runtime/dancers-regular.webp",
+        "meta": "assets/production/DA-VISUAL-R2/runtime/dancers-regular.json",
+        "frame": "dancer-regular-09"
+      },
+      "status": "APPROVED"
+    },
+    {
+      "id": "dancer-regular-10",
+      "category": "body",
+      "png": "individual/dancers/regular/dancer-regular-10.png",
+      "webp": "individual/dancers/regular/dancer-regular-10.webp",
+      "width": 512,
+      "height": 768,
+      "alpha": true,
+      "sha256": "d8260e649a57dad77738fa9804f802a85745297592198d1c4b3daf7a0c4df17f",
+      "byteSize": 123394,
+      "mime": "image/webp",
+      "pivot": {
+        "x": 0.5,
+        "y": 1.0
+      },
+      "usedBy": [
+        "DancerView"
+      ],
+      "headSocket": {
+        "x": 256,
+        "y": 188,
+        "radius": 73,
+        "normalized": [
+          0.5,
+          0.2448,
+          0.1423
+        ]
+      },
+      "notes": "R2 per-asset avatar socket validated from the actual internal transparent opening.",
+      "runtime": {
+        "atlas": "assets/production/DA-VISUAL-R2/runtime/dancers-regular.webp",
+        "meta": "assets/production/DA-VISUAL-R2/runtime/dancers-regular.json",
+        "frame": "dancer-regular-10"
+      },
+      "status": "APPROVED"
+    },
+    {
+      "id": "dancer-regular-11",
+      "category": "body",
+      "png": "individual/dancers/regular/dancer-regular-11.png",
+      "webp": "individual/dancers/regular/dancer-regular-11.webp",
+      "width": 512,
+      "height": 768,
+      "alpha": true,
+      "sha256": "ebde541d10e3c07d6c0e02760de5ad729a9ead92a12d877bae356275d93c0a7b",
+      "byteSize": 100636,
+      "mime": "image/webp",
+      "pivot": {
+        "x": 0.5,
+        "y": 1.0
+      },
+      "usedBy": [
+        "DancerView"
+      ],
+      "headSocket": {
+        "x": 256,
+        "y": 192,
+        "radius": 74,
+        "normalized": [
+          0.5,
+          0.25,
+          0.145
+        ]
+      },
+      "notes": "R2 per-asset avatar socket validated from the actual internal transparent opening.",
+      "runtime": {
+        "atlas": "assets/production/DA-VISUAL-R2/runtime/dancers-regular.webp",
+        "meta": "assets/production/DA-VISUAL-R2/runtime/dancers-regular.json",
+        "frame": "dancer-regular-11"
+      },
+      "status": "APPROVED"
+    },
+    {
+      "id": "dancer-regular-12",
+      "category": "body",
+      "png": "individual/dancers/regular/dancer-regular-12.png",
+      "webp": "individual/dancers/regular/dancer-regular-12.webp",
+      "width": 512,
+      "height": 768,
+      "alpha": true,
+      "sha256": "54672526b2347a1af18942be98469b6f5fcfd0861ac8cd13c512f31ef1f45fd7",
+      "byteSize": 105206,
+      "mime": "image/webp",
+      "pivot": {
+        "x": 0.5,
+        "y": 1.0
+      },
+      "usedBy": [
+        "DancerView"
+      ],
+      "headSocket": {
+        "x": 240,
+        "y": 253,
+        "radius": 75,
+        "normalized": [
+          0.4688,
+          0.3294,
+          0.1469
+        ]
+      },
+      "notes": "R2 per-asset avatar socket validated from the actual internal transparent opening.",
+      "runtime": {
+        "atlas": "assets/production/DA-VISUAL-R2/runtime/dancers-regular.webp",
+        "meta": "assets/production/DA-VISUAL-R2/runtime/dancers-regular.json",
+        "frame": "dancer-regular-12"
+      },
+      "status": "APPROVED"
+    },
+    {
+      "id": "dancer-vip-female-01",
+      "category": "vip-body",
+      "png": "individual/dancers/vip/female/dancer-vip-female-01.png",
+      "webp": "individual/dancers/vip/female/dancer-vip-female-01.webp",
+      "width": 560,
+      "height": 840,
+      "alpha": true,
+      "sha256": "aec4f1d87a6f0161f8eba00d64e08b871c5615ebcca6f1f91188acc2405fa2d9",
+      "byteSize": 128978,
+      "mime": "image/webp",
+      "pivot": {
+        "x": 0.5,
+        "y": 1.0
+      },
+      "usedBy": [
+        "DancerView",
+        "VIPLayer"
+      ],
+      "headSocket": {
+        "x": 267,
+        "y": 468,
+        "radius": 55,
+        "normalized": [
+          0.4768,
+          0.5571,
+          0.0982
+        ]
+      },
+      "runtime": {
+        "atlas": "assets/production/DA-VISUAL-R2/runtime/dancers-vip.webp",
+        "meta": "assets/production/DA-VISUAL-R2/runtime/dancers-vip.json",
+        "frame": "dancer-vip-female-01"
+      },
+      "status": "APPROVED",
+      "notes": "R2 per-asset avatar socket validated from the actual internal transparent opening."
+    },
+    {
+      "id": "dancer-vip-female-02",
+      "category": "vip-body",
+      "png": "individual/dancers/vip/female/dancer-vip-female-02.png",
+      "webp": "individual/dancers/vip/female/dancer-vip-female-02.webp",
+      "width": 560,
+      "height": 840,
+      "alpha": true,
+      "sha256": "53bf89a66a41a35c12699fc3e971d335d54861ce8ce2ba848f9bad5377e80d44",
+      "byteSize": 138370,
+      "mime": "image/webp",
+      "pivot": {
+        "x": 0.5,
+        "y": 1.0
+      },
+      "usedBy": [
+        "DancerView",
+        "VIPLayer"
+      ],
+      "headSocket": {
+        "x": 266,
+        "y": 467,
+        "radius": 54,
+        "normalized": [
+          0.475,
+          0.556,
+          0.0972
+        ]
+      },
+      "runtime": {
+        "atlas": "assets/production/DA-VISUAL-R2/runtime/dancers-vip.webp",
+        "meta": "assets/production/DA-VISUAL-R2/runtime/dancers-vip.json",
+        "frame": "dancer-vip-female-02"
+      },
+      "status": "APPROVED",
+      "notes": "R2 per-asset avatar socket validated from the actual internal transparent opening."
+    },
+    {
+      "id": "dancer-vip-female-03",
+      "category": "vip-body",
+      "png": "individual/dancers/vip/female/dancer-vip-female-03.png",
+      "webp": "individual/dancers/vip/female/dancer-vip-female-03.webp",
+      "width": 560,
+      "height": 840,
+      "alpha": true,
+      "sha256": "ce0f6cdabd82058b5ef7ca3aee754fd44dbbddace277e9905b52d57a2bfc86b6",
+      "byteSize": 139342,
+      "mime": "image/webp",
+      "pivot": {
+        "x": 0.5,
+        "y": 1.0
+      },
+      "usedBy": [
+        "DancerView",
+        "VIPLayer"
+      ],
+      "headSocket": {
+        "x": 279,
+        "y": 431,
+        "radius": 58,
+        "normalized": [
+          0.4982,
+          0.5131,
+          0.1043
+        ]
+      },
+      "runtime": {
+        "atlas": "assets/production/DA-VISUAL-R2/runtime/dancers-vip.webp",
+        "meta": "assets/production/DA-VISUAL-R2/runtime/dancers-vip.json",
+        "frame": "dancer-vip-female-03"
+      },
+      "status": "APPROVED",
+      "notes": "R2 per-asset avatar socket validated from the actual internal transparent opening."
+    },
+    {
+      "id": "dancer-vip-female-04",
+      "category": "vip-body",
+      "png": "individual/dancers/vip/female/dancer-vip-female-04.png",
+      "webp": "individual/dancers/vip/female/dancer-vip-female-04.webp",
+      "width": 560,
+      "height": 840,
+      "alpha": true,
+      "sha256": "bfad9890ef3f2100266f32de53e658105fd4c9502d8a72ab285c9224eb413648",
+      "byteSize": 131012,
+      "mime": "image/webp",
+      "pivot": {
+        "x": 0.5,
+        "y": 1.0
+      },
+      "usedBy": [
+        "DancerView",
+        "VIPLayer"
+      ],
+      "headSocket": {
+        "x": 271,
+        "y": 422,
+        "radius": 62,
+        "normalized": [
+          0.4839,
+          0.5024,
+          0.11
+        ]
+      },
+      "runtime": {
+        "atlas": "assets/production/DA-VISUAL-R2/runtime/dancers-vip.webp",
+        "meta": "assets/production/DA-VISUAL-R2/runtime/dancers-vip.json",
+        "frame": "dancer-vip-female-04"
+      },
+      "status": "APPROVED",
+      "notes": "R2 per-asset avatar socket validated from the actual internal transparent opening."
+    },
+    {
+      "id": "dancer-vip-female-05",
+      "category": "vip-body",
+      "png": "individual/dancers/vip/female/dancer-vip-female-05.png",
+      "webp": "individual/dancers/vip/female/dancer-vip-female-05.webp",
+      "width": 560,
+      "height": 840,
+      "alpha": true,
+      "sha256": "1c6884b1bb7d40c7115bb5f1bb7d07ded3a6e0f658aee2f115a766d3ab378c3c",
+      "byteSize": 152694,
+      "mime": "image/webp",
+      "pivot": {
+        "x": 0.5,
+        "y": 1.0
+      },
+      "usedBy": [
+        "DancerView",
+        "VIPLayer"
+      ],
+      "headSocket": {
+        "x": 294,
+        "y": 398,
+        "radius": 63,
+        "normalized": [
+          0.525,
+          0.4738,
+          0.1116
+        ]
+      },
+      "runtime": {
+        "atlas": "assets/production/DA-VISUAL-R2/runtime/dancers-vip.webp",
+        "meta": "assets/production/DA-VISUAL-R2/runtime/dancers-vip.json",
+        "frame": "dancer-vip-female-05"
+      },
+      "status": "APPROVED",
+      "notes": "R2 per-asset avatar socket validated from the actual internal transparent opening."
+    },
+    {
+      "id": "dancer-vip-male-01",
+      "category": "vip-body",
+      "png": "individual/dancers/vip/male/dancer-vip-male-01.png",
+      "webp": "individual/dancers/vip/male/dancer-vip-male-01.webp",
+      "width": 560,
+      "height": 840,
+      "alpha": true,
+      "sha256": "fd6c1906d971ab011bfc8c8b4e0c2e3d6bf05f352dee7dae7ce571519920aac5",
+      "byteSize": 80934,
+      "mime": "image/webp",
+      "pivot": {
+        "x": 0.5,
+        "y": 1.0
+      },
+      "usedBy": [
+        "DancerView",
+        "VIPLayer"
+      ],
+      "headSocket": {
+        "x": 292,
+        "y": 338,
+        "radius": 65,
+        "normalized": [
+          0.5214,
+          0.4024,
+          0.1154
+        ]
+      },
+      "notes": "R2 per-asset avatar socket validated from the actual internal transparent opening.",
+      "runtime": {
+        "atlas": "assets/production/DA-VISUAL-R2/runtime/dancers-vip.webp",
+        "meta": "assets/production/DA-VISUAL-R2/runtime/dancers-vip.json",
+        "frame": "dancer-vip-male-01"
+      },
+      "status": "APPROVED"
+    },
+    {
+      "id": "dancer-vip-male-02",
+      "category": "vip-body",
+      "png": "individual/dancers/vip/male/dancer-vip-male-02.png",
+      "webp": "individual/dancers/vip/male/dancer-vip-male-02.webp",
+      "width": 560,
+      "height": 840,
+      "alpha": true,
+      "sha256": "8ff719b3fa710b82ce3700bf2df4fb37099bc62406e5c1c4acd94100dabd8777",
+      "byteSize": 77336,
+      "mime": "image/webp",
+      "pivot": {
+        "x": 0.5,
+        "y": 1.0
+      },
+      "usedBy": [
+        "DancerView",
+        "VIPLayer"
+      ],
+      "headSocket": {
+        "x": 308,
+        "y": 330,
+        "radius": 69,
+        "normalized": [
+          0.55,
+          0.3929,
+          0.1224
+        ]
+      },
+      "notes": "R2 per-asset avatar socket validated from the actual internal transparent opening.",
+      "runtime": {
+        "atlas": "assets/production/DA-VISUAL-R2/runtime/dancers-vip.webp",
+        "meta": "assets/production/DA-VISUAL-R2/runtime/dancers-vip.json",
+        "frame": "dancer-vip-male-02"
+      },
+      "status": "APPROVED"
+    },
+    {
+      "id": "dancer-vip-male-03",
+      "category": "vip-body",
+      "png": "individual/dancers/vip/male/dancer-vip-male-03.png",
+      "webp": "individual/dancers/vip/male/dancer-vip-male-03.webp",
+      "width": 560,
+      "height": 840,
+      "alpha": true,
+      "sha256": "948b11c0ba868c3b0631fd245373a56f5c41b5eae4503a2fce0542aba1dbb16b",
+      "byteSize": 74640,
+      "mime": "image/webp",
+      "pivot": {
+        "x": 0.5,
+        "y": 1.0
+      },
+      "usedBy": [
+        "DancerView",
+        "VIPLayer"
+      ],
+      "headSocket": {
+        "x": 289,
+        "y": 338,
+        "radius": 57,
+        "normalized": [
+          0.5161,
+          0.4024,
+          0.1023
+        ]
+      },
+      "notes": "R2 per-asset avatar socket validated from the actual internal transparent opening.",
+      "runtime": {
+        "atlas": "assets/production/DA-VISUAL-R2/runtime/dancers-vip.webp",
+        "meta": "assets/production/DA-VISUAL-R2/runtime/dancers-vip.json",
+        "frame": "dancer-vip-male-03"
+      },
+      "status": "APPROVED"
+    },
+    {
+      "id": "dancer-vip-male-04",
+      "category": "vip-body",
+      "png": "individual/dancers/vip/male/dancer-vip-male-04.png",
+      "webp": "individual/dancers/vip/male/dancer-vip-male-04.webp",
+      "width": 560,
+      "height": 840,
+      "alpha": true,
+      "sha256": "ff2e3526d2dd80a90f561f28af7a6bc1f9da5241463521daf154508c8fee9f2c",
+      "byteSize": 76302,
+      "mime": "image/webp",
+      "pivot": {
+        "x": 0.5,
+        "y": 1.0
+      },
+      "usedBy": [
+        "DancerView",
+        "VIPLayer"
+      ],
+      "headSocket": {
+        "x": 269,
+        "y": 322,
+        "radius": 55,
+        "normalized": [
+          0.4804,
+          0.3833,
+          0.0982
+        ]
+      },
+      "notes": "R2 per-asset avatar socket validated from the actual internal transparent opening.",
+      "runtime": {
+        "atlas": "assets/production/DA-VISUAL-R2/runtime/dancers-vip.webp",
+        "meta": "assets/production/DA-VISUAL-R2/runtime/dancers-vip.json",
+        "frame": "dancer-vip-male-04"
+      },
+      "status": "APPROVED"
+    },
+    {
+      "id": "dancer-vip-male-05",
+      "category": "vip-body",
+      "png": "individual/dancers/vip/male/dancer-vip-male-05.png",
+      "webp": "individual/dancers/vip/male/dancer-vip-male-05.webp",
+      "width": 560,
+      "height": 840,
+      "alpha": true,
+      "sha256": "be416e91e37c4f005282ac2d158abe0edda4580c4e1c38102e6a89b802bc59fc",
+      "byteSize": 79238,
+      "mime": "image/webp",
+      "pivot": {
+        "x": 0.5,
+        "y": 1.0
+      },
+      "usedBy": [
+        "DancerView",
+        "VIPLayer"
+      ],
+      "headSocket": {
+        "x": 253,
+        "y": 333,
+        "radius": 60,
+        "normalized": [
+          0.4518,
+          0.3964,
+          0.108
+        ]
+      },
+      "notes": "R2 per-asset avatar socket validated from the actual internal transparent opening.",
+      "runtime": {
+        "atlas": "assets/production/DA-VISUAL-R2/runtime/dancers-vip.webp",
+        "meta": "assets/production/DA-VISUAL-R2/runtime/dancers-vip.json",
+        "frame": "dancer-vip-male-05"
+      },
+      "status": "APPROVED"
+    },
+    {
+      "id": "reaction-happy",
+      "category": "reaction",
+      "png": "individual/reactions/reaction-happy.png",
+      "webp": "individual/reactions/reaction-happy.webp",
+      "width": 256,
+      "height": 256,
+      "alpha": true,
+      "sha256": "5564fa2727901849d0527fcb440e732a52b9133a80cfac332f5d4a3ac47e4b30",
+      "byteSize": 18966,
+      "mime": "image/webp",
+      "pivot": {
+        "x": 0.5,
+        "y": 1.0
+      },
+      "usedBy": [
+        "OverlayLayer"
+      ],
+      "runtime": {
+        "atlas": "assets/production/DA-VISUAL-R2/runtime/reactions.webp",
+        "meta": "assets/production/DA-VISUAL-R2/runtime/reactions.json",
+        "frame": "reaction-happy"
+      },
+      "status": "APPROVED"
+    },
+    {
+      "id": "reaction-laugh",
+      "category": "reaction",
+      "png": "individual/reactions/reaction-laugh.png",
+      "webp": "individual/reactions/reaction-laugh.webp",
+      "width": 256,
+      "height": 256,
+      "alpha": true,
+      "sha256": "26310a63bdad24439272196f2a4c7c759d3508fd9b6cbd19839a21117b28e3d3",
+      "byteSize": 18466,
+      "mime": "image/webp",
+      "pivot": {
+        "x": 0.5,
+        "y": 1.0
+      },
+      "usedBy": [
+        "OverlayLayer"
+      ],
+      "runtime": {
+        "atlas": "assets/production/DA-VISUAL-R2/runtime/reactions.webp",
+        "meta": "assets/production/DA-VISUAL-R2/runtime/reactions.json",
+        "frame": "reaction-laugh"
+      },
+      "status": "APPROVED"
+    },
+    {
+      "id": "reaction-wink-love",
+      "category": "reaction",
+      "png": "individual/reactions/reaction-wink-love.png",
+      "webp": "individual/reactions/reaction-wink-love.webp",
+      "width": 256,
+      "height": 256,
+      "alpha": true,
+      "sha256": "212be5e139737177075fab7edefc964a32b9d599f46ee447b2567adf4702cc69",
+      "byteSize": 16410,
+      "mime": "image/webp",
+      "pivot": {
+        "x": 0.5,
+        "y": 1.0
+      },
+      "usedBy": [
+        "OverlayLayer"
+      ],
+      "runtime": {
+        "atlas": "assets/production/DA-VISUAL-R2/runtime/reactions.webp",
+        "meta": "assets/production/DA-VISUAL-R2/runtime/reactions.json",
+        "frame": "reaction-wink-love"
+      },
+      "status": "APPROVED"
+    },
+    {
+      "id": "reaction-cool",
+      "category": "reaction",
+      "png": "individual/reactions/reaction-cool.png",
+      "webp": "individual/reactions/reaction-cool.webp",
+      "width": 256,
+      "height": 256,
+      "alpha": true,
+      "sha256": "4d8ffd3eb6110e8d7fc9dacb6115798a30fde70c8ce11d82d33b53a5a4ab05f3",
+      "byteSize": 18836,
+      "mime": "image/webp",
+      "pivot": {
+        "x": 0.5,
+        "y": 1.0
+      },
+      "usedBy": [
+        "OverlayLayer"
+      ],
+      "runtime": {
+        "atlas": "assets/production/DA-VISUAL-R2/runtime/reactions.webp",
+        "meta": "assets/production/DA-VISUAL-R2/runtime/reactions.json",
+        "frame": "reaction-cool"
+      },
+      "status": "APPROVED"
+    },
+    {
+      "id": "reaction-heart-eyes",
+      "category": "reaction",
+      "png": "individual/reactions/reaction-heart-eyes.png",
+      "webp": "individual/reactions/reaction-heart-eyes.webp",
+      "width": 256,
+      "height": 256,
+      "alpha": true,
+      "sha256": "f2c1d1e5500925ee547175197144fa44a825dce114e4ba8b0019391bcbf6bd58",
+      "byteSize": 18638,
+      "mime": "image/webp",
+      "pivot": {
+        "x": 0.5,
+        "y": 1.0
+      },
+      "usedBy": [
+        "OverlayLayer"
+      ],
+      "runtime": {
+        "atlas": "assets/production/DA-VISUAL-R2/runtime/reactions.webp",
+        "meta": "assets/production/DA-VISUAL-R2/runtime/reactions.json",
+        "frame": "reaction-heart-eyes"
+      },
+      "status": "APPROVED"
+    },
+    {
+      "id": "reaction-cry",
+      "category": "reaction",
+      "png": "individual/reactions/reaction-cry.png",
+      "webp": "individual/reactions/reaction-cry.webp",
+      "width": 256,
+      "height": 256,
+      "alpha": true,
+      "sha256": "75a43a903bfe3e99dd3a5f878deb0a4fed9cab0bd564b1fcb025fe939e2af963",
+      "byteSize": 16530,
+      "mime": "image/webp",
+      "pivot": {
+        "x": 0.5,
+        "y": 1.0
+      },
+      "usedBy": [
+        "OverlayLayer"
+      ],
+      "runtime": {
+        "atlas": "assets/production/DA-VISUAL-R2/runtime/reactions.webp",
+        "meta": "assets/production/DA-VISUAL-R2/runtime/reactions.json",
+        "frame": "reaction-cry"
+      },
+      "status": "APPROVED"
+    },
+    {
+      "id": "reaction-wow",
+      "category": "reaction",
+      "png": "individual/reactions/reaction-wow.png",
+      "webp": "individual/reactions/reaction-wow.webp",
+      "width": 256,
+      "height": 256,
+      "alpha": true,
+      "sha256": "36f5997e04cc36c3d607124d67b2b2f552f54454bb5aa0218f899beeac4512cd",
+      "byteSize": 16264,
+      "mime": "image/webp",
+      "pivot": {
+        "x": 0.5,
+        "y": 1.0
+      },
+      "usedBy": [
+        "OverlayLayer"
+      ],
+      "runtime": {
+        "atlas": "assets/production/DA-VISUAL-R2/runtime/reactions.webp",
+        "meta": "assets/production/DA-VISUAL-R2/runtime/reactions.json",
+        "frame": "reaction-wow"
+      },
+      "status": "APPROVED"
+    },
+    {
+      "id": "reaction-angry",
+      "category": "reaction",
+      "png": "individual/reactions/reaction-angry.png",
+      "webp": "individual/reactions/reaction-angry.webp",
+      "width": 256,
+      "height": 256,
+      "alpha": true,
+      "sha256": "66ff57e76fd8bdc2ea33af3b79fed84ea599d957cbeccd298f84648ca725d651",
+      "byteSize": 17634,
+      "mime": "image/webp",
+      "pivot": {
+        "x": 0.5,
+        "y": 1.0
+      },
+      "usedBy": [
+        "OverlayLayer"
+      ],
+      "runtime": {
+        "atlas": "assets/production/DA-VISUAL-R2/runtime/reactions.webp",
+        "meta": "assets/production/DA-VISUAL-R2/runtime/reactions.json",
+        "frame": "reaction-angry"
+      },
+      "status": "APPROVED"
+    },
+    {
+      "id": "reaction-shy",
+      "category": "reaction",
+      "png": "individual/reactions/reaction-shy.png",
+      "webp": "individual/reactions/reaction-shy.webp",
+      "width": 256,
+      "height": 256,
+      "alpha": true,
+      "sha256": "78a8cf021160e5f2b9bb9ecd52bcf14e4d07e4404e1753014ed70d68f0a6aa6d",
+      "byteSize": 19328,
+      "mime": "image/webp",
+      "pivot": {
+        "x": 0.5,
+        "y": 1.0
+      },
+      "usedBy": [
+        "OverlayLayer"
+      ],
+      "runtime": {
+        "atlas": "assets/production/DA-VISUAL-R2/runtime/reactions.webp",
+        "meta": "assets/production/DA-VISUAL-R2/runtime/reactions.json",
+        "frame": "reaction-shy"
+      },
+      "status": "APPROVED"
+    },
+    {
+      "id": "reaction-star-eyes",
+      "category": "reaction",
+      "png": "individual/reactions/reaction-star-eyes.png",
+      "webp": "individual/reactions/reaction-star-eyes.webp",
+      "width": 256,
+      "height": 256,
+      "alpha": true,
+      "sha256": "e6fde8dcf94260d090f64194b436cc92060ab45c5e48bfe19d185031b0b7ad55",
+      "byteSize": 19176,
+      "mime": "image/webp",
+      "pivot": {
+        "x": 0.5,
+        "y": 1.0
+      },
+      "usedBy": [
+        "OverlayLayer"
+      ],
+      "runtime": {
+        "atlas": "assets/production/DA-VISUAL-R2/runtime/reactions.webp",
+        "meta": "assets/production/DA-VISUAL-R2/runtime/reactions.json",
+        "frame": "reaction-star-eyes"
+      },
+      "status": "APPROVED"
+    },
+    {
+      "id": "reaction-sleep",
+      "category": "reaction",
+      "png": "individual/reactions/reaction-sleep.png",
+      "webp": "individual/reactions/reaction-sleep.webp",
+      "width": 256,
+      "height": 256,
+      "alpha": true,
+      "sha256": "34e32df7330f6124cdb35eaed55145e1cda40b992749b11dd16753a84756f12d",
+      "byteSize": 16392,
+      "mime": "image/webp",
+      "pivot": {
+        "x": 0.5,
+        "y": 1.0
+      },
+      "usedBy": [
+        "OverlayLayer"
+      ],
+      "runtime": {
+        "atlas": "assets/production/DA-VISUAL-R2/runtime/reactions.webp",
+        "meta": "assets/production/DA-VISUAL-R2/runtime/reactions.json",
+        "frame": "reaction-sleep"
+      },
+      "status": "APPROVED"
+    },
+    {
+      "id": "reaction-kiss",
+      "category": "reaction",
+      "png": "individual/reactions/reaction-kiss.png",
+      "webp": "individual/reactions/reaction-kiss.webp",
+      "width": 256,
+      "height": 256,
+      "alpha": true,
+      "sha256": "93ca955aa392542daaacbb0726caef28a0ed27860cd788b54307cb7acedf63fd",
+      "byteSize": 17246,
+      "mime": "image/webp",
+      "pivot": {
+        "x": 0.5,
+        "y": 1.0
+      },
+      "usedBy": [
+        "OverlayLayer"
+      ],
+      "runtime": {
+        "atlas": "assets/production/DA-VISUAL-R2/runtime/reactions.webp",
+        "meta": "assets/production/DA-VISUAL-R2/runtime/reactions.json",
+        "frame": "reaction-kiss"
+      },
+      "status": "APPROVED"
+    },
+    {
+      "id": "reaction-cheer",
+      "category": "reaction",
+      "png": "individual/reactions/reaction-cheer.png",
+      "webp": "individual/reactions/reaction-cheer.webp",
+      "width": 256,
+      "height": 256,
+      "alpha": true,
+      "sha256": "7ee4fb0c714140f81ab46ac1ad61c390c0411c468733948b12710a3959d9c9ac",
+      "byteSize": 25336,
+      "mime": "image/webp",
+      "pivot": {
+        "x": 0.5,
+        "y": 1.0
+      },
+      "usedBy": [
+        "OverlayLayer"
+      ],
+      "runtime": {
+        "atlas": "assets/production/DA-VISUAL-R2/runtime/reactions.webp",
+        "meta": "assets/production/DA-VISUAL-R2/runtime/reactions.json",
+        "frame": "reaction-cheer"
+      },
+      "status": "APPROVED"
+    },
+    {
+      "id": "reaction-smirk",
+      "category": "reaction",
+      "png": "individual/reactions/reaction-smirk.png",
+      "webp": "individual/reactions/reaction-smirk.webp",
+      "width": 256,
+      "height": 256,
+      "alpha": true,
+      "sha256": "91b594b87fc076ddc49b9fe5de950c7a5553afadf8f940fd5b153a01f397b5c4",
+      "byteSize": 20254,
+      "mime": "image/webp",
+      "pivot": {
+        "x": 0.5,
+        "y": 1.0
+      },
+      "usedBy": [
+        "OverlayLayer"
+      ],
+      "runtime": {
+        "atlas": "assets/production/DA-VISUAL-R2/runtime/reactions.webp",
+        "meta": "assets/production/DA-VISUAL-R2/runtime/reactions.json",
+        "frame": "reaction-smirk"
+      },
+      "status": "APPROVED"
+    },
+    {
+      "id": "reaction-go-megaphone",
+      "category": "reaction",
+      "png": "individual/reactions/reaction-go-megaphone.png",
+      "webp": "individual/reactions/reaction-go-megaphone.webp",
+      "width": 256,
+      "height": 256,
+      "alpha": true,
+      "sha256": "8f7b9a544fc18e14f3397538c7d66e1e4081beaace7f4b39429cdee7f3858ff7",
+      "byteSize": 20680,
+      "mime": "image/webp",
+      "pivot": {
+        "x": 0.5,
+        "y": 1.0
+      },
+      "usedBy": [
+        "OverlayLayer"
+      ],
+      "runtime": {
+        "atlas": "assets/production/DA-VISUAL-R2/runtime/reactions.webp",
+        "meta": "assets/production/DA-VISUAL-R2/runtime/reactions.json",
+        "frame": "reaction-go-megaphone"
+      },
+      "status": "APPROVED"
+    },
+    {
+      "id": "reaction-surprised",
+      "category": "reaction",
+      "png": "individual/reactions/reaction-surprised.png",
+      "webp": "individual/reactions/reaction-surprised.webp",
+      "width": 256,
+      "height": 256,
+      "alpha": true,
+      "sha256": "ca76166e6730685162c775b4da025f238c072fce8f957367b66d089571d25396",
+      "byteSize": 22390,
+      "mime": "image/webp",
+      "pivot": {
+        "x": 0.5,
+        "y": 1.0
+      },
+      "usedBy": [
+        "OverlayLayer"
+      ],
+      "runtime": {
+        "atlas": "assets/production/DA-VISUAL-R2/runtime/reactions.webp",
+        "meta": "assets/production/DA-VISUAL-R2/runtime/reactions.json",
+        "frame": "reaction-surprised"
+      },
+      "status": "APPROVED"
+    },
+    {
+      "id": "reaction-hug-heart",
+      "category": "reaction",
+      "png": "individual/reactions/reaction-hug-heart.png",
+      "webp": "individual/reactions/reaction-hug-heart.webp",
+      "width": 256,
+      "height": 256,
+      "alpha": true,
+      "sha256": "bdee858ae17f5dadacb832d20c73f1b51cf27bbfc8ecff0b2a14f4359c66efb3",
+      "byteSize": 21584,
+      "mime": "image/webp",
+      "pivot": {
+        "x": 0.5,
+        "y": 1.0
+      },
+      "usedBy": [
+        "OverlayLayer"
+      ],
+      "runtime": {
+        "atlas": "assets/production/DA-VISUAL-R2/runtime/reactions.webp",
+        "meta": "assets/production/DA-VISUAL-R2/runtime/reactions.json",
+        "frame": "reaction-hug-heart"
+      },
+      "status": "APPROVED"
+    },
+    {
+      "id": "reaction-gg",
+      "category": "reaction",
+      "png": "individual/reactions/reaction-gg.png",
+      "webp": "individual/reactions/reaction-gg.webp",
+      "width": 256,
+      "height": 256,
+      "alpha": true,
+      "sha256": "8b1e24bbf33de54f9a4bd7ce8506767981aa98547d18fe5d206029bd830e3782",
+      "byteSize": 21420,
+      "mime": "image/webp",
+      "pivot": {
+        "x": 0.5,
+        "y": 1.0
+      },
+      "usedBy": [
+        "OverlayLayer"
+      ],
+      "runtime": {
+        "atlas": "assets/production/DA-VISUAL-R2/runtime/reactions.webp",
+        "meta": "assets/production/DA-VISUAL-R2/runtime/reactions.json",
+        "frame": "reaction-gg"
+      },
+      "status": "APPROVED"
+    },
+    {
+      "id": "reaction-excited",
+      "category": "reaction",
+      "png": "individual/reactions/reaction-excited.png",
+      "webp": "individual/reactions/reaction-excited.webp",
+      "width": 256,
+      "height": 256,
+      "alpha": true,
+      "sha256": "3a6bc17787323d430967431966f0333cfef5ae7a898afc37f9e880ee3264d2f4",
+      "byteSize": 26594,
+      "mime": "image/webp",
+      "pivot": {
+        "x": 0.5,
+        "y": 1.0
+      },
+      "usedBy": [
+        "OverlayLayer"
+      ],
+      "runtime": {
+        "atlas": "assets/production/DA-VISUAL-R2/runtime/reactions.webp",
+        "meta": "assets/production/DA-VISUAL-R2/runtime/reactions.json",
+        "frame": "reaction-excited"
+      },
+      "status": "APPROVED"
+    },
+    {
+      "id": "reaction-silly",
+      "category": "reaction",
+      "png": "individual/reactions/reaction-silly.png",
+      "webp": "individual/reactions/reaction-silly.webp",
+      "width": 256,
+      "height": 256,
+      "alpha": true,
+      "sha256": "b791d048b574a9ff890bd64b816e6b1e191f7b5762c6fde21454e3517db2b40f",
+      "byteSize": 23358,
+      "mime": "image/webp",
+      "pivot": {
+        "x": 0.5,
+        "y": 1.0
+      },
+      "usedBy": [
+        "OverlayLayer"
+      ],
+      "runtime": {
+        "atlas": "assets/production/DA-VISUAL-R2/runtime/reactions.webp",
+        "meta": "assets/production/DA-VISUAL-R2/runtime/reactions.json",
+        "frame": "reaction-silly"
+      },
+      "status": "APPROVED"
+    },
+    {
+      "id": "reaction-cry-big",
+      "category": "reaction",
+      "png": "individual/reactions/reaction-cry-big.png",
+      "webp": "individual/reactions/reaction-cry-big.webp",
+      "width": 256,
+      "height": 256,
+      "alpha": true,
+      "sha256": "b2145065017f36c8eb7f2ca58a418f9c7ad09aad9b5bed816c36a36f8593e343",
+      "byteSize": 21852,
+      "mime": "image/webp",
+      "pivot": {
+        "x": 0.5,
+        "y": 1.0
+      },
+      "usedBy": [
+        "OverlayLayer"
+      ],
+      "runtime": {
+        "atlas": "assets/production/DA-VISUAL-R2/runtime/reactions.webp",
+        "meta": "assets/production/DA-VISUAL-R2/runtime/reactions.json",
+        "frame": "reaction-cry-big"
+      },
+      "status": "APPROVED"
+    },
+    {
+      "id": "reaction-fire-angry",
+      "category": "reaction",
+      "png": "individual/reactions/reaction-fire-angry.png",
+      "webp": "individual/reactions/reaction-fire-angry.webp",
+      "width": 256,
+      "height": 256,
+      "alpha": true,
+      "sha256": "49fb6660b7d3acf6b05b23fbf4d372add33837f73df6d4a61110d928078442e8",
+      "byteSize": 20410,
+      "mime": "image/webp",
+      "pivot": {
+        "x": 0.5,
+        "y": 1.0
+      },
+      "usedBy": [
+        "OverlayLayer"
+      ],
+      "runtime": {
+        "atlas": "assets/production/DA-VISUAL-R2/runtime/reactions.webp",
+        "meta": "assets/production/DA-VISUAL-R2/runtime/reactions.json",
+        "frame": "reaction-fire-angry"
+      },
+      "status": "APPROVED"
+    },
+    {
+      "id": "reaction-blush",
+      "category": "reaction",
+      "png": "individual/reactions/reaction-blush.png",
+      "webp": "individual/reactions/reaction-blush.webp",
+      "width": 256,
+      "height": 256,
+      "alpha": true,
+      "sha256": "cc007f775c0cf43f09123b8408fc76152bb93a6d7298fb68c2ccea009577984f",
+      "byteSize": 22106,
+      "mime": "image/webp",
+      "pivot": {
+        "x": 0.5,
+        "y": 1.0
+      },
+      "usedBy": [
+        "OverlayLayer"
+      ],
+      "runtime": {
+        "atlas": "assets/production/DA-VISUAL-R2/runtime/reactions.webp",
+        "meta": "assets/production/DA-VISUAL-R2/runtime/reactions.json",
+        "frame": "reaction-blush"
+      },
+      "status": "APPROVED"
+    },
+    {
+      "id": "reaction-party",
+      "category": "reaction",
+      "png": "individual/reactions/reaction-party.png",
+      "webp": "individual/reactions/reaction-party.webp",
+      "width": 256,
+      "height": 256,
+      "alpha": true,
+      "sha256": "4a6f680131c4926978c44a2b4ec12f784c8e2d44a933c52d6051663051a72e2f",
+      "byteSize": 32262,
+      "mime": "image/webp",
+      "pivot": {
+        "x": 0.5,
+        "y": 1.0
+      },
+      "usedBy": [
+        "OverlayLayer"
+      ],
+      "runtime": {
+        "atlas": "assets/production/DA-VISUAL-R2/runtime/reactions.webp",
+        "meta": "assets/production/DA-VISUAL-R2/runtime/reactions.json",
+        "frame": "reaction-party"
+      },
+      "status": "APPROVED"
+    },
+    {
+      "id": "bubble-go",
+      "category": "command-bubble",
+      "png": "individual/bubbles/bubble-go.png",
+      "webp": "individual/bubbles/bubble-go.webp",
+      "width": 512,
+      "height": 320,
+      "alpha": true,
+      "sha256": "42d4f1e95a26c795c41225f5ca5ea743fb8c7881fee09cf0153d0de9b5d1dfff",
+      "byteSize": 35940,
+      "mime": "image/webp",
+      "pivot": {
+        "x": 0.5,
+        "y": 1.0
+      },
+      "usedBy": [
+        "OverlayLayer"
+      ],
+      "runtime": {
+        "atlas": "assets/production/DA-VISUAL-R2/runtime/bubbles.webp",
+        "meta": "assets/production/DA-VISUAL-R2/runtime/bubbles.json",
+        "frame": "bubble-go"
+      },
+      "status": "APPROVED"
+    },
+    {
+      "id": "bubble-join",
+      "category": "command-bubble",
+      "png": "individual/bubbles/bubble-join.png",
+      "webp": "individual/bubbles/bubble-join.webp",
+      "width": 512,
+      "height": 320,
+      "alpha": true,
+      "sha256": "8d34e8d91afa59e5fb5de4b8ea1b20a5a982c2d4b4f8c969bc217a6325ef4404",
+      "byteSize": 36642,
+      "mime": "image/webp",
+      "pivot": {
+        "x": 0.5,
+        "y": 1.0
+      },
+      "usedBy": [
+        "OverlayLayer"
+      ],
+      "runtime": {
+        "atlas": "assets/production/DA-VISUAL-R2/runtime/bubbles.webp",
+        "meta": "assets/production/DA-VISUAL-R2/runtime/bubbles.json",
+        "frame": "bubble-join"
+      },
+      "status": "APPROVED"
+    },
+    {
+      "id": "bubble-vao",
+      "category": "command-bubble",
+      "png": "individual/bubbles/bubble-vao.png",
+      "webp": "individual/bubbles/bubble-vao.webp",
+      "width": 512,
+      "height": 320,
+      "alpha": true,
+      "sha256": "5271f51b46147130e34aba0ebd0ea7e1410b46c8bf035420d987e0b339c4ffee",
+      "byteSize": 33540,
+      "mime": "image/webp",
+      "pivot": {
+        "x": 0.5,
+        "y": 1.0
+      },
+      "usedBy": [
+        "OverlayLayer"
+      ],
+      "runtime": {
+        "atlas": "assets/production/DA-VISUAL-R2/runtime/bubbles.webp",
+        "meta": "assets/production/DA-VISUAL-R2/runtime/bubbles.json",
+        "frame": "bubble-vao"
+      },
+      "status": "APPROVED"
+    },
+    {
+      "id": "bubble-vip",
+      "category": "command-bubble",
+      "png": "individual/bubbles/bubble-vip.png",
+      "webp": "individual/bubbles/bubble-vip.webp",
+      "width": 512,
+      "height": 320,
+      "alpha": true,
+      "sha256": "94fce9af53ea07752c3aa0fe83a79ce2bf9571fd14b7b013ed01cea15a91e94e",
+      "byteSize": 37966,
+      "mime": "image/webp",
+      "pivot": {
+        "x": 0.5,
+        "y": 1.0
+      },
+      "usedBy": [
+        "OverlayLayer"
+      ],
+      "runtime": {
+        "atlas": "assets/production/DA-VISUAL-R2/runtime/bubbles.webp",
+        "meta": "assets/production/DA-VISUAL-R2/runtime/bubbles.json",
+        "frame": "bubble-vip"
+      },
+      "status": "APPROVED"
+    },
+    {
+      "id": "bubble-dance",
+      "category": "command-bubble",
+      "png": "individual/bubbles/bubble-dance.png",
+      "webp": "individual/bubbles/bubble-dance.webp",
+      "width": 512,
+      "height": 320,
+      "alpha": true,
+      "sha256": "bc897cabcd06c5372ca060a18286b4c5039a843a3d248f73833b06bcee3d3897",
+      "byteSize": 37604,
+      "mime": "image/webp",
+      "pivot": {
+        "x": 0.5,
+        "y": 1.0
+      },
+      "usedBy": [
+        "OverlayLayer"
+      ],
+      "runtime": {
+        "atlas": "assets/production/DA-VISUAL-R2/runtime/bubbles.webp",
+        "meta": "assets/production/DA-VISUAL-R2/runtime/bubbles.json",
+        "frame": "bubble-dance"
+      },
+      "status": "APPROVED"
+    },
+    {
+      "id": "bubble-thank-you",
+      "category": "command-bubble",
+      "png": "individual/bubbles/bubble-thank-you.png",
+      "webp": "individual/bubbles/bubble-thank-you.webp",
+      "width": 512,
+      "height": 320,
+      "alpha": true,
+      "sha256": "e74b43e012714ac8372f3856a08411fa78ca4cc254cb4fd6019353a3e3ba0298",
+      "byteSize": 39810,
+      "mime": "image/webp",
+      "pivot": {
+        "x": 0.5,
+        "y": 1.0
+      },
+      "usedBy": [
+        "OverlayLayer"
+      ],
+      "runtime": {
+        "atlas": "assets/production/DA-VISUAL-R2/runtime/bubbles.webp",
+        "meta": "assets/production/DA-VISUAL-R2/runtime/bubbles.json",
+        "frame": "bubble-thank-you"
+      },
+      "status": "APPROVED"
+    },
+    {
+      "id": "bubble-party-goal",
+      "category": "command-bubble",
+      "png": "individual/bubbles/bubble-party-goal.png",
+      "webp": "individual/bubbles/bubble-party-goal.webp",
+      "width": 512,
+      "height": 320,
+      "alpha": true,
+      "sha256": "82ba907282a03f6e3926ee4a4133993ebf762677a5273bc603657fa15a71580c",
+      "byteSize": 47576,
+      "mime": "image/webp",
+      "pivot": {
+        "x": 0.5,
+        "y": 1.0
+      },
+      "usedBy": [
+        "OverlayLayer"
+      ],
+      "runtime": {
+        "atlas": "assets/production/DA-VISUAL-R2/runtime/bubbles.webp",
+        "meta": "assets/production/DA-VISUAL-R2/runtime/bubbles.json",
+        "frame": "bubble-party-goal"
+      },
+      "status": "APPROVED"
+    },
+    {
+      "id": "bubble-follow",
+      "category": "command-bubble",
+      "png": "individual/bubbles/bubble-follow.png",
+      "webp": "individual/bubbles/bubble-follow.webp",
+      "width": 512,
+      "height": 320,
+      "alpha": true,
+      "sha256": "6ff89d3a14f0ad452712bb621686f4d44ff6a515810e50712e6e09363a2b480a",
+      "byteSize": 42220,
+      "mime": "image/webp",
+      "pivot": {
+        "x": 0.5,
+        "y": 1.0
+      },
+      "usedBy": [
+        "OverlayLayer"
+      ],
+      "runtime": {
+        "atlas": "assets/production/DA-VISUAL-R2/runtime/bubbles.webp",
+        "meta": "assets/production/DA-VISUAL-R2/runtime/bubbles.json",
+        "frame": "bubble-follow"
+      },
+      "status": "APPROVED"
+    },
+    {
+      "id": "bubble-share",
+      "category": "command-bubble",
+      "png": "individual/bubbles/bubble-share.png",
+      "webp": "individual/bubbles/bubble-share.webp",
+      "width": 512,
+      "height": 320,
+      "alpha": true,
+      "sha256": "f9f02b7fae622ce1e7a3ae43bdcf16d4fbf956ce5d809a383ae57f1d4a3abfc8",
+      "byteSize": 38130,
+      "mime": "image/webp",
+      "pivot": {
+        "x": 0.5,
+        "y": 1.0
+      },
+      "usedBy": [
+        "OverlayLayer"
+      ],
+      "runtime": {
+        "atlas": "assets/production/DA-VISUAL-R2/runtime/bubbles.webp",
+        "meta": "assets/production/DA-VISUAL-R2/runtime/bubbles.json",
+        "frame": "bubble-share"
+      },
+      "status": "APPROVED"
+    },
+    {
+      "id": "bubble-wow",
+      "category": "command-bubble",
+      "png": "individual/bubbles/bubble-wow.png",
+      "webp": "individual/bubbles/bubble-wow.webp",
+      "width": 512,
+      "height": 320,
+      "alpha": true,
+      "sha256": "5bca37607210b9ab956e74501982d686b085a069d08c9fe5f2c383bddb6dd659",
+      "byteSize": 43704,
+      "mime": "image/webp",
+      "pivot": {
+        "x": 0.5,
+        "y": 1.0
+      },
+      "usedBy": [
+        "OverlayLayer"
+      ],
+      "runtime": {
+        "atlas": "assets/production/DA-VISUAL-R2/runtime/bubbles.webp",
+        "meta": "assets/production/DA-VISUAL-R2/runtime/bubbles.json",
+        "frame": "bubble-wow"
+      },
+      "status": "APPROVED"
+    },
+    {
+      "id": "bubble-gg",
+      "category": "command-bubble",
+      "png": "individual/bubbles/bubble-gg.png",
+      "webp": "individual/bubbles/bubble-gg.webp",
+      "width": 512,
+      "height": 320,
+      "alpha": true,
+      "sha256": "24fa3b6da24860323d0ef523f267a4634ca089f7564e3cfeb73dcaa1b6fb76d1",
+      "byteSize": 54288,
+      "mime": "image/webp",
+      "pivot": {
+        "x": 0.5,
+        "y": 1.0
+      },
+      "usedBy": [
+        "OverlayLayer"
+      ],
+      "runtime": {
+        "atlas": "assets/production/DA-VISUAL-R2/runtime/bubbles.webp",
+        "meta": "assets/production/DA-VISUAL-R2/runtime/bubbles.json",
+        "frame": "bubble-gg"
+      },
+      "status": "APPROVED"
+    },
+    {
+      "id": "bubble-nice",
+      "category": "command-bubble",
+      "png": "individual/bubbles/bubble-nice.png",
+      "webp": "individual/bubbles/bubble-nice.webp",
+      "width": 512,
+      "height": 320,
+      "alpha": true,
+      "sha256": "cf3dcbc8de78c8c1f3d31d2c95cfeb94268fac26d05fc45d75d48a2eacbfca68",
+      "byteSize": 32060,
+      "mime": "image/webp",
+      "pivot": {
+        "x": 0.5,
+        "y": 1.0
+      },
+      "usedBy": [
+        "OverlayLayer"
+      ],
+      "runtime": {
+        "atlas": "assets/production/DA-VISUAL-R2/runtime/bubbles.webp",
+        "meta": "assets/production/DA-VISUAL-R2/runtime/bubbles.json",
+        "frame": "bubble-nice"
+      },
+      "status": "APPROVED"
+    },
+    {
+      "id": "bubble-combo",
+      "category": "command-bubble",
+      "png": "individual/bubbles/bubble-combo.png",
+      "webp": "individual/bubbles/bubble-combo.webp",
+      "width": 512,
+      "height": 320,
+      "alpha": true,
+      "sha256": "7a33c8cd2ea76ca5e8ba481f35588734d3c60bac22aa853bb7d7fb368231f1a9",
+      "byteSize": 40972,
+      "mime": "image/webp",
+      "pivot": {
+        "x": 0.5,
+        "y": 1.0
+      },
+      "usedBy": [
+        "OverlayLayer"
+      ],
+      "runtime": {
+        "atlas": "assets/production/DA-VISUAL-R2/runtime/bubbles.webp",
+        "meta": "assets/production/DA-VISUAL-R2/runtime/bubbles.json",
+        "frame": "bubble-combo"
+      },
+      "status": "APPROVED"
+    },
+    {
+      "id": "bubble-support-me",
+      "category": "command-bubble",
+      "png": "individual/bubbles/bubble-support-me.png",
+      "webp": "individual/bubbles/bubble-support-me.webp",
+      "width": 512,
+      "height": 320,
+      "alpha": true,
+      "sha256": "2cfe2beaaf5ac77baf3a366f1d6411eef5f9891269247ae58a0fc21a6893a1eb",
+      "byteSize": 46290,
+      "mime": "image/webp",
+      "pivot": {
+        "x": 0.5,
+        "y": 1.0
+      },
+      "usedBy": [
+        "OverlayLayer"
+      ],
+      "runtime": {
+        "atlas": "assets/production/DA-VISUAL-R2/runtime/bubbles.webp",
+        "meta": "assets/production/DA-VISUAL-R2/runtime/bubbles.json",
+        "frame": "bubble-support-me"
+      },
+      "status": "APPROVED"
+    },
+    {
+      "id": "gift-rose-red",
+      "category": "gift-item",
+      "png": "individual/gifts-fx/gift-rose-red.png",
+      "webp": "individual/gifts-fx/gift-rose-red.webp",
+      "width": 384,
+      "height": 384,
+      "alpha": true,
+      "sha256": "6b682d19456d1720db993e72493ad1633b6fbffd236c3c90a57b4b0f2e67ec3a",
+      "byteSize": 28562,
+      "mime": "image/webp",
+      "pivot": {
+        "x": 0.5,
+        "y": 1.0
+      },
+      "usedBy": [
+        "GiftFXLayer"
+      ],
+      "runtime": {
+        "atlas": "assets/production/DA-VISUAL-R2/runtime/gifts-fx.webp",
+        "meta": "assets/production/DA-VISUAL-R2/runtime/gifts-fx.json",
+        "frame": "gift-rose-red"
+      },
+      "status": "APPROVED"
+    },
+    {
+      "id": "gift-heart",
+      "category": "gift-item",
+      "png": "individual/gifts-fx/gift-heart.png",
+      "webp": "individual/gifts-fx/gift-heart.webp",
+      "width": 384,
+      "height": 384,
+      "alpha": true,
+      "sha256": "5627fc994bdea5c3bd242792bef47eede7477b8f5c8b5fde5f022647bd3b31c5",
+      "byteSize": 24550,
+      "mime": "image/webp",
+      "pivot": {
+        "x": 0.5,
+        "y": 1.0
+      },
+      "usedBy": [
+        "GiftFXLayer"
+      ],
+      "runtime": {
+        "atlas": "assets/production/DA-VISUAL-R2/runtime/gifts-fx.webp",
+        "meta": "assets/production/DA-VISUAL-R2/runtime/gifts-fx.json",
+        "frame": "gift-heart"
+      },
+      "status": "APPROVED"
+    },
+    {
+      "id": "fx-tier1-spark",
+      "category": "effect",
+      "png": "individual/gifts-fx/fx-tier1-spark.png",
+      "webp": "individual/gifts-fx/fx-tier1-spark.webp",
+      "width": 384,
+      "height": 384,
+      "alpha": true,
+      "sha256": "be68d9c258d5420b9c60f8a46ef633a95eb3f13cba5313625d72ffd90646ca53",
+      "byteSize": 15704,
+      "mime": "image/webp",
+      "pivot": {
+        "x": 0.5,
+        "y": 1.0
+      },
+      "usedBy": [
+        "GiftFXLayer"
+      ],
+      "runtime": {
+        "atlas": "assets/production/DA-VISUAL-R2/runtime/gifts-fx.webp",
+        "meta": "assets/production/DA-VISUAL-R2/runtime/gifts-fx.json",
+        "frame": "fx-tier1-spark"
+      },
+      "status": "APPROVED"
+    },
+    {
+      "id": "fx-tier1-music",
+      "category": "effect",
+      "png": "individual/gifts-fx/fx-tier1-music.png",
+      "webp": "individual/gifts-fx/fx-tier1-music.webp",
+      "width": 384,
+      "height": 384,
+      "alpha": true,
+      "sha256": "8bf760b0dc3dee18d2add6d312e445124e4fe89fc935390091a5549255d2a94d",
+      "byteSize": 17146,
+      "mime": "image/webp",
+      "pivot": {
+        "x": 0.5,
+        "y": 1.0
+      },
+      "usedBy": [
+        "GiftFXLayer"
+      ],
+      "runtime": {
+        "atlas": "assets/production/DA-VISUAL-R2/runtime/gifts-fx.webp",
+        "meta": "assets/production/DA-VISUAL-R2/runtime/gifts-fx.json",
+        "frame": "fx-tier1-music"
+      },
+      "status": "APPROVED"
+    },
+    {
+      "id": "fx-tier2-heart-orbit",
+      "category": "effect",
+      "png": "individual/gifts-fx/fx-tier2-heart-orbit.png",
+      "webp": "individual/gifts-fx/fx-tier2-heart-orbit.webp",
+      "width": 384,
+      "height": 384,
+      "alpha": true,
+      "sha256": "9443fc6bbb2e6638e425866176af67f3091c85bb82626c03b7a29ce5e8f85eda",
+      "byteSize": 19888,
+      "mime": "image/webp",
+      "pivot": {
+        "x": 0.5,
+        "y": 1.0
+      },
+      "usedBy": [
+        "GiftFXLayer"
+      ],
+      "runtime": {
+        "atlas": "assets/production/DA-VISUAL-R2/runtime/gifts-fx.webp",
+        "meta": "assets/production/DA-VISUAL-R2/runtime/gifts-fx.json",
+        "frame": "fx-tier2-heart-orbit"
+      },
+      "status": "APPROVED"
+    },
+    {
+      "id": "fx-tier2-heart-rain",
+      "category": "effect",
+      "png": "individual/gifts-fx/fx-tier2-heart-rain.png",
+      "webp": "individual/gifts-fx/fx-tier2-heart-rain.webp",
+      "width": 384,
+      "height": 384,
+      "alpha": true,
+      "sha256": "fecbb6f75e6bfb3673a8eef183e92bf3b77db791fe7565407d70c6e6c0f307bd",
+      "byteSize": 22982,
+      "mime": "image/webp",
+      "pivot": {
+        "x": 0.5,
+        "y": 1.0
+      },
+      "usedBy": [
+        "GiftFXLayer"
+      ],
+      "runtime": {
+        "atlas": "assets/production/DA-VISUAL-R2/runtime/gifts-fx.webp",
+        "meta": "assets/production/DA-VISUAL-R2/runtime/gifts-fx.json",
+        "frame": "fx-tier2-heart-rain"
+      },
+      "status": "APPROVED"
+    },
+    {
+      "id": "fx-tier2-confetti",
+      "category": "effect",
+      "png": "individual/gifts-fx/fx-tier2-confetti.png",
+      "webp": "individual/gifts-fx/fx-tier2-confetti.webp",
+      "width": 384,
+      "height": 384,
+      "alpha": true,
+      "sha256": "a3aacae2407f16263cadbe0b3bb68c60252131f6679b4322e6bd5b7bdf095415",
+      "byteSize": 22498,
+      "mime": "image/webp",
+      "pivot": {
+        "x": 0.5,
+        "y": 1.0
+      },
+      "usedBy": [
+        "GiftFXLayer"
+      ],
+      "runtime": {
+        "atlas": "assets/production/DA-VISUAL-R2/runtime/gifts-fx.webp",
+        "meta": "assets/production/DA-VISUAL-R2/runtime/gifts-fx.json",
+        "frame": "fx-tier2-confetti"
+      },
+      "status": "APPROVED"
+    },
+    {
+      "id": "fx-tier3-crystal-blue",
+      "category": "effect",
+      "png": "individual/gifts-fx/fx-tier3-crystal-blue.png",
+      "webp": "individual/gifts-fx/fx-tier3-crystal-blue.webp",
+      "width": 384,
+      "height": 384,
+      "alpha": true,
+      "sha256": "d6bc71b316aa39d00f5178b27136c9f6dc4e05b4eb9b43f3316391cfcaee5f34",
+      "byteSize": 32896,
+      "mime": "image/webp",
+      "pivot": {
+        "x": 0.5,
+        "y": 1.0
+      },
+      "usedBy": [
+        "GiftFXLayer"
+      ],
+      "runtime": {
+        "atlas": "assets/production/DA-VISUAL-R2/runtime/gifts-fx.webp",
+        "meta": "assets/production/DA-VISUAL-R2/runtime/gifts-fx.json",
+        "frame": "fx-tier3-crystal-blue"
+      },
+      "status": "APPROVED"
+    },
+    {
+      "id": "fx-tier3-crystal-pink",
+      "category": "effect",
+      "png": "individual/gifts-fx/fx-tier3-crystal-pink.png",
+      "webp": "individual/gifts-fx/fx-tier3-crystal-pink.webp",
+      "width": 384,
+      "height": 384,
+      "alpha": true,
+      "sha256": "0ae31783ddd6156e87e8daf7dc8332ba9fb1d7ab137ea6b181064b0926930c34",
+      "byteSize": 27858,
+      "mime": "image/webp",
+      "pivot": {
+        "x": 0.5,
+        "y": 1.0
+      },
+      "usedBy": [
+        "GiftFXLayer"
+      ],
+      "runtime": {
+        "atlas": "assets/production/DA-VISUAL-R2/runtime/gifts-fx.webp",
+        "meta": "assets/production/DA-VISUAL-R2/runtime/gifts-fx.json",
+        "frame": "fx-tier3-crystal-pink"
+      },
+      "status": "APPROVED"
+    },
+    {
+      "id": "fx-tier3-crystal-rainbow",
+      "category": "effect",
+      "png": "individual/gifts-fx/fx-tier3-crystal-rainbow.png",
+      "webp": "individual/gifts-fx/fx-tier3-crystal-rainbow.webp",
+      "width": 384,
+      "height": 384,
+      "alpha": true,
+      "sha256": "4d9082c5e8cc823defc44513744c5a0b5f5beee6e6a6a22dc714719b6b96e460",
+      "byteSize": 15236,
+      "mime": "image/webp",
+      "pivot": {
+        "x": 0.5,
+        "y": 1.0
+      },
+      "usedBy": [
+        "GiftFXLayer"
+      ],
+      "runtime": {
+        "atlas": "assets/production/DA-VISUAL-R2/runtime/gifts-fx.webp",
+        "meta": "assets/production/DA-VISUAL-R2/runtime/gifts-fx.json",
+        "frame": "fx-tier3-crystal-rainbow"
+      },
+      "status": "APPROVED"
+    },
+    {
+      "id": "fx-tier4-crystal-crown",
+      "category": "effect",
+      "png": "individual/gifts-fx/fx-tier4-crystal-crown.png",
+      "webp": "individual/gifts-fx/fx-tier4-crystal-crown.webp",
+      "width": 384,
+      "height": 384,
+      "alpha": true,
+      "sha256": "c115f3d7b0d33d40f9d9e7e3b13cddb9fcb237802e1425ae01b173a0b0a3be62",
+      "byteSize": 18248,
+      "mime": "image/webp",
+      "pivot": {
+        "x": 0.5,
+        "y": 1.0
+      },
+      "usedBy": [
+        "GiftFXLayer"
+      ],
+      "runtime": {
+        "atlas": "assets/production/DA-VISUAL-R2/runtime/gifts-fx.webp",
+        "meta": "assets/production/DA-VISUAL-R2/runtime/gifts-fx.json",
+        "frame": "fx-tier4-crystal-crown"
+      },
+      "status": "APPROVED"
+    },
+    {
+      "id": "fx-tier4-heart-podium",
+      "category": "effect",
+      "png": "individual/gifts-fx/fx-tier4-heart-podium.png",
+      "webp": "individual/gifts-fx/fx-tier4-heart-podium.webp",
+      "width": 384,
+      "height": 384,
+      "alpha": true,
+      "sha256": "98f47fcd04a7ee9d0bfdc359fd67b84bf8e8455979de6bf237616a2feb1dc207",
+      "byteSize": 18988,
+      "mime": "image/webp",
+      "pivot": {
+        "x": 0.5,
+        "y": 1.0
+      },
+      "usedBy": [
+        "GiftFXLayer"
+      ],
+      "runtime": {
+        "atlas": "assets/production/DA-VISUAL-R2/runtime/gifts-fx.webp",
+        "meta": "assets/production/DA-VISUAL-R2/runtime/gifts-fx.json",
+        "frame": "fx-tier4-heart-podium"
+      },
+      "status": "APPROVED"
+    },
+    {
+      "id": "fx-tier5-cosmic-blue",
+      "category": "effect",
+      "png": "individual/gifts-fx/fx-tier5-cosmic-blue.png",
+      "webp": "individual/gifts-fx/fx-tier5-cosmic-blue.webp",
+      "width": 384,
+      "height": 384,
+      "alpha": true,
+      "sha256": "160a1cee253c2685d16d06c5ac6a34acf763ed511318694a44e55948739dbb22",
+      "byteSize": 24276,
+      "mime": "image/webp",
+      "pivot": {
+        "x": 0.5,
+        "y": 1.0
+      },
+      "usedBy": [
+        "GiftFXLayer"
+      ],
+      "runtime": {
+        "atlas": "assets/production/DA-VISUAL-R2/runtime/gifts-fx.webp",
+        "meta": "assets/production/DA-VISUAL-R2/runtime/gifts-fx.json",
+        "frame": "fx-tier5-cosmic-blue"
+      },
+      "status": "APPROVED"
+    },
+    {
+      "id": "fx-tier5-cosmic-purple",
+      "category": "effect",
+      "png": "individual/gifts-fx/fx-tier5-cosmic-purple.png",
+      "webp": "individual/gifts-fx/fx-tier5-cosmic-purple.webp",
+      "width": 384,
+      "height": 384,
+      "alpha": true,
+      "sha256": "f911811c7deaab0eb1f1a7321f1529e3e3b27a67ea4da29ae7efda59872ba75a",
+      "byteSize": 27890,
+      "mime": "image/webp",
+      "pivot": {
+        "x": 0.5,
+        "y": 1.0
+      },
+      "usedBy": [
+        "GiftFXLayer"
+      ],
+      "runtime": {
+        "atlas": "assets/production/DA-VISUAL-R2/runtime/gifts-fx.webp",
+        "meta": "assets/production/DA-VISUAL-R2/runtime/gifts-fx.json",
+        "frame": "fx-tier5-cosmic-purple"
+      },
+      "status": "APPROVED"
+    },
+    {
+      "id": "fx-tier3-confetti-burst",
+      "category": "effect",
+      "png": "individual/gifts-fx/fx-tier3-confetti-burst.png",
+      "webp": "individual/gifts-fx/fx-tier3-confetti-burst.webp",
+      "width": 384,
+      "height": 384,
+      "alpha": true,
+      "sha256": "7ed28124fd95f491a33249d170cc06b26f643411e8c1ffa384a39c7b4709a6a1",
+      "byteSize": 32618,
+      "mime": "image/webp",
+      "pivot": {
+        "x": 0.5,
+        "y": 1.0
+      },
+      "usedBy": [
+        "GiftFXLayer"
+      ],
+      "runtime": {
+        "atlas": "assets/production/DA-VISUAL-R2/runtime/gifts-fx.webp",
+        "meta": "assets/production/DA-VISUAL-R2/runtime/gifts-fx.json",
+        "frame": "fx-tier3-confetti-burst"
+      },
+      "status": "APPROVED"
+    },
+    {
+      "id": "fx-tier4-heart-vortex",
+      "category": "effect",
+      "png": "individual/gifts-fx/fx-tier4-heart-vortex.png",
+      "webp": "individual/gifts-fx/fx-tier4-heart-vortex.webp",
+      "width": 384,
+      "height": 384,
+      "alpha": true,
+      "sha256": "22c512422a9975ced58567cbda9b8e7ce28872b47708f587fca658c7c2db9388",
+      "byteSize": 14206,
+      "mime": "image/webp",
+      "pivot": {
+        "x": 0.5,
+        "y": 1.0
+      },
+      "usedBy": [
+        "GiftFXLayer"
+      ],
+      "runtime": {
+        "atlas": "assets/production/DA-VISUAL-R2/runtime/gifts-fx.webp",
+        "meta": "assets/production/DA-VISUAL-R2/runtime/gifts-fx.json",
+        "frame": "fx-tier4-heart-vortex"
+      },
+      "status": "APPROVED"
+    },
+    {
+      "id": "fx-tier4-star-vortex",
+      "category": "effect",
+      "png": "individual/gifts-fx/fx-tier4-star-vortex.png",
+      "webp": "individual/gifts-fx/fx-tier4-star-vortex.webp",
+      "width": 384,
+      "height": 384,
+      "alpha": true,
+      "sha256": "85a58783245b8ea785f4e66a38c904f4d22b25794eac4317f7943fc574b7f964",
+      "byteSize": 15112,
+      "mime": "image/webp",
+      "pivot": {
+        "x": 0.5,
+        "y": 1.0
+      },
+      "usedBy": [
+        "GiftFXLayer"
+      ],
+      "runtime": {
+        "atlas": "assets/production/DA-VISUAL-R2/runtime/gifts-fx.webp",
+        "meta": "assets/production/DA-VISUAL-R2/runtime/gifts-fx.json",
+        "frame": "fx-tier4-star-vortex"
+      },
+      "status": "APPROVED"
+    },
+    {
+      "id": "fx-tier5-rainbow-vortex",
+      "category": "effect",
+      "png": "individual/gifts-fx/fx-tier5-rainbow-vortex.png",
+      "webp": "individual/gifts-fx/fx-tier5-rainbow-vortex.webp",
+      "width": 384,
+      "height": 384,
+      "alpha": true,
+      "sha256": "b8a0b92c56b75533f6e21b1a383aea580cba8238c681e1cca3e485014691dc88",
+      "byteSize": 17704,
+      "mime": "image/webp",
+      "pivot": {
+        "x": 0.5,
+        "y": 1.0
+      },
+      "usedBy": [
+        "GiftFXLayer"
+      ],
+      "runtime": {
+        "atlas": "assets/production/DA-VISUAL-R2/runtime/gifts-fx.webp",
+        "meta": "assets/production/DA-VISUAL-R2/runtime/gifts-fx.json",
+        "frame": "fx-tier5-rainbow-vortex"
+      },
+      "status": "APPROVED"
+    },
+    {
+      "id": "crown-gold",
+      "category": "accessory",
+      "png": "individual/accessories/crown-gold.png",
+      "webp": "individual/accessories/crown-gold.webp",
+      "width": 256,
+      "height": 256,
+      "alpha": true,
+      "sha256": "5d4b3c9d875c710e3b1a28e6be59dbd9bffd1d422ed7fe83ff96511d12edfc21",
+      "byteSize": 14562,
+      "mime": "image/webp",
+      "pivot": {
+        "x": 0.5,
+        "y": 1.0
+      },
+      "usedBy": [
+        "DancerView",
+        "VIPLayer"
+      ],
+      "runtime": {
+        "atlas": "assets/production/DA-VISUAL-R2/runtime/rank-accessories.webp",
+        "meta": "assets/production/DA-VISUAL-R2/runtime/rank-accessories.json",
+        "frame": "crown-gold"
+      },
+      "status": "APPROVED"
+    },
+    {
+      "id": "crown-blue",
+      "category": "accessory",
+      "png": "individual/accessories/crown-blue.png",
+      "webp": "individual/accessories/crown-blue.webp",
+      "width": 256,
+      "height": 256,
+      "alpha": true,
+      "sha256": "4be2a2d6f01aed85334486492883cf5da4b3198c7267272449155443773a0fdc",
+      "byteSize": 13378,
+      "mime": "image/webp",
+      "pivot": {
+        "x": 0.5,
+        "y": 1.0
+      },
+      "usedBy": [
+        "DancerView",
+        "VIPLayer"
+      ],
+      "runtime": {
+        "atlas": "assets/production/DA-VISUAL-R2/runtime/rank-accessories.webp",
+        "meta": "assets/production/DA-VISUAL-R2/runtime/rank-accessories.json",
+        "frame": "crown-blue"
+      },
+      "status": "APPROVED"
+    },
+    {
+      "id": "crown-pink",
+      "category": "accessory",
+      "png": "individual/accessories/crown-pink.png",
+      "webp": "individual/accessories/crown-pink.webp",
+      "width": 256,
+      "height": 256,
+      "alpha": true,
+      "sha256": "d3fa567947eccae9d4e4aa52983e06860ba4d6d344803002518a9d96c8d459e7",
+      "byteSize": 12480,
+      "mime": "image/webp",
+      "pivot": {
+        "x": 0.5,
+        "y": 1.0
+      },
+      "usedBy": [
+        "DancerView",
+        "VIPLayer"
+      ],
+      "runtime": {
+        "atlas": "assets/production/DA-VISUAL-R2/runtime/rank-accessories.webp",
+        "meta": "assets/production/DA-VISUAL-R2/runtime/rank-accessories.json",
+        "frame": "crown-pink"
+      },
+      "status": "APPROVED"
+    },
+    {
+      "id": "vip-heart-crest",
+      "category": "accessory",
+      "png": "individual/accessories/vip-heart-crest.png",
+      "webp": "individual/accessories/vip-heart-crest.webp",
+      "width": 256,
+      "height": 256,
+      "alpha": true,
+      "sha256": "b21bd003b7df2602b5038deae161731cc9a7a8a1255b7ef0409eb4aebcf42639",
+      "byteSize": 17534,
+      "mime": "image/webp",
+      "pivot": {
+        "x": 0.5,
+        "y": 1.0
+      },
+      "usedBy": [
+        "DancerView",
+        "VIPLayer"
+      ],
+      "runtime": {
+        "atlas": "assets/production/DA-VISUAL-R2/runtime/rank-accessories.webp",
+        "meta": "assets/production/DA-VISUAL-R2/runtime/rank-accessories.json",
+        "frame": "vip-heart-crest"
+      },
+      "status": "APPROVED"
+    },
+    {
+      "id": "wings-gold",
+      "category": "accessory",
+      "png": "individual/accessories/wings-gold.png",
+      "webp": "individual/accessories/wings-gold.webp",
+      "width": 256,
+      "height": 256,
+      "alpha": true,
+      "sha256": "1f5dba16aa4c41e0e7060797d90d664f8e5b2ab4c9eaf720ff57100549d6ae58",
+      "byteSize": 12166,
+      "mime": "image/webp",
+      "pivot": {
+        "x": 0.5,
+        "y": 1.0
+      },
+      "usedBy": [
+        "DancerView",
+        "VIPLayer"
+      ],
+      "runtime": {
+        "atlas": "assets/production/DA-VISUAL-R2/runtime/rank-accessories.webp",
+        "meta": "assets/production/DA-VISUAL-R2/runtime/rank-accessories.json",
+        "frame": "wings-gold"
+      },
+      "status": "APPROVED"
+    },
+    {
+      "id": "wings-blue",
+      "category": "accessory",
+      "png": "individual/accessories/wings-blue.png",
+      "webp": "individual/accessories/wings-blue.webp",
+      "width": 256,
+      "height": 256,
+      "alpha": true,
+      "sha256": "1cb15054776941f493fc5be19900c26c92d305a6070547d107040eed009f5305",
+      "byteSize": 11644,
+      "mime": "image/webp",
+      "pivot": {
+        "x": 0.5,
+        "y": 1.0
+      },
+      "usedBy": [
+        "DancerView",
+        "VIPLayer"
+      ],
+      "runtime": {
+        "atlas": "assets/production/DA-VISUAL-R2/runtime/rank-accessories.webp",
+        "meta": "assets/production/DA-VISUAL-R2/runtime/rank-accessories.json",
+        "frame": "wings-blue"
+      },
+      "status": "APPROVED"
+    },
+    {
+      "id": "wings-pink",
+      "category": "accessory",
+      "png": "individual/accessories/wings-pink.png",
+      "webp": "individual/accessories/wings-pink.webp",
+      "width": 256,
+      "height": 256,
+      "alpha": true,
+      "sha256": "0e718ff9bb716bd4d4eddf73db73381f275ed55c79300ade0551f17a639692b9",
+      "byteSize": 8766,
+      "mime": "image/webp",
+      "pivot": {
+        "x": 0.5,
+        "y": 1.0
+      },
+      "usedBy": [
+        "DancerView",
+        "VIPLayer"
+      ],
+      "runtime": {
+        "atlas": "assets/production/DA-VISUAL-R2/runtime/rank-accessories.webp",
+        "meta": "assets/production/DA-VISUAL-R2/runtime/rank-accessories.json",
+        "frame": "wings-pink"
+      },
+      "status": "APPROVED"
+    },
+    {
+      "id": "halo-gold",
+      "category": "accessory",
+      "png": "individual/accessories/halo-gold.png",
+      "webp": "individual/accessories/halo-gold.webp",
+      "width": 256,
+      "height": 256,
+      "alpha": true,
+      "sha256": "4323f78e2899796a6d6eae26c2b339df9625aebb1805a00da9004027ab2f462d",
+      "byteSize": 10864,
+      "mime": "image/webp",
+      "pivot": {
+        "x": 0.5,
+        "y": 1.0
+      },
+      "usedBy": [
+        "DancerView",
+        "VIPLayer"
+      ],
+      "runtime": {
+        "atlas": "assets/production/DA-VISUAL-R2/runtime/rank-accessories.webp",
+        "meta": "assets/production/DA-VISUAL-R2/runtime/rank-accessories.json",
+        "frame": "halo-gold"
+      },
+      "status": "APPROVED"
+    },
+    {
+      "id": "stars-wings",
+      "category": "accessory",
+      "png": "individual/accessories/stars-wings.png",
+      "webp": "individual/accessories/stars-wings.webp",
+      "width": 256,
+      "height": 256,
+      "alpha": true,
+      "sha256": "e5e10854472ccc8c8f0dbbfee1d06ffac1e57626c26f31fbf08f7a29129edf91",
+      "byteSize": 10220,
+      "mime": "image/webp",
+      "pivot": {
+        "x": 0.5,
+        "y": 1.0
+      },
+      "usedBy": [
+        "DancerView",
+        "VIPLayer"
+      ],
+      "runtime": {
+        "atlas": "assets/production/DA-VISUAL-R2/runtime/rank-accessories.webp",
+        "meta": "assets/production/DA-VISUAL-R2/runtime/rank-accessories.json",
+        "frame": "stars-wings"
+      },
+      "status": "APPROVED"
+    },
+    {
+      "id": "rank-badge-01",
+      "category": "rank-badge",
+      "png": "individual/rank/rank-badge-01.png",
+      "webp": "individual/rank/rank-badge-01.webp",
+      "width": 256,
+      "height": 256,
+      "alpha": true,
+      "sha256": "2321eeac7d56c0c150628a7c99e11b5c14acc2af83a27029435a2013e173e99e",
+      "byteSize": 13820,
+      "mime": "image/webp",
+      "pivot": {
+        "x": 0.5,
+        "y": 1.0
+      },
+      "usedBy": [
+        "DancerView",
+        "OverlayLayer"
+      ],
+      "runtime": {
+        "atlas": "assets/production/DA-VISUAL-R2/runtime/rank-accessories.webp",
+        "meta": "assets/production/DA-VISUAL-R2/runtime/rank-accessories.json",
+        "frame": "rank-badge-01"
+      },
+      "status": "APPROVED"
+    },
+    {
+      "id": "rank-badge-02",
+      "category": "rank-badge",
+      "png": "individual/rank/rank-badge-02.png",
+      "webp": "individual/rank/rank-badge-02.webp",
+      "width": 256,
+      "height": 256,
+      "alpha": true,
+      "sha256": "bfe1f0d81c859b02c69e279df4f3a5f72e598dabab7b2ff7c3da6c65f206d143",
+      "byteSize": 14318,
+      "mime": "image/webp",
+      "pivot": {
+        "x": 0.5,
+        "y": 1.0
+      },
+      "usedBy": [
+        "DancerView",
+        "OverlayLayer"
+      ],
+      "runtime": {
+        "atlas": "assets/production/DA-VISUAL-R2/runtime/rank-accessories.webp",
+        "meta": "assets/production/DA-VISUAL-R2/runtime/rank-accessories.json",
+        "frame": "rank-badge-02"
+      },
+      "status": "APPROVED"
+    },
+    {
+      "id": "rank-badge-03",
+      "category": "rank-badge",
+      "png": "individual/rank/rank-badge-03.png",
+      "webp": "individual/rank/rank-badge-03.webp",
+      "width": 256,
+      "height": 256,
+      "alpha": true,
+      "sha256": "bd875a36b7ec4f420e098461aeca56123c010183a9c08c94f6a126c5c285ce49",
+      "byteSize": 15128,
+      "mime": "image/webp",
+      "pivot": {
+        "x": 0.5,
+        "y": 1.0
+      },
+      "usedBy": [
+        "DancerView",
+        "OverlayLayer"
+      ],
+      "runtime": {
+        "atlas": "assets/production/DA-VISUAL-R2/runtime/rank-accessories.webp",
+        "meta": "assets/production/DA-VISUAL-R2/runtime/rank-accessories.json",
+        "frame": "rank-badge-03"
+      },
+      "status": "APPROVED"
+    },
+    {
+      "id": "rank-badge-04",
+      "category": "rank-badge",
+      "png": "individual/rank/rank-badge-04.png",
+      "webp": "individual/rank/rank-badge-04.webp",
+      "width": 256,
+      "height": 256,
+      "alpha": true,
+      "sha256": "146b4d336a417fc68eab9e26d07e3f5ab56862bca730aa1d3ac453459ff03429",
+      "byteSize": 13636,
+      "mime": "image/webp",
+      "pivot": {
+        "x": 0.5,
+        "y": 1.0
+      },
+      "usedBy": [
+        "DancerView",
+        "OverlayLayer"
+      ],
+      "runtime": {
+        "atlas": "assets/production/DA-VISUAL-R2/runtime/rank-accessories.webp",
+        "meta": "assets/production/DA-VISUAL-R2/runtime/rank-accessories.json",
+        "frame": "rank-badge-04"
+      },
+      "status": "APPROVED"
+    },
+    {
+      "id": "rank-badge-05",
+      "category": "rank-badge",
+      "png": "individual/rank/rank-badge-05.png",
+      "webp": "individual/rank/rank-badge-05.webp",
+      "width": 256,
+      "height": 256,
+      "alpha": true,
+      "sha256": "4b9caa48f6da1e36681ef98dad2d64ddb63a61680faa3d0388671f9f90a05b98",
+      "byteSize": 13998,
+      "mime": "image/webp",
+      "pivot": {
+        "x": 0.5,
+        "y": 1.0
+      },
+      "usedBy": [
+        "DancerView",
+        "OverlayLayer"
+      ],
+      "runtime": {
+        "atlas": "assets/production/DA-VISUAL-R2/runtime/rank-accessories.webp",
+        "meta": "assets/production/DA-VISUAL-R2/runtime/rank-accessories.json",
+        "frame": "rank-badge-05"
+      },
+      "status": "APPROVED"
+    },
+    {
+      "id": "rank-badge-06",
+      "category": "rank-badge",
+      "png": "individual/rank/rank-badge-06.png",
+      "webp": "individual/rank/rank-badge-06.webp",
+      "width": 256,
+      "height": 256,
+      "alpha": true,
+      "sha256": "bbfa081c3dee4e15a168ea11b1cd1676031456a26c02f3cb6da43009c1f3e087",
+      "byteSize": 14668,
+      "mime": "image/webp",
+      "pivot": {
+        "x": 0.5,
+        "y": 1.0
+      },
+      "usedBy": [
+        "DancerView",
+        "OverlayLayer"
+      ],
+      "runtime": {
+        "atlas": "assets/production/DA-VISUAL-R2/runtime/rank-accessories.webp",
+        "meta": "assets/production/DA-VISUAL-R2/runtime/rank-accessories.json",
+        "frame": "rank-badge-06"
+      },
+      "status": "APPROVED"
+    },
+    {
+      "id": "rank-badge-07",
+      "category": "rank-badge",
+      "png": "individual/rank/rank-badge-07.png",
+      "webp": "individual/rank/rank-badge-07.webp",
+      "width": 256,
+      "height": 256,
+      "alpha": true,
+      "sha256": "96964736d6229316caef5026c15c2ecc53bc4b85d6cb75718b4129dd16a196d5",
+      "byteSize": 13590,
+      "mime": "image/webp",
+      "pivot": {
+        "x": 0.5,
+        "y": 1.0
+      },
+      "usedBy": [
+        "DancerView",
+        "OverlayLayer"
+      ],
+      "runtime": {
+        "atlas": "assets/production/DA-VISUAL-R2/runtime/rank-accessories.webp",
+        "meta": "assets/production/DA-VISUAL-R2/runtime/rank-accessories.json",
+        "frame": "rank-badge-07"
+      },
+      "status": "APPROVED"
+    },
+    {
+      "id": "rank-badge-08",
+      "category": "rank-badge",
+      "png": "individual/rank/rank-badge-08.png",
+      "webp": "individual/rank/rank-badge-08.webp",
+      "width": 256,
+      "height": 256,
+      "alpha": true,
+      "sha256": "6c0c831f26d4626c388f5e03f26802126353bc85bdf9b3f9045c94771e2f7449",
+      "byteSize": 14706,
+      "mime": "image/webp",
+      "pivot": {
+        "x": 0.5,
+        "y": 1.0
+      },
+      "usedBy": [
+        "DancerView",
+        "OverlayLayer"
+      ],
+      "runtime": {
+        "atlas": "assets/production/DA-VISUAL-R2/runtime/rank-accessories.webp",
+        "meta": "assets/production/DA-VISUAL-R2/runtime/rank-accessories.json",
+        "frame": "rank-badge-08"
+      },
+      "status": "APPROVED"
+    },
+    {
+      "id": "rank-badge-09",
+      "category": "rank-badge",
+      "png": "individual/rank/rank-badge-09.png",
+      "webp": "individual/rank/rank-badge-09.webp",
+      "width": 256,
+      "height": 256,
+      "alpha": true,
+      "sha256": "b3467774083ee34664891736f9933c76d214418d2381eedd9e116af5c253c637",
+      "byteSize": 14726,
+      "mime": "image/webp",
+      "pivot": {
+        "x": 0.5,
+        "y": 1.0
+      },
+      "usedBy": [
+        "DancerView",
+        "OverlayLayer"
+      ],
+      "runtime": {
+        "atlas": "assets/production/DA-VISUAL-R2/runtime/rank-accessories.webp",
+        "meta": "assets/production/DA-VISUAL-R2/runtime/rank-accessories.json",
+        "frame": "rank-badge-09"
+      },
+      "status": "APPROVED"
+    },
+    {
+      "id": "rank-badge-10",
+      "category": "rank-badge",
+      "png": "individual/rank/rank-badge-10.png",
+      "webp": "individual/rank/rank-badge-10.webp",
+      "width": 256,
+      "height": 256,
+      "alpha": true,
+      "sha256": "83c4db5538c158505de324b8f8cb63cf51c532172a3ffd33eaa157b9229280b0",
+      "byteSize": 15284,
+      "mime": "image/webp",
+      "pivot": {
+        "x": 0.5,
+        "y": 1.0
+      },
+      "usedBy": [
+        "DancerView",
+        "OverlayLayer"
+      ],
+      "runtime": {
+        "atlas": "assets/production/DA-VISUAL-R2/runtime/rank-accessories.webp",
+        "meta": "assets/production/DA-VISUAL-R2/runtime/rank-accessories.json",
+        "frame": "rank-badge-10"
+      },
+      "status": "APPROVED"
+    },
+    {
+      "id": "stage-vip-podium",
+      "category": "environment",
+      "png": "individual/stage-ui/stage-vip-podium.png",
+      "webp": "individual/stage-ui/stage-vip-podium.webp",
+      "width": 640,
+      "height": 480,
+      "alpha": true,
+      "sha256": "ad1a448ea455b13dec36e6ff15e87d04b58a7bbbc2afcab4dac694e2c1198d33",
+      "byteSize": 69630,
+      "mime": "image/webp",
+      "pivot": {
+        "x": 0.5,
+        "y": 1.0
+      },
+      "usedBy": [
+        "EnvironmentLayer",
+        "VIPLayer"
+      ],
+      "runtime": {
+        "atlas": "assets/production/DA-VISUAL-R2/runtime/stage-ui.webp",
+        "meta": "assets/production/DA-VISUAL-R2/runtime/stage-ui.json",
+        "frame": "stage-vip-podium"
+      },
+      "status": "APPROVED"
+    },
+    {
+      "id": "party-goal-frame",
+      "category": "ui",
+      "png": "individual/stage-ui/party-goal-frame.png",
+      "webp": "individual/stage-ui/party-goal-frame.webp",
+      "width": 900,
+      "height": 300,
+      "alpha": true,
+      "sha256": "3e4e4a7adaec7114025af4ed2d33c526f8c7fc920ffdeb84c5500f972fd346df",
+      "byteSize": 34084,
+      "mime": "image/webp",
+      "pivot": {
+        "x": 0.5,
+        "y": 1.0
+      },
+      "usedBy": [
+        "OverlayLayer"
+      ],
+      "runtime": {
+        "atlas": "assets/production/DA-VISUAL-R2/runtime/stage-ui.webp",
+        "meta": "assets/production/DA-VISUAL-R2/runtime/stage-ui.json",
+        "frame": "party-goal-frame"
+      },
+      "status": "APPROVED"
+    },
+    {
+      "id": "ui-new-vip",
+      "category": "ui",
+      "png": "individual/stage-ui/ui-new-vip.png",
+      "webp": "individual/stage-ui/ui-new-vip.webp",
+      "width": 900,
+      "height": 300,
+      "alpha": true,
+      "sha256": "15b5fbf9d3d604027dd891602fc325680d4c7ef3556ec635a9e3896509beefc7",
+      "byteSize": 60896,
+      "mime": "image/webp",
+      "pivot": {
+        "x": 0.5,
+        "y": 1.0
+      },
+      "usedBy": [
+        "AnnouncementLayer"
+      ],
+      "runtime": {
+        "atlas": "assets/production/DA-VISUAL-R2/runtime/stage-ui.webp",
+        "meta": "assets/production/DA-VISUAL-R2/runtime/stage-ui.json",
+        "frame": "ui-new-vip"
+      },
+      "status": "APPROVED"
+    },
+    {
+      "id": "ui-top1-banner",
+      "category": "ui",
+      "png": "individual/stage-ui/ui-top1-banner.png",
+      "webp": "individual/stage-ui/ui-top1-banner.webp",
+      "width": 900,
+      "height": 300,
+      "alpha": true,
+      "sha256": "0a9a3d0328a1394ecb6082e693e4ab49c9cc8e9f2366b0a9502271fb0dc1082a",
+      "byteSize": 53620,
+      "mime": "image/webp",
+      "pivot": {
+        "x": 0.5,
+        "y": 1.0
+      },
+      "usedBy": [
+        "OverlayLayer"
+      ],
+      "runtime": {
+        "atlas": "assets/production/DA-VISUAL-R2/runtime/stage-ui.webp",
+        "meta": "assets/production/DA-VISUAL-R2/runtime/stage-ui.json",
+        "frame": "ui-top1-banner"
+      },
+      "status": "APPROVED"
+    },
+    {
+      "id": "ui-now-playing",
+      "category": "ui",
+      "png": "individual/stage-ui/ui-now-playing.png",
+      "webp": "individual/stage-ui/ui-now-playing.webp",
+      "width": 960,
+      "height": 240,
+      "alpha": true,
+      "sha256": "2c46ff3e34a434f037c652db62f0ed190a029f9418a1a188a0b81a415dffed34",
+      "byteSize": 21170,
+      "mime": "image/webp",
+      "pivot": {
+        "x": 0.5,
+        "y": 1.0
+      },
+      "usedBy": [
+        "DJLayer",
+        "OverlayLayer"
+      ],
+      "runtime": {
+        "atlas": "assets/production/DA-VISUAL-R2/runtime/stage-ui.webp",
+        "meta": "assets/production/DA-VISUAL-R2/runtime/stage-ui.json",
+        "frame": "ui-now-playing"
+      },
+      "status": "APPROVED"
+    },
+    {
+      "id": "stage-bg-neon-kawaii",
+      "category": "background",
+      "png": "individual/backgrounds/stage-bg-neon-kawaii.png",
+      "webp": "individual/backgrounds/stage-bg-neon-kawaii.webp",
+      "width": 1080,
+      "height": 1920,
+      "alpha": false,
+      "sha256": "8c89893c8aed98d2e4b10189847daa715efe247f45754104f266d1210113e7e8",
+      "byteSize": 364136,
+      "mime": "image/webp",
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      },
+      "usedBy": [
+        "BackgroundLayer"
+      ],
+      "runtime": {
+        "file": "assets/production/DA-VISUAL-R2/runtime/stage-bg-neon-kawaii.webp"
+      },
+      "status": "APPROVED"
+    },
+    {
+      "id": "avatar-default-happy",
+      "category": "avatar-fallback",
+      "png": "individual/avatar/avatar-default-happy.png",
+      "webp": "individual/avatar/avatar-default-happy.webp",
+      "width": 256,
+      "height": 256,
+      "alpha": true,
+      "sha256": "afa67ac4cb44b1aadb6b0958fdc71b0f5634e9de1a8e0b9093759b85752ec5c9",
+      "byteSize": 19572,
+      "mime": "image/webp",
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      },
+      "usedBy": [
+        "DancerView"
+      ],
+      "runtime": {
+        "atlas": "assets/production/DA-VISUAL-R2/runtime/reactions.webp",
+        "meta": "assets/production/DA-VISUAL-R2/runtime/reactions.json",
+        "frame": "avatar-default-happy"
+      },
+      "status": "APPROVED"
+    }
+  ],
+  "atlas": {
+    "dancers-regular": {
+      "atlas": "dancers-regular.webp",
+      "width": 1024,
+      "height": 1152,
+      "mime": "image/webp",
+      "sha256": "85def1911ee3058fc4d4080c40dfe20e073b719ff3742712de8f9b0fbce5abea",
+      "byteSize": 487956
+    },
+    "dancers-vip": {
+      "atlas": "dancers-vip.webp",
+      "width": 1400,
+      "height": 840,
+      "mime": "image/webp",
+      "sha256": "7f382805706329f3153bb93ce9215c1724a3f30cc2961200e09735e350adc0a8",
+      "byteSize": 403794
+    },
+    "reactions": {
+      "atlas": "reactions.webp",
+      "width": 640,
+      "height": 640,
+      "mime": "image/webp",
+      "sha256": "fb3ca782b3764d4fddb65fe505209166fb0dede67d30cf8ab1322f5d65a51a05",
+      "byteSize": 222158
+    },
+    "bubbles": {
+      "atlas": "bubbles.webp",
+      "width": 1024,
+      "height": 640,
+      "mime": "image/webp",
+      "sha256": "9752add3fd3862693b2b3c479b11c6f7dad5b80c7607e82d792456e317450bed",
+      "byteSize": 259198
+    },
+    "gifts-fx": {
+      "atlas": "gifts-fx.webp",
+      "width": 960,
+      "height": 768,
+      "mime": "image/webp",
+      "sha256": "8eeefc0f1e55b2f75bf62ce64735c3ec8b3146464cf23b119c8ef61ce91850dd",
+      "byteSize": 181954
+    },
+    "rank-accessories": {
+      "atlas": "rank-accessories.webp",
+      "width": 640,
+      "height": 512,
+      "mime": "image/webp",
+      "sha256": "f815fdf391d9612a9e0ee2356b4e072ab8d220de10a9259011221440b3095fbe",
+      "byteSize": 108014
+    },
+    "stage-ui": {
+      "atlas": "stage-ui.webp",
+      "width": 960,
+      "height": 320,
+      "mime": "image/webp",
+      "sha256": "3beebd4e3e8989d1b2805d7d4672bbbf98c1a4dbbd1254572503e4491f438d0e",
+      "byteSize": 75628
+    }
+  },
+  "rules": [
+    "ChatGPT/System Architect owns production visual truth.",
+    "Claude must consume asset IDs and atlas metadata; do not hard-code source sheet coordinates.",
+    "Do not recolor/crop/redraw approved R2 assets without a new visual revision.",
+    "Avatar is rendered as a circular masked layer at each dancer asset headSocket.",
+    "Per-asset headSocket is authoritative; no global socket fallback when metadata exists.",
+    "Runtime prefers WebP atlases; individual PNG/WebP files are source/fallback package."
+  ]
+}

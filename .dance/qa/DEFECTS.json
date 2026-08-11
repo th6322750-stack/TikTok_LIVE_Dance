@@ -33,7 +33,10 @@
       "severity": "HIGH",
       "observed": "PR #3 currently uses crown 0.8x body width and badge 0.42x body width.",
       "expected": "R2 contract requires crown 0.44x and rank badge 0.27x body width.",
-      "status": "OPEN"
+      "status": "FIXED_PENDING_QA",
+      "fixedInVisualRevision": "DA-VISUAL-R2",
+      "fixedBy": "Claude",
+      "fixDetail": "Ratios moved out of the renderer into theme data (ThemeDefinition.rankLayout, sourced from VISUAL_CONTRACT.rankVisual.layout): crownWidthBodyRatio 0.44, badgeWidthBodyRatio 0.27. DancerView now scales crown/badge from those values, crown centred above the head silhouette and badge on the head side clear of the avatar circle. Regression test: 'hands the renderer the approved crown/badge ratios (DA-QA-003)'."
     },
     {
       "defectId": "DA-QA-004",
@@ -54,7 +57,10 @@
       "severity": "MEDIUM",
       "observed": "PR #3 applies one coverage formula to all gift tiers.",
       "expected": "When largeTakeovers=true, LOW tier-4 coverage >=0.82 stage width and tier-5 >=1.00 stage width; particleScale may reduce density/concurrency, not takeover coverage below those minima.",
-      "status": "OPEN"
+      "status": "FIXED_PENDING_QA",
+      "fixedInVisualRevision": "DA-VISUAL-R2",
+      "fixedBy": "Claude",
+      "fixDetail": "Coverage is now resolved per tier by apps/stage/src/stage/effectCoverage.ts against PerformanceProfile.coverage (LOW tier1to3Max 0.62, tier4Min 0.82, tier5Min 1.00). particleScale only shapes the base ramp and can no longer scale a takeover below its floor; the renderer applies the resolved coverage verbatim. Regression tests: apps/stage/src/stage/effectCoverage.test.ts (12) plus two scene-level assertions."
     }
   ],
   "lifecycle": ["OPEN", "FIXED_PENDING_QA", "CLOSED", "REOPENED"],

@@ -1,0 +1,2 @@
+DA-VISUAL-R2
+Fixes DA-QA-001..005 visual prep defects: per-asset sockets, clean VIP male bodies, clean source bleed, new clean rank badges, rank scale contract, tier4/5 LOW takeover contract.
