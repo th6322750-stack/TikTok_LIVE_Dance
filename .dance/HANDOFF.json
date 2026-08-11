@@ -1,11 +1,12 @@
 {
   "protocolVersion": 1,
-  "handoffId": "DA-T09-R1-LOCKED",
+  "handoffId": "DA-T09-R2-REMEDIATION",
   "task": 9,
-  "title": "Asset, Theme & Visual System",
-  "visualRevision": "DA-VISUAL-R1",
+  "title": "Asset, Theme & Visual System — R2 remediation",
+  "visualRevision": "DA-VISUAL-R2",
   "baseImplementationCommit": "c569780b8b328fdaa91e02ad2fca630ff99d6af6",
-  "visualCommit": "7400a88ebc20f7ec06c219e7dd97f1c69a13b7c2",
+  "targetImplementationHead": "a90a6eb6d541e5663bd857d67200d68d2bde93ee",
+  "visualCommit": "31714b3571f04615e215deeab53fc65d54f2cde5",
   "createdBy": "ChatGPT/System Architect",
   "status": "READY_FOR_IMPLEMENTATION",
   "visualSetupComplete": true,
@@ -17,17 +18,24 @@
     ".dance/ASSET_MANIFEST.json"
   ],
   "assetPackage": {
-    "fileName": "DA-VISUAL-R1-production.zip",
-    "sha256": "e297760bb8f1d5d6b7b28cb98f0dc08bccdeceb350511d3fed1b60c2676ebef1",
-    "libraryFileId": "libfile_3102e94b82c08191bceddcc02d319315",
-    "expectedExtractRoot": "assets/production/DA-VISUAL-R1"
+    "fileName": "DA-VISUAL-R2-production.zip",
+    "sha256": "42b2b47554def73a6fd611fa6cf449106e01cb0f432b582f2e1f59f1961c3559",
+    "libraryFileId": "libfile_c4420f5e7cd88191b4478e23b77e7e2b",
+    "expectedExtractRoot": "assets/production/DA-VISUAL-R2"
   },
   "implementationBranch": "claude/task-09-asset-theme-visual-system",
   "hardGate": {
     "claudeMayStart": true,
-    "precondition": "The owner must place DA-VISUAL-R1-production.zip in the repository root or otherwise make the exact locked package available locally; Claude must verify SHA256 before extraction.",
-    "reason": "Visual contracts, geometry, IDs, production package and lock are complete."
+    "precondition": "Owner places DA-VISUAL-R2-production.zip in the local repo/workspace; Claude verifies SHA256 before replacing R1 assets.",
+    "reason": "R2 fixes the visual QA blockers found on PR #3."
   },
-  "knownBlockers": [],
-  "stopCondition": "Open Task 09 PR, publish implementation receipt, then stop for ChatGPT visual QA."
+  "requiredRemediation": [
+    "consume R2 package and update theme revision/path from R1 to R2",
+    "use per-asset headSocket values from manifest",
+    "set crown width to 0.44 body width and rank badge width to 0.27 body width",
+    "when LOW.largeTakeovers=true keep tier-4 coverage >=0.82 stage width and tier-5 coverage >=1.00 stage width",
+    "keep DJ artwork deferred to Task 11",
+    "run pnpm validate and update implementation receipt"
+  ],
+  "stopCondition": "Push R2 remediation commit(s) to PR #3, CI green, then stop for ChatGPT visual QA round 2."
 }
