@@ -1,21 +1,21 @@
 protocolVersion: 1
 project: Dance Arena V2
-phase: task-09-implementation
+phase: task-09-r2-remediation
 visualOwner: ChatGPT
 implementationOwner: Claude
-visualRevision: DA-VISUAL-R1
+visualRevision: DA-VISUAL-R2
 visualSetupComplete: true
 baseImplementationCommit: c569780b8b328fdaa91e02ad2fca630ff99d6af6
-visualManifestCommit: 7400a88ebc20f7ec06c219e7dd97f1c69a13b7c2
+visualManifestCommit: 57394c7832cead4973d8e392bac8d1d6a0d03645
 status: READY_FOR_IMPLEMENTATION
 
 assetPackage:
-  fileName: DA-VISUAL-R1-production.zip
-  sha256: e297760bb8f1d5d6b7b28cb98f0dc08bccdeceb350511d3fed1b60c2676ebef1
-  byteSize: 40076049
+  fileName: DA-VISUAL-R2-production.zip
+  sha256: 42b2b47554def73a6fd611fa6cf449106e01cb0f432b582f2e1f59f1961c3559
+  byteSize: 35870901
   logicalAssetCount: 104
-  libraryFileId: libfile_3102e94b82c08191bceddcc02d319315
-  expectedExtractRoot: assets/production/DA-VISUAL-R1
+  libraryFileId: libfile_c4420f5e7cd88191b4478e23b77e7e2b
+  expectedExtractRoot: assets/production/DA-VISUAL-R2
 
 ownership:
   chatgpt:
@@ -34,8 +34,9 @@ ownership:
     - .dance/requests/**
 
 hardRules:
-  - Claude must verify the locked asset package SHA256 before extraction.
+  - Claude must verify the locked R2 asset package SHA256 before extraction.
   - Claude must not invent missing approved artwork.
+  - Per-asset headSocket is authoritative.
   - Claude must not alter ChatGPT-owned approved assets/contracts to simplify implementation.
   - Missing visual resources must use the request lifecycle.
   - Core Engine gameplay state must remain independent from theme and asset choice.
