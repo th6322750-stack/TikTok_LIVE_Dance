@@ -1,34 +1,31 @@
 /**
- * DancerView (Blueprint §31).
+ * DancerView (Blueprint §31, DA-VISUAL-R1).
  *
- * Composition: BodySprite → AvatarMask → NameLabel → RankBadge.
+ * Composition, bottom to top: aura → body → avatar (circle-masked) → accessory → name → badge.
  *
- * Task 06 uses PLACEHOLDER primitives only. The production chibi/VIP costume art is Task 09 and is
- * supplied by the System Architect — nothing here should be mistaken for final art.
+ * The avatar is the viewer's IDENTITY, so it is composited at the body's `headSocket` taken from the
+ * manifest — never at a position guessed from the costume artwork, and never replaced by it
+ * (VISUAL_CONTRACT `avatarIdentity`, locked rule 4).
  */
 
 import type { NormalizedPosition, StageDancer } from '@dance-arena/contracts';
-import { Container, Graphics, Sprite, Text } from 'pixi.js';
+import { Container, Graphics, Sprite, Text, Texture } from 'pixi.js';
 
-import type { DancerView } from '../stageScene.js';
+import type { DancerVisual, DancerView } from '../stageScene.js';
 import type { StageSize } from '../stageSize.js';
-import { loadAvatarTexture } from './avatarCache.js';
+import type { TextureCache } from './textureCache.js';
 
-const BODY_WIDTH = 54;
-const BODY_HEIGHT = 84;
-const AVATAR_RADIUS = 22;
-
-const ZONE_COLORS: Record<string, number> = {
-  normal: 0x3a3a5c,
-  vip: 0x8a6a1f,
-};
+/** Rendered body height as a fraction of stage height; keeps 30 dancers readable at 720x1280. */
+const BODY_HEIGHT_RATIO = 0.17;
 
 export interface PixiDancerViewOptions {
   readonly parent: Container;
   readonly design: StageSize;
   readonly dancer: StageDancer;
   readonly position: NormalizedPosition;
-  /** Called when the dancer must move between the normal and VIP layers. */
+  readonly visual: DancerVisual;
+  readonly textures: TextureCache;
+  readonly avatarTexture: (url: string | undefined) => Promise<Texture | undefined>;
   readonly reparent: (view: Container, zone: StageDancer['zone']) => void;
 }
 
@@ -36,72 +33,121 @@ export function createPixiDancerView(options: PixiDancerViewOptions): DancerView
   const root = new Container();
   root.label = `dancer:${options.dancer.dancerId}`;
 
-  const body = new Graphics();
+  const aura = new Graphics();
+  const body = new Sprite();
   const avatar = new Sprite();
   const avatarMask = new Graphics();
+  const accessory = new Sprite();
   const name = new Text({
     text: options.dancer.nickname,
     style: { fill: 0xf0f0ff, fontSize: 13, fontFamily: 'system-ui, sans-serif' },
   });
-  const badge = new Text({
-    text: '',
-    style: { fill: 0xffd28a, fontSize: 12, fontFamily: 'system-ui, sans-serif' },
-  });
+  const badge = new Sprite();
 
+  body.anchor.set(0.5, 1);
   avatar.anchor.set(0.5);
-  avatar.width = AVATAR_RADIUS * 2;
-  avatar.height = AVATAR_RADIUS * 2;
-  avatar.y = -BODY_HEIGHT / 2 - AVATAR_RADIUS + 6;
-  avatar.mask = avatarMask;
-
-  avatarMask.circle(0, avatar.y, AVATAR_RADIUS).fill(0xffffff);
-
-  name.anchor.set(0.5);
-  name.y = BODY_HEIGHT / 2 + 10;
-
+  accessory.anchor.set(0.5, 1);
   badge.anchor.set(0.5);
-  badge.y = -BODY_HEIGHT / 2 - AVATAR_RADIUS * 2 - 2;
+  name.anchor.set(0.5);
 
-  root.addChild(body, avatarMask, avatar, name, badge);
+  avatar.mask = avatarMask;
+  root.addChild(aura, body, avatarMask, avatar, accessory, name, badge);
   options.parent.addChild(root);
 
   let currentZone = options.dancer.zone;
-
-  const drawBody = (zone: StageDancer['zone']): void => {
-    body
-      .clear()
-      .roundRect(-BODY_WIDTH / 2, -BODY_HEIGHT / 2, BODY_WIDTH, BODY_HEIGHT, 12)
-      .fill(ZONE_COLORS[zone] ?? ZONE_COLORS.normal ?? 0x3a3a5c)
-      .stroke({ color: zone === 'vip' ? 0xffd28a : 0x55557a, width: 2 });
-  };
+  let bodyHeight = options.design.height * BODY_HEIGHT_RATIO;
+  let bodyWidth = bodyHeight * 0.66;
 
   const place = (position: NormalizedPosition): void => {
     root.x = position.x * options.design.width;
     root.y = position.y * options.design.height;
   };
 
-  const setRank = (rank: number | undefined): void => {
-    badge.text = rank === undefined ? '' : `#${rank}`;
-    badge.visible = rank !== undefined;
-  };
+  /** Lays out every child from the body box and the manifest head socket. */
+  function layout(visual: DancerVisual): void {
+    const asset = visual.body;
 
-  drawBody(currentZone);
-  place(options.position);
-  setRank(options.dancer.rank);
+    if (asset !== undefined) {
+      // Preserve the approved aspect ratio; never stretch artwork to fit.
+      bodyHeight = options.design.height * BODY_HEIGHT_RATIO;
+      bodyWidth = (asset.width / asset.height) * bodyHeight;
+    }
 
-  void loadAvatarTexture(options.dancer.avatarUrl).then((texture) => {
+    body.width = bodyWidth;
+    body.height = bodyHeight;
+
+    const socket = visual.headSocket;
+    const avatarDiameter = (socket?.radius ?? 0.165) * 2 * bodyWidth;
+
+    avatar.width = avatarDiameter;
+    avatar.height = avatarDiameter;
+    // Socket y is normalized to the body box, measured from its top; the body pivot is its bottom.
+    avatar.x = ((socket?.x ?? 0.5) - 0.5) * bodyWidth;
+    avatar.y = -bodyHeight + (socket?.y ?? 0.245) * bodyHeight;
+
+    avatarMask
+      .clear()
+      .circle(avatar.x, avatar.y, avatarDiameter / 2)
+      .fill(0xffffff);
+
+    accessory.width = bodyWidth * 0.8;
+    accessory.height = bodyWidth * 0.8;
+    accessory.x = avatar.x;
+    accessory.y = avatar.y - avatarDiameter * 0.42;
+
+    name.y = 14;
+
+    badge.width = bodyWidth * 0.42;
+    badge.height = bodyWidth * 0.42;
+    badge.x = bodyWidth * 0.42;
+    badge.y = -bodyHeight * 0.92;
+
+    aura.clear();
+    if (visual.auraColor !== undefined) {
+      aura
+        .ellipse(0, 0, bodyWidth * 0.62, bodyHeight * 0.14)
+        .fill({ color: visual.auraColor, alpha: 0.45 });
+    }
+  }
+
+  async function applyVisual(visual: DancerVisual): Promise<void> {
+    layout(visual);
+
+    const [bodyTexture, badgeTexture, accessoryTexture] = await Promise.all([
+      options.textures.textureFor(visual.body),
+      options.textures.textureFor(visual.badge),
+      options.textures.textureFor(visual.accessory),
+    ]);
+
     if (root.destroyed) return;
 
-    avatar.texture = texture;
-    avatar.width = AVATAR_RADIUS * 2;
-    avatar.height = AVATAR_RADIUS * 2;
-  });
+    if (bodyTexture !== undefined) body.texture = bodyTexture;
+
+    badge.texture = badgeTexture ?? Texture.EMPTY;
+    badge.visible = badgeTexture !== undefined;
+
+    accessory.texture = accessoryTexture ?? Texture.EMPTY;
+    accessory.visible = accessoryTexture !== undefined;
+
+    // Avatar last: a failed load must leave the approved fallback head in place, never a hole.
+    const avatarTexture =
+      (await options.avatarTexture(visual.avatarUrl)) ??
+      (await options.textures.textureFor(visual.avatarFallback));
+
+    if (root.destroyed) return;
+
+    avatar.texture = avatarTexture ?? Texture.EMPTY;
+    avatar.visible = avatarTexture !== undefined;
+    layout(visual);
+  }
+
+  place(options.position);
+  void applyVisual(options.visual);
 
   return {
     moveTo(position: NormalizedPosition, dancer: StageDancer): void {
       if (dancer.zone !== currentZone) {
         currentZone = dancer.zone;
-        drawBody(currentZone);
         options.reparent(root, currentZone);
       }
 
@@ -109,7 +155,9 @@ export function createPixiDancerView(options: PixiDancerViewOptions): DancerView
       place(position);
     },
 
-    setRank,
+    setRank(_rank: number | undefined, visual: DancerVisual): void {
+      void applyVisual(visual);
+    },
 
     destroy(): void {
       root.destroy({ children: true });

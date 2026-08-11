@@ -12,10 +12,12 @@
     "typecheck": "tsc -p tsconfig.json"
   },
   "dependencies": {
+    "@dance-arena/assets": "workspace:*",
     "@dance-arena/contracts": "workspace:*",
     "pixi.js": "^8.19.0"
   },
   "devDependencies": {
+    "@types/node": "^26.2.0",
     "vite": "^7.3.6"
   }
 }

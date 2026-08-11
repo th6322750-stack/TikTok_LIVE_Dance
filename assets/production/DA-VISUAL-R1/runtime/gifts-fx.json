@@ -1,0 +1,190 @@
+{
+  "atlas": "gifts-fx.webp",
+  "width": 960,
+  "height": 768,
+  "mime": "image/webp",
+  "sha256": "9346ce87a05a7e9e86d7ab11621ad62887d94c73bfa1f24ca30a0fd32663c206",
+  "byteSize": 350982,
+  "frames": {
+    "gift-rose-red": {
+      "x": 0,
+      "y": 0,
+      "w": 192,
+      "h": 192,
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "gift-heart": {
+      "x": 192,
+      "y": 0,
+      "w": 192,
+      "h": 192,
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "fx-tier1-spark": {
+      "x": 384,
+      "y": 0,
+      "w": 192,
+      "h": 192,
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "fx-tier1-music": {
+      "x": 576,
+      "y": 0,
+      "w": 192,
+      "h": 192,
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "fx-tier2-heart-orbit": {
+      "x": 768,
+      "y": 0,
+      "w": 192,
+      "h": 192,
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "fx-tier2-heart-rain": {
+      "x": 0,
+      "y": 192,
+      "w": 192,
+      "h": 192,
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "fx-tier2-confetti": {
+      "x": 192,
+      "y": 192,
+      "w": 192,
+      "h": 192,
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "fx-tier3-crystal-blue": {
+      "x": 384,
+      "y": 192,
+      "w": 192,
+      "h": 192,
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "fx-tier3-crystal-pink": {
+      "x": 576,
+      "y": 192,
+      "w": 192,
+      "h": 192,
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "fx-tier3-crystal-rainbow": {
+      "x": 768,
+      "y": 192,
+      "w": 192,
+      "h": 192,
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "fx-tier4-crystal-crown": {
+      "x": 0,
+      "y": 384,
+      "w": 192,
+      "h": 192,
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "fx-tier4-heart-podium": {
+      "x": 192,
+      "y": 384,
+      "w": 192,
+      "h": 192,
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "fx-tier5-cosmic-blue": {
+      "x": 384,
+      "y": 384,
+      "w": 192,
+      "h": 192,
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "fx-tier5-cosmic-purple": {
+      "x": 576,
+      "y": 384,
+      "w": 192,
+      "h": 192,
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "fx-tier3-confetti-burst": {
+      "x": 768,
+      "y": 384,
+      "w": 192,
+      "h": 192,
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "fx-tier4-heart-vortex": {
+      "x": 0,
+      "y": 576,
+      "w": 192,
+      "h": 192,
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "fx-tier4-star-vortex": {
+      "x": 192,
+      "y": 576,
+      "w": 192,
+      "h": 192,
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "fx-tier5-rainbow-vortex": {
+      "x": 384,
+      "y": 576,
+      "w": 192,
+      "h": 192,
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    }
+  }
+}

@@ -1,70 +1,99 @@
 /**
  * Fake renderer implementing the `StageRenderer` port.
  *
- * Lets the whole snapshot/incremental contract be tested without WebGL, and records every call so
- * a test can assert that the scene did not rebuild when it should have patched.
+ * Lets the whole snapshot/incremental/theme contract be tested without WebGL, and records every
+ * call so a test can assert that the scene bound the right APPROVED asset to each slot and that it
+ * patched instead of rebuilding.
  */
 
+import type { ResolvedTheme } from '@dance-arena/assets';
 import type {
   NormalizedPosition,
   PartyGoalState,
+  PerformanceProfile,
   StageDancer,
   StageEventOf,
   StageRankingEntry,
 } from '@dance-arena/contracts';
 
-import type { DancerView, StageRenderer } from '../stageScene.js';
+import type { DancerView, DancerVisual, GiftEffectVisual, StageRenderer } from '../stageScene.js';
 
 export interface FakeDancerRecord {
-  readonly dancer: StageDancer;
+  dancer: StageDancer;
   position: NormalizedPosition;
+  visual: DancerVisual;
   rank: number | undefined;
   destroyed: boolean;
   moves: number;
+  visualUpdates: number;
+}
+
+export interface FakeEffectRecord {
+  readonly event: StageEventOf<'stage:gift-effect'>;
+  readonly visual: GiftEffectVisual;
+  stopped: boolean;
 }
 
 export interface FakeRenderer extends StageRenderer {
   readonly created: FakeDancerRecord[];
-  readonly giftEffects: StageEventOf<'stage:gift-effect'>[];
+  readonly effects: FakeEffectRecord[];
   readonly announcements: string[];
+  readonly themeApplications: { theme: ResolvedTheme; profile: PerformanceProfile }[];
   clears: number;
   ranking: readonly StageRankingEntry[];
   partyGoal: PartyGoalState | undefined;
   spotlightUserId: string | undefined;
   liveDancers(): FakeDancerRecord[];
+  playingEffects(): FakeEffectRecord[];
+  recordFor(userId: string): FakeDancerRecord | undefined;
 }
 
 export function createFakeRenderer(): FakeRenderer {
   const created: FakeDancerRecord[] = [];
-  const giftEffects: StageEventOf<'stage:gift-effect'>[] = [];
+  const effects: FakeEffectRecord[] = [];
   const announcements: string[] = [];
+  const themeApplications: { theme: ResolvedTheme; profile: PerformanceProfile }[] = [];
 
   const renderer: FakeRenderer = {
     created,
-    giftEffects,
+    effects,
     announcements,
+    themeApplications,
     clears: 0,
     ranking: [],
     partyGoal: undefined,
     spotlightUserId: undefined,
 
-    createDancer(dancer: StageDancer, position: NormalizedPosition): DancerView {
+    applyTheme(theme, profile) {
+      themeApplications.push({ theme, profile });
+    },
+
+    createDancer(
+      dancer: StageDancer,
+      position: NormalizedPosition,
+      visual: DancerVisual,
+    ): DancerView {
       const record: FakeDancerRecord = {
         dancer,
         position,
+        visual,
         rank: dancer.rank,
         destroyed: false,
         moves: 0,
+        visualUpdates: 0,
       };
       created.push(record);
 
       return {
-        moveTo(next: NormalizedPosition): void {
+        moveTo(next: NormalizedPosition, nextDancer: StageDancer): void {
           record.position = next;
+          record.dancer = nextDancer;
           record.moves += 1;
         },
-        setRank(rank: number | undefined): void {
+        setRank(rank: number | undefined, nextVisual: DancerVisual): void {
           record.rank = rank;
+          record.visual = nextVisual;
+          record.visualUpdates += 1;
         },
         destroy(): void {
           record.destroyed = true;
@@ -72,8 +101,15 @@ export function createFakeRenderer(): FakeRenderer {
       };
     },
 
-    playGiftEffect(effect) {
-      giftEffects.push(effect);
+    playGiftEffect(event, visual) {
+      effects.push({ event, visual, stopped: false });
+    },
+
+    stopGiftEffect(effectId) {
+      for (const effect of effects) {
+        const id = `${effect.event.userId}:${effect.event.at}:${effect.event.tierId}`;
+        if (id === effectId) effect.stopped = true;
+      }
     },
 
     setRanking(entries) {
@@ -97,6 +133,9 @@ export function createFakeRenderer(): FakeRenderer {
     },
 
     liveDancers: () => created.filter((record) => !record.destroyed),
+    playingEffects: () => effects.filter((effect) => !effect.stopped),
+    recordFor: (userId) =>
+      created.find((record) => !record.destroyed && record.dancer.userId === userId),
   };
 
   return renderer;
