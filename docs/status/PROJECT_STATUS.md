@@ -14,7 +14,7 @@ Execution plan: **B — approved**
 | 06 | STAGE Pixi Minimal | DONE — PR #2 merged |
 | 07 | EulerStream Connector & Normalizer | DONE — PR #2 merged |
 | 08 | End-to-End Gameplay Integration | DONE — PR #2 merged |
-| 09 | Asset, Theme & Visual System | READY — DA-VISUAL-R1 locked, awaiting Claude implementation |
+| 09 | Asset, Theme & Visual System | PR OPEN — DA-VISUAL-R1 consumed, awaiting ChatGPT visual QA |
 | 10 | Auto Host & TTS | TODO |
 | 11 | DJ & Audio Reactive | TODO |
 | 12 | Settings, Secrets & Licensing | TODO |
@@ -42,3 +42,12 @@ Trạng thái hợp lệ: `TODO`, `READY`, `IN PROGRESS`, `PR OPEN`, `BLOCKED`, 
 - `.dance/DANCE_LOCK.json`: LOCKED.
 - `.dance/HANDOFF.json`: visualSetupComplete=true; Claude implementation gate OPEN once the exact locked ZIP is available in the local repository and its SHA is verified.
 - Claude must implement Task 09 on branch `claude/task-09-asset-theme-visual-system`, publish implementation receipt, open PR, and stop for ChatGPT visual QA.
+
+### Task 09 — implementation result (chờ visual QA)
+- Branch `claude/task-09-asset-theme-visual-system`; receipt tại `.dance/implementation/IMPLEMENTATION_RECEIPT.json`.
+- ZIP SHA256 khớp lock; **104/104 asset + 7/7 atlas** verify sha256 theo manifest, 0 problem.
+- Asset trong git theo quyết định owner: chỉ runtime WebP + JSON + manifest + contact sheet (122 file, 7.93 MB); 111 PNG editing source giữ ngoài repo trong ZIP đã ghi hash.
+- AssetService (`packages/assets`): Zod validate manifest/atlas ở boundary, registry tra theo asset ID + fallback theo category, theme là DATA bind slot→id, AvatarCache memory LRU + disk port + TTL 48h + fallback.
+- STAGE: atlas frame theo metadata (không hard-code toạ độ), avatar đặt tại `headSocket` của manifest, crown/badge/aura cho Top 1–3, effect scheduler chống gift spam theo performance profile, theme switch không đổi gameplay state.
+- Tests: **363** (294 → 363, +69). `pnpm validate` PASS toàn bộ.
+- `.dance/requests/DA-REQ-001.json` OPEN: `VISUAL_CONTRACT.json` (DRAFT) tham chiếu id/geometry không có trong package APPROVED_LOCKED; đã bind sang asset approved cùng category, không tự vẽ hay recolor.
