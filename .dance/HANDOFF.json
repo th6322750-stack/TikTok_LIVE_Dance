@@ -1,14 +1,14 @@
 {
   "protocolVersion": 1,
-  "handoffId": "DA-T09-R1-DRAFT",
+  "handoffId": "DA-T09-R1-LOCKED",
   "task": 9,
   "title": "Asset, Theme & Visual System",
   "visualRevision": "DA-VISUAL-R1",
   "baseImplementationCommit": "c569780b8b328fdaa91e02ad2fca630ff99d6af6",
-  "visualCommit": null,
+  "visualCommit": "7400a88ebc20f7ec06c219e7dd97f1c69a13b7c2",
   "createdBy": "ChatGPT/System Architect",
-  "status": "DRAFT",
-  "visualSetupComplete": false,
+  "status": "READY_FOR_IMPLEMENTATION",
+  "visualSetupComplete": true,
   "requiredFiles": [
     ".dance/PROJECT_STATE.yaml",
     ".dance/HANDOFF.json",
@@ -16,12 +16,18 @@
     ".dance/VISUAL_CONTRACT.json",
     ".dance/ASSET_MANIFEST.json"
   ],
+  "assetPackage": {
+    "fileName": "DA-VISUAL-R1-production.zip",
+    "sha256": "e297760bb8f1d5d6b7b28cb98f0dc08bccdeceb350511d3fed1b60c2676ebef1",
+    "libraryFileId": "libfile_3102e94b82c08191bceddcc02d319315",
+    "expectedExtractRoot": "assets/production/DA-VISUAL-R1"
+  },
   "implementationBranch": "claude/task-09-asset-theme-visual-system",
   "hardGate": {
-    "claudeMayStart": false,
-    "reason": "Production visual assets are still being prepared by ChatGPT."
+    "claudeMayStart": true,
+    "precondition": "The owner must place DA-VISUAL-R1-production.zip in the repository root or otherwise make the exact locked package available locally; Claude must verify SHA256 before extraction.",
+    "reason": "Visual contracts, geometry, IDs, production package and lock are complete."
   },
-  "knownBlockers": [
-    "Production dancer/costume/FX/background assets not yet locked."
-  ]
+  "knownBlockers": [],
+  "stopCondition": "Open Task 09 PR, publish implementation receipt, then stop for ChatGPT visual QA."
 }
