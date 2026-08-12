@@ -1,36 +1,74 @@
 {
   "protocolVersion": 1,
-  "handoffId": "DA-T09-COMPLETE-R3",
-  "task": 9,
-  "title": "Asset, Theme & Visual System — complete",
-  "visualRevision": "DA-VISUAL-R3",
+  "handoffId": "DA-T10-AUTOHOST-TTS",
+  "task": 10,
+  "title": "Auto Host & TTS",
   "createdBy": "ChatGPT/System Architect",
-  "status": "TASK_09_COMPLETE",
-  "visualSetupComplete": true,
-  "implementationCommit": "af1ce72a00b532b917836f76dafcd981d5141381",
-  "mergeCommit": "22bb2331422c51e429918c62ac4d3c429bbe2216",
-  "finalVisualQA": {
-    "status": "PASS",
-    "closedDefects": ["DA-QA-001", "DA-QA-002", "DA-QA-003", "DA-QA-004", "DA-QA-005"]
+  "status": "READY_FOR_IMPLEMENTATION",
+  "implementationBranch": "claude/task-10-auto-host-tts",
+  "taskSpec": "docs/tasks/TASK_10_AUTO_HOST_TTS.md",
+  "taskSpecCommit": "c8d2628f278a6696683e20c09114a8351fd5c57e",
+  "mustSyncLatestMain": true,
+  "dependencies": {
+    "task09": "DONE",
+    "visualRevision": "DA-VISUAL-R3",
+    "visualLockMustRemainUnchanged": true
   },
-  "assetPackage": {
-    "fileName": "DA-VISUAL-R3-production.zip",
-    "sha256": "3f10c2c8b75b163a7b168336a3524a6ce092cf2f06e9d6019e7d40fae73391d0",
-    "byteSize": 40297364,
-    "expectedExtractRoot": "assets/production/DA-VISUAL-R3"
-  },
-  "nextTask": {
-    "task": 10,
-    "title": "Auto Host & TTS",
-    "status": "READY_WAITING_OWNER_HANDOFF"
+  "architecture": {
+    "coreOwns": [
+      "declarative Auto Host rule evaluation",
+      "cooldown state",
+      "safe template expansion",
+      "game-transition triggers and AutoHostActionIntent production"
+    ],
+    "mainOwns": [
+      "timer scheduling",
+      "bounded TTS queue",
+      "TTS priority/dedup/drop policy",
+      "typed side-effect orchestration"
+    ],
+    "stageOwns": [
+      "render-only reaction/bubble/announcement/spotlight output",
+      "dumb local Web Speech output adapter and completion/error acknowledgement"
+    ],
+    "controlOwns": [
+      "runtime configuration UI",
+      "TTS preview/control",
+      "queue/status presentation"
+    ]
   },
   "hardGate": {
-    "claudeMayStart": false,
-    "reason": "Task 09 is complete. Task 10 requires a new explicit owner/System Architect handoff before implementation begins."
+    "claudeMayStart": true,
+    "precondition": "Sync latest origin/main, read the full Task 10 spec and current R3 lock before coding.",
+    "stopAfter": "Open/update Task 10 PR with green CI, then stop for ChatGPT review."
   },
-  "doNotDo": [
-    "do not start Task 10 without a new explicit handoff",
-    "do not modify DA-VISUAL-R3 artwork or accepted Task 09 render tuning",
-    "do not reopen closed Task 09 QA defects without a newly observed regression"
-  ]
+  "hardRules": [
+    "Do not post comments/messages back to TikTok.",
+    "Do not add cloud TTS credentials or secrets in renderer/config.",
+    "Do not use eval, Function constructor or arbitrary executable rule expressions.",
+    "Do not speak raw arbitrary user comments in the default preset.",
+    "Do not mutate gift score, queue priority, ranking or VIP state from Auto Host actions.",
+    "Do not modify/recolor/redraw DA-VISUAL-R3 assets.",
+    "Use semantic reaction/bubble slots resolved by the existing R3 theme/asset system.",
+    "Core Auto Host logic must remain free of Electron/Node/React/Pixi/Web Speech dependencies.",
+    "TTS queue must be bounded, deterministic and owned outside renderers.",
+    "Do not start Task 11."
+  ],
+  "requiredAcceptance": [
+    "simulated follow produces deterministic announcement + TTS intent",
+    "high-value gift is thanked without double-scoring or duplicate gift FX",
+    "duplicate gift replay does not create duplicate Auto Host thanks",
+    "party goal completion and rank promotion fire once per real transition",
+    "accepted GO/JOIN command can show an R3 semantic bubble",
+    "100+ social-event burst leaves a bounded TTS queue",
+    "CONTROL reload does not reset TTS queue/runtime state",
+    "STAGE reload does not reset canonical Core state and does not replay speech unbounded",
+    "Web Speech unavailable degrades safely while visuals continue",
+    "pnpm validate and CI pass"
+  ],
+  "nextTask": {
+    "task": 11,
+    "title": "DJ & Audio Reactive",
+    "status": "BLOCKED_UNTIL_TASK_10_REVIEW_MERGE"
+  }
 }
