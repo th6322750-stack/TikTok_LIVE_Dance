@@ -1,30 +1,36 @@
 protocolVersion: 1
 project: Dance Arena V2
-phase: task-09-r3-final-remediation
+phase: task-10-ready
 visualOwner: ChatGPT
 implementationOwner: Claude
 visualRevision: DA-VISUAL-R3
 visualSetupComplete: true
-baseImplementationCommit: 9ac4fab8ec109325182bafae9370e8f6b91d3ca0
-visualManifestCommit: 9eaf21bf14203ef880bb59792aee21fd462b1151
-status: READY_FOR_IMPLEMENTATION
+status: READY_WAITING_OWNER_HANDOFF
+
+task09:
+  status: DONE
+  implementationCommit: af1ce72a00b532b917836f76dafcd981d5141381
+  mergeCommit: 22bb2331422c51e429918c62ac4d3c429bbe2216
+  finalVisualQA: PASS
+  tests: 381
+  closedDefects:
+    - DA-QA-001
+    - DA-QA-002
+    - DA-QA-003
+    - DA-QA-004
+    - DA-QA-005
 
 assetPackage:
   fileName: DA-VISUAL-R3-production.zip
   sha256: 3f10c2c8b75b163a7b168336a3524a6ce092cf2f06e9d6019e7d40fae73391d0
   byteSize: 40297364
   logicalAssetCount: 104
-  libraryFileId: libfile_0a5d18b6cd9c819186f44f9411063b8c
   expectedExtractRoot: assets/production/DA-VISUAL-R3
 
-qaState:
-  closed:
-    - DA-QA-001
-    - DA-QA-003
-    - DA-QA-005
-  fixedPendingFinalQA:
-    - DA-QA-002
-    - DA-QA-004
+nextTask:
+  id: 10
+  name: Auto Host & TTS
+  status: READY_WAITING_OWNER_HANDOFF
 
 ownership:
   chatgpt:
@@ -43,23 +49,8 @@ ownership:
     - .dance/requests/**
 
 hardRules:
-  - Claude must verify the locked R3 asset package SHA256 before extraction.
-  - Claude must not invent or redraw approved artwork.
-  - Per-asset headSocket is authoritative.
-  - Preserve R3 atlas frame metadata and 4px transparent padding.
-  - DA-QA-001, DA-QA-003 and DA-QA-005 implementation behavior is already accepted; do not retune it during R3 swap.
-  - Core Engine gameplay state must remain independent from theme and asset choice.
-  - Any approved visual replacement requires a new visual revision or explicit unlock.
-
-requestLifecycle:
-  - OPEN
-  - ACKNOWLEDGED
-  - RESOLVED
-  - CONSUMED
-  - CLOSED
-
-qaLifecycle:
-  - OPEN
-  - FIXED_PENDING_QA
-  - CLOSED
-  - REOPENED
+  - DA-VISUAL-R3 is the accepted Task 09 production visual revision.
+  - Per-asset headSocket remains authoritative.
+  - Preserve accepted crown/badge ratios and LOW takeover coverage unless a new approved contract revision changes them.
+  - Claude must not start Task 10 before an explicit new handoff opens the gate.
+  - Core Engine gameplay state remains independent from theme and asset choice.
