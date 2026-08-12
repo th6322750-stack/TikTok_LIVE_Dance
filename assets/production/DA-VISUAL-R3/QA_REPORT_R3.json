@@ -1,0 +1,28 @@
+{
+  "visualRevision": "DA-VISUAL-R3",
+  "logicalAssetCount": 104,
+  "stableIdsFromR2": true,
+  "checks": {
+    "individualWebpHashMismatch": [],
+    "atlasHashMismatch": [],
+    "atlasMetaMismatch": [],
+    "hiddenRgbUnderTransparentPixels": 0,
+    "vipMaleSocketProblems": [],
+    "regularAndVipFemaleDetachedSourceFragments": "removed by connected-silhouette cleanup",
+    "atlasTransparentPaddingPx": 4,
+    "runtimeAtlasCount": 7
+  },
+  "visualQA": {
+    "DA-QA-002": "FIXED_IN_R3",
+    "DA-QA-004": "FIXED_IN_R3",
+    "DA-QA-001": "REMAINS_CLOSED",
+    "DA-QA-003": "REMAINS_CLOSED",
+    "DA-QA-005": "REMAINS_CLOSED"
+  },
+  "behaviorContract": {
+    "crownWidthBodyRatio": 0.44,
+    "rankBadgeWidthBodyRatio": 0.27,
+    "lowTier4CoverageMin": 0.82,
+    "lowTier5CoverageMin": 1.0
+  }
+}

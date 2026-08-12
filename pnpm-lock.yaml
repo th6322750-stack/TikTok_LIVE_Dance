@@ -100,6 +100,9 @@ importers:
 
   apps/stage:
     dependencies:
+      '@dance-arena/assets':
+        specifier: workspace:*
+        version: link:../../packages/assets
       '@dance-arena/contracts':
         specifier: workspace:*
         version: link:../../packages/contracts
@@ -107,6 +110,9 @@ importers:
         specifier: ^8.19.0
         version: 8.19.0
     devDependencies:
+      '@types/node':
+        specifier: ^26.2.0
+        version: 26.2.0
       vite:
         specifier: ^7.3.6
         version: 7.3.6(@types/node@26.2.0)(lightningcss@1.33.0)
@@ -116,6 +122,13 @@ importers:
       '@dance-arena/contracts':
         specifier: workspace:*
         version: link:../contracts
+      zod:
+        specifier: ^4.4.3
+        version: 4.4.3
+    devDependencies:
+      '@types/node':
+        specifier: ^26.2.0
+        version: 26.2.0
 
   packages/connectors:
     dependencies:

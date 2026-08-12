@@ -27,6 +27,17 @@ coverage/
 secrets.json
 local.settings.json
 
+# Production asset packs (owner decision, Task 09):
+# only the RUNTIME distribution is tracked — WebP atlases/frames, individual WebP fallbacks,
+# JSON metadata and the QA contact sheet (~8 MB). The PNG editing sources (~30 MB) stay in the
+# ChatGPT Library package `DA-VISUAL-R1-production.zip`, whose SHA256 is recorded in
+# `.dance/DANCE_LOCK.json`, so git history does not carry every future revision twice.
+assets/production/**/*.png
+assets/**/*.psd
+assets/**/*.ai
+assets/**/*.tif
+assets/**/*.tiff
+
 # Logs
 logs/
 *.log

@@ -8,3 +8,9 @@ pnpm-lock.yaml
 # Markdown is authored prose (architecture/spec/handoff documents owned by the System Architect).
 # Prettier must not reflow it — see docs/handoff/CLAUDE_READ_FIRST.md.
 **/*.md
+
+# ChatGPT/System Architect owned artifacts (see .dance/PROJECT_STATE.yaml `ownership`).
+# These are approved, hash-recorded contracts and asset metadata: reformatting them would both
+# violate the ownership rule and change bytes whose integrity is pinned in .dance/DANCE_LOCK.json.
+.dance/
+assets/production/

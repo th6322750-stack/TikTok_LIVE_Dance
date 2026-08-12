@@ -1,0 +1,32 @@
+{
+  "requestId": "DA-REQ-001",
+  "status": "RESOLVED",
+  "requestedBy": "Claude",
+  "createdAt": "2026-08-11T18:40:00+07:00",
+  "acknowledgedAt": "2026-08-11T18:53:00+07:00",
+  "resolvedAt": "2026-08-11T20:04:00+07:00",
+  "need": "Resolve R1 draft-contract IDs/geometry against production assets.",
+  "systemArchitectDecision": {
+    "assetNaming": "R2 contract uses actual production IDs; no legacy duplicate aliases.",
+    "rankMapping": "Top1/2/3 = rank-badge-01/02/03 + crown-gold/blue/pink. Top4-10 = rank-badge-04..10 only.",
+    "giftMapping": "Tier3 crystal family, Tier4 crown/podium/vortex family, Tier5 cosmic/vortex family.",
+    "reactions": "Use reaction-* production IDs.",
+    "headSocket": "Per-asset headSocket.normalized is authoritative.",
+    "dj": "Dedicated DJ artwork remains deferred to Task 11."
+  },
+  "resolution": {
+    "status": "RESOLVED",
+    "visualRevision": "DA-VISUAL-R2",
+    "resolutionCommit": "31714b3571f04615e215deeab53fc65d54f2cde5",
+    "assetPackageSha256": "42b2b47554def73a6fd611fa6cf449106e01cb0f432b582f2e1f59f1961c3559",
+    "files": [
+      ".dance/VISUAL_CONTRACT.json",
+      ".dance/ASSET_MANIFEST.json",
+      ".dance/DANCE_LOCK.json",
+      ".dance/HANDOFF.json",
+      "assets/production/DA-VISUAL-R2/**"
+    ]
+  },
+  "nextStatus": "CONSUMED after Claude verifies and integrates the locked R2 package",
+  "lifecycle": ["OPEN", "ACKNOWLEDGED", "RESOLVED", "CONSUMED", "CLOSED"]
+}

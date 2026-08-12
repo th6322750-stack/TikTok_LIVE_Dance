@@ -1,0 +1,261 @@
+{
+  "atlas": "reactions.webp",
+  "width": 664,
+  "height": 664,
+  "mime": "image/webp",
+  "sha256": "101a521c5cbf2fb0f28a3fa3ba68ec7d9da31bbafa0a01cc25f6a0f9291e2e38",
+  "byteSize": 407314,
+  "padding": 4,
+  "frames": {
+    "reaction-happy": {
+      "x": 4,
+      "y": 4,
+      "w": 128,
+      "h": 128,
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "reaction-laugh": {
+      "x": 136,
+      "y": 4,
+      "w": 128,
+      "h": 128,
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "reaction-wink-love": {
+      "x": 268,
+      "y": 4,
+      "w": 128,
+      "h": 128,
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "reaction-cool": {
+      "x": 400,
+      "y": 4,
+      "w": 128,
+      "h": 128,
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "reaction-heart-eyes": {
+      "x": 532,
+      "y": 4,
+      "w": 128,
+      "h": 128,
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "reaction-cry": {
+      "x": 4,
+      "y": 136,
+      "w": 128,
+      "h": 128,
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "reaction-wow": {
+      "x": 136,
+      "y": 136,
+      "w": 128,
+      "h": 128,
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "reaction-angry": {
+      "x": 268,
+      "y": 136,
+      "w": 128,
+      "h": 128,
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "reaction-shy": {
+      "x": 400,
+      "y": 136,
+      "w": 128,
+      "h": 128,
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "reaction-star-eyes": {
+      "x": 532,
+      "y": 136,
+      "w": 128,
+      "h": 128,
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "reaction-sleep": {
+      "x": 4,
+      "y": 268,
+      "w": 128,
+      "h": 128,
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "reaction-kiss": {
+      "x": 136,
+      "y": 268,
+      "w": 128,
+      "h": 128,
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "reaction-cheer": {
+      "x": 268,
+      "y": 268,
+      "w": 128,
+      "h": 128,
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "reaction-smirk": {
+      "x": 400,
+      "y": 268,
+      "w": 128,
+      "h": 128,
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "reaction-go-megaphone": {
+      "x": 532,
+      "y": 268,
+      "w": 128,
+      "h": 128,
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "reaction-surprised": {
+      "x": 4,
+      "y": 400,
+      "w": 128,
+      "h": 128,
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "reaction-hug-heart": {
+      "x": 136,
+      "y": 400,
+      "w": 128,
+      "h": 128,
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "reaction-gg": {
+      "x": 268,
+      "y": 400,
+      "w": 128,
+      "h": 128,
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "reaction-excited": {
+      "x": 400,
+      "y": 400,
+      "w": 128,
+      "h": 128,
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "reaction-silly": {
+      "x": 532,
+      "y": 400,
+      "w": 128,
+      "h": 128,
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "reaction-cry-big": {
+      "x": 4,
+      "y": 532,
+      "w": 128,
+      "h": 128,
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "reaction-fire-angry": {
+      "x": 136,
+      "y": 532,
+      "w": 128,
+      "h": 128,
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "reaction-blush": {
+      "x": 268,
+      "y": 532,
+      "w": 128,
+      "h": 128,
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "reaction-party": {
+      "x": 400,
+      "y": 532,
+      "w": 128,
+      "h": 128,
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "avatar-default-happy": {
+      "x": 532,
+      "y": 532,
+      "w": 128,
+      "h": 128,
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    }
+  }
+}

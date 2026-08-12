@@ -1,0 +1,111 @@
+{
+  "atlas": "dancers-vip.webp",
+  "width": 1424,
+  "height": 852,
+  "mime": "image/webp",
+  "sha256": "74f05ed6a2bead6103b01fe998bd1eacd712643c169ce3cb0f2fcd67b23645ba",
+  "byteSize": 979364,
+  "padding": 4,
+  "frames": {
+    "dancer-vip-female-01": {
+      "x": 4,
+      "y": 4,
+      "w": 280,
+      "h": 420,
+      "pivot": {
+        "x": 0.5,
+        "y": 1.0
+      }
+    },
+    "dancer-vip-female-02": {
+      "x": 288,
+      "y": 4,
+      "w": 280,
+      "h": 420,
+      "pivot": {
+        "x": 0.5,
+        "y": 1.0
+      }
+    },
+    "dancer-vip-female-03": {
+      "x": 572,
+      "y": 4,
+      "w": 280,
+      "h": 420,
+      "pivot": {
+        "x": 0.5,
+        "y": 1.0
+      }
+    },
+    "dancer-vip-female-04": {
+      "x": 856,
+      "y": 4,
+      "w": 280,
+      "h": 420,
+      "pivot": {
+        "x": 0.5,
+        "y": 1.0
+      }
+    },
+    "dancer-vip-female-05": {
+      "x": 1140,
+      "y": 4,
+      "w": 280,
+      "h": 420,
+      "pivot": {
+        "x": 0.5,
+        "y": 1.0
+      }
+    },
+    "dancer-vip-male-01": {
+      "x": 4,
+      "y": 428,
+      "w": 280,
+      "h": 420,
+      "pivot": {
+        "x": 0.5,
+        "y": 1.0
+      }
+    },
+    "dancer-vip-male-02": {
+      "x": 288,
+      "y": 428,
+      "w": 280,
+      "h": 420,
+      "pivot": {
+        "x": 0.5,
+        "y": 1.0
+      }
+    },
+    "dancer-vip-male-03": {
+      "x": 572,
+      "y": 428,
+      "w": 280,
+      "h": 420,
+      "pivot": {
+        "x": 0.5,
+        "y": 1.0
+      }
+    },
+    "dancer-vip-male-04": {
+      "x": 856,
+      "y": 428,
+      "w": 280,
+      "h": 420,
+      "pivot": {
+        "x": 0.5,
+        "y": 1.0
+      }
+    },
+    "dancer-vip-male-05": {
+      "x": 1140,
+      "y": 428,
+      "w": 280,
+      "h": 420,
+      "pivot": {
+        "x": 0.5,
+        "y": 1.0
+      }
+    }
+  }
+}

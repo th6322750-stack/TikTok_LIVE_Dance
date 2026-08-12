@@ -1,0 +1,30 @@
+DA-VISUAL-R3 RELEASE NOTES
+
+Purpose
+- Supersedes QA-failed DA-VISUAL-R2.
+- Fixes DA-QA-002 and DA-QA-004 without changing asset IDs or implementation contracts.
+
+R3 corrections
+1. VIP male
+   - Removed baked face identity from all 5 VIP male bodies.
+   - Enlarged clean transparent avatar openings.
+   - Published updated per-asset headSocket values.
+
+2. Sprite isolation
+   - Removed detached source-sheet fragments from regular/VIP female bodies.
+   - Zeroed RGB values wherever alpha is transparent.
+   - Cleaned affected gift/FX sprites by isolating the intended component.
+   - Rebuilt fx-tier3-crystal-rainbow from the clean crystal silhouette.
+
+3. Runtime atlas safety
+   - Rebuilt all 7 WebP atlases from cleaned sources.
+   - Added 4px transparent padding between atlas frames.
+   - Runtime WebP encoded losslessly.
+
+Behavior contract unchanged from approved R2
+- crown width: 0.44 x body width
+- rank badge width: 0.27 x body width
+- LOW tier-4 min coverage: 0.82 x stage width
+- LOW tier-5 min coverage: 1.00 x stage width
+
+No ID changes. Claude should treat R3 as a drop-in visual revision replacement.
