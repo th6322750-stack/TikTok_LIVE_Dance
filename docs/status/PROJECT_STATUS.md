@@ -14,9 +14,9 @@ Execution plan: **B — approved**
 | 06 | STAGE Pixi Minimal | DONE — PR #2 merged |
 | 07 | EulerStream Connector & Normalizer | DONE — PR #2 merged |
 | 08 | End-to-End Gameplay Integration | DONE — PR #2 merged |
-| 09 | Asset, Theme & Visual System | **DONE — PR #3 merged, DA-VISUAL-R3 final QA PASS** |
-| 10 | Auto Host & TTS | READY — waiting explicit owner handoff |
-| 11 | DJ & Audio Reactive | TODO |
+| 09 | Asset, Theme & Visual System | DONE — PR #3 merged, DA-VISUAL-R3 final QA PASS |
+| 10 | Auto Host & TTS | **READY FOR IMPLEMENTATION — handoff `DA-T10-AUTOHOST-TTS`** |
+| 11 | DJ & Audio Reactive | BLOCKED — wait Task 10 review/merge |
 | 12 | Settings, Secrets & Licensing | TODO |
 | 13 | Diagnostics, Resilience & Performance | TODO |
 | 14 | Packaging, Release & Acceptance | TODO |
@@ -33,16 +33,43 @@ Trạng thái hợp lệ: `TODO`, `READY`, `IN PROGRESS`, `PR OPEN`, `BLOCKED`, 
 - PR #3 merged: `22bb2331422c51e429918c62ac4d3c429bbe2216`.
 - Final implementation head: `af1ce72a00b532b917836f76dafcd981d5141381`.
 - Approved visual revision: **DA-VISUAL-R3 — Neon Kawaii Arena**.
-- Locked package SHA256: `3f10c2c8b75b163a7b168336a3524a6ce092cf2f06e9d6019e7d40fae73391d0`.
-- Package size: `40,297,364` bytes.
-- Production pack: **104 logical assets**, **7 runtime atlases**, stable IDs across remediation revisions.
-- Runtime resolution is manifest/atlas metadata driven; no hard-coded source-sheet/frame coordinates.
-- Avatar identity uses authoritative per-asset `headSocket.normalized` geometry.
-- Accepted rank layout: crown `0.44× body width`, rank badge `0.27× body width`.
-- Accepted LOW coverage: Tier 1–3 ≤ `0.62×`, Tier 4 ≥ `0.82×`, Tier 5 ≥ `1.00×` stage width.
-- R3 atlases use **4px transparent frame padding**.
-- Final QA: `DA-QA-001` → `DA-QA-005` all **CLOSED**.
-- CI on final PR head: `pnpm validate (Windows)` PASS; regression suite: **381 tests**.
+- Production pack: **104 logical assets**, **7 runtime atlases**.
+- Per-asset avatar socket, crown/badge tuning, LOW takeover coverage and 4px atlas padding final QA PASS.
+- `DA-QA-001` → `DA-QA-005`: CLOSED.
+- Final regression suite: **381 tests**; CI PASS.
 
-## Next
-Task 10 is **READY but not started**. Claude must wait for an explicit owner/System Architect handoff before beginning Auto Host & TTS.
+## Task 10 — handoff opened
+
+Handoff: `.dance/HANDOFF.json` → `DA-T10-AUTOHOST-TTS`.
+
+Full implementation contract: `docs/tasks/TASK_10_AUTO_HOST_TTS.md`.
+
+Implementation branch:
+
+`claude/task-10-auto-host-tts`
+
+Architecture:
+
+```text
+LIVE/game/timer trigger
+      ↓
+Core AutoHostRuleEngine
+      ↓
+AutoHostActionIntent
+ ├─ visual → STAGE
+ └─ TTS → Main bounded TtsQueueService → STAGE Web Speech adapter
+```
+
+Task 10 requirements include declarative rule evaluation, cooldowns, safe template rendering, Vietnamese default rules, bounded priority/deduplicating TTS queue, typed Web Speech bridge, R3 reaction/bubble rendering, CONTROL runtime controls and full simulator/reload/spam regression tests.
+
+Hard product rules:
+
+- no TikTok outbound comments/messages;
+- no cloud TTS credential;
+- no raw arbitrary comment TTS in default rules;
+- no `eval`/executable rule expressions;
+- no Auto Host mutation of gift score/ranking/queue/VIP;
+- DA-VISUAL-R3 remains immutable;
+- runtime Auto Host config persistence is deferred to Task 12.
+
+Task 11 must remain blocked until Task 10 PR passes ChatGPT review and is merged.
