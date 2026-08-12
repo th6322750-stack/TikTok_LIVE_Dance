@@ -1,13 +1,16 @@
 /**
- * DA-VISUAL-R2 — "Neon Kawaii Arena" theme binding.
+ * DA-VISUAL-R3 — "Neon Kawaii Arena" theme binding.
  *
  * PURE DATA. Every id below exists in the APPROVED_LOCKED manifest; nothing is recoloured, cropped
- * or invented (locked rule 3). Zones, palette and rank layout are copied from
- * `.dance/VISUAL_CONTRACT.json`, which is `APPROVED_LOCKED` as of R2.
+ * or invented (locked rule 3). Zones, palette and rank layout come from
+ * `.dance/VISUAL_CONTRACT.json`.
  *
- * R2 closed DA-REQ-001: the contract now names the real production ids, so every slot below is a
- * direct binding with no substitution. Per-asset `headSocket` metadata is authoritative (R2 fixed
- * the sockets that R1 had standardized), and DJ artwork stays deferred to Task 11.
+ * R3 is a drop-in artwork revision: the 104 logical ids are unchanged from R2, so every binding
+ * below stayed the same. R3 only replaced the artwork behind them (clean VIP-male avatar sockets
+ * for DA-QA-002, sprite/atlas bleed removal for DA-QA-004) and republished per-asset
+ * `headSocket` values, which this code already reads from the manifest.
+ *
+ * DJ artwork stays deferred to Task 11.
  */
 
 import type { ThemeDefinition } from './themeSchema.js';
@@ -33,9 +36,10 @@ const VIP_POOL = [
 export const NEON_KAWAII_ARENA_THEME: ThemeDefinition = {
   themeId: 'neon-kawaii-arena',
   themeName: 'Neon Kawaii Arena',
-  visualRevision: 'DA-VISUAL-R2',
+  visualRevision: 'DA-VISUAL-R3',
 
-  // VISUAL_CONTRACT.rankVisual.layout / DANCE_LOCK.approvedGeometry (DA-QA-003).
+  // VISUAL_CONTRACT.rankVisual.layout / DANCE_LOCK.approvedGeometry (DA-QA-003, accepted in QA
+  // round 2 and unchanged by R3 — do not retune).
   rankLayout: {
     crownWidthBodyRatio: 0.44,
     badgeWidthBodyRatio: 0.27,

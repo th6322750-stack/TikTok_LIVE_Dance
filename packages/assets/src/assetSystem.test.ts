@@ -28,7 +28,7 @@ const registry = createAssetRegistry({
   },
 });
 
-describe('locked manifest (DA-VISUAL-R2)', () => {
+describe('locked manifest (approved production revision)', () => {
   it('parses the approved manifest shipped in the repository', () => {
     expect(manifest.visualRevision).toBe(LOCKED_VISUAL_REVISION);
     expect(manifest.status).toBe('APPROVED_LOCKED');
@@ -37,15 +37,36 @@ describe('locked manifest (DA-VISUAL-R2)', () => {
     expect(manifest.productionRoot).toBe(PRODUCTION_ROOT);
   });
 
-  it('carries a DISTINCT head socket per dancer body (DA-QA-001 fix)', () => {
+  it('carries a DISTINCT head socket per dancer body (DA-QA-001)', () => {
     const sockets = manifest.assets
       .filter((asset) => asset.category === 'body' || asset.category === 'vip-body')
       .map((asset) => asset.headSocket?.normalized.join(','));
 
     expect(sockets).toHaveLength(22);
     expect(sockets.every((socket) => socket !== undefined)).toBe(true);
-    // R1 standardized these; R2 must measure each body, so most values differ.
+    // R1 standardized these; every revision since measures each body, so values differ.
     expect(new Set(sockets).size).toBeGreaterThan(15);
+  });
+
+  it('publishes a usable avatar socket for every VIP male body (DA-QA-002)', () => {
+    const vipMales = manifest.assets.filter((asset) => asset.id.includes('vip-male'));
+
+    expect(vipMales).toHaveLength(5);
+
+    for (const asset of vipMales) {
+      const socket = asset.headSocket?.normalized;
+
+      expect(socket, asset.id).toBeDefined();
+      if (socket === undefined) continue;
+
+      const [x, y, radius] = socket;
+      expect(x, asset.id).toBeGreaterThan(0);
+      expect(x, asset.id).toBeLessThan(1);
+      expect(y, asset.id).toBeGreaterThan(0);
+      expect(y, asset.id).toBeLessThan(1);
+      // R3 enlarged the clean cut-outs; a usable opening is never a hairline.
+      expect(radius, asset.id).toBeGreaterThan(0.1);
+    }
   });
 
   it('rejects a manifest whose assetCount disagrees with its asset list', () => {
@@ -95,8 +116,34 @@ describe('AssetRegistry', () => {
 
     expect(asset).toBeDefined();
     expect(asset?.atlas?.name).toBe('dancers-regular');
-    expect(asset?.atlas?.rect).toMatchObject({ x: 0, y: 0, w: 256, h: 384 });
+    expect(asset?.atlas?.frame).toBe('dancer-regular-01');
     expect(asset?.file).toContain(`${PRODUCTION_ROOT}/individual/dancers/regular`);
+
+    // The rect must come from the atlas METADATA, never from coordinates written in code
+    // (locked rule 2). Comparing against the JSON is the only assertion that stays true across
+    // revisions — R3 repacked every atlas with 4px padding, which shifted all frames.
+    const expected = atlases['dancers-regular']?.frames['dancer-regular-01'];
+    expect(expected).toBeDefined();
+    expect(asset?.atlas?.rect).toEqual(expected);
+  });
+
+  it('honours the atlas frame padding published by the revision', () => {
+    // R3 rebuilt the atlases with 4px transparent padding between frames; the registry must use
+    // the padded offsets verbatim, otherwise sprites would sample a neighbour's pixels.
+    for (const [name, atlas] of Object.entries(atlases)) {
+      const frames = Object.values(atlas.frames);
+      expect(frames.length, name).toBeGreaterThan(0);
+
+      for (const frame of frames) {
+        expect(frame.x + frame.w).toBeLessThanOrEqual(atlas.width);
+        expect(frame.y + frame.h).toBeLessThanOrEqual(atlas.height);
+      }
+    }
+
+    // Spot-check that the first frame is inset rather than flush against the atlas origin.
+    const first = atlases['dancers-regular']?.frames['dancer-regular-01'];
+    expect(first?.x).toBeGreaterThan(0);
+    expect(first?.y).toBeGreaterThan(0);
   });
 
   it('exposes the per-asset normalized head socket, not a hard-coded value', () => {
@@ -260,7 +307,7 @@ describe('theme resolution (Neon Kawaii Arena)', () => {
 
   it('flags a theme authored for a different visual revision', () => {
     const future = resolveTheme(
-      { ...NEON_KAWAII_ARENA_THEME, visualRevision: 'DA-VISUAL-R3' },
+      { ...NEON_KAWAII_ARENA_THEME, visualRevision: 'DA-VISUAL-R99-UNRELEASED' },
       registry,
     );
 

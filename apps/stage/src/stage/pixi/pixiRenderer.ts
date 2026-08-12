@@ -1,7 +1,7 @@
 /**
  * PixiJS implementation of the `StageRenderer` port (Blueprint §28, §31; Task 09).
  *
- * Owns the fixed layer stack and draws the APPROVED DA-VISUAL-R1 artwork it is handed. It resolves
+ * Owns the fixed layer stack and draws the APPROVED artwork it is handed. It resolves
  * nothing itself: tier, rank band, costume and colour all arrive already decided, so there is no
  * `if (diamonds > 1000)` and no asset path anywhere in this file.
  */

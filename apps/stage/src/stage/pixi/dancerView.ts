@@ -1,5 +1,5 @@
 /**
- * DancerView (Blueprint §31, DA-VISUAL-R1).
+ * DancerView (Blueprint §31, `.dance` visual protocol).
  *
  * Composition, bottom to top: aura → body → avatar (circle-masked) → accessory → name → badge.
  *

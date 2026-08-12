@@ -1,99 +1,109 @@
 {
   "task": 9,
   "status": "IMPLEMENTED_PENDING_VISUAL_QA",
-  "remediationRound": 2,
-  "handoffId": "DA-T09-R2-REMEDIATION",
-  "consumedVisualRevision": "DA-VISUAL-R2",
-  "consumedVisualCommit": "31714b3571f04615e215deeab53fc65d54f2cde5",
-  "consumedLockCommit": "b33ef60",
+  "remediationRound": 3,
+  "handoffId": "DA-T09-R3-FINAL-REMEDIATION",
+  "consumedVisualRevision": "DA-VISUAL-R3",
+  "consumedVisualCommit": "c378e31aa0353bb3f8973f211f8ec0d52a975503",
+  "consumedManifestCommit": "9eaf21bf14203ef880bb59792aee21fd462b1151",
   "implementationBranch": "claude/task-09-asset-theme-visual-system",
-  "baseImplementationCommit": "c569780b8b328fdaa91e02ad2fca630ff99d6af6",
-  "previousImplementationCommit": "a90a6eb6d541e5663bd857d67200d68d2bde93ee",
+  "previousImplementationCommit": "9ac4fab8ec109325182bafae9370e8f6b91d3ca0",
   "assetPackageVerification": {
-    "fileName": "DA-VISUAL-R2-production.zip",
-    "expectedSha256": "42b2b47554def73a6fd611fa6cf449106e01cb0f432b582f2e1f59f1961c3559",
-    "actualSha256": "42b2b47554def73a6fd611fa6cf449106e01cb0f432b582f2e1f59f1961c3559",
-    "byteSize": 35870901,
+    "fileName": "DA-VISUAL-R3-production.zip",
+    "expectedSha256": "3f10c2c8b75b163a7b168336a3524a6ce092cf2f06e9d6019e7d40fae73391d0",
+    "actualSha256": "3f10c2c8b75b163a7b168336a3524a6ce092cf2f06e9d6019e7d40fae73391d0",
+    "expectedByteSize": 40297364,
+    "actualByteSize": 40297364,
     "result": "MATCH",
     "verifiedBeforeExtraction": true,
-    "extractRoot": "assets/production/DA-VISUAL-R2",
-    "perAssetIntegrity": "104/104 assets and 7/7 atlases verified against ASSET_MANIFEST.json sha256",
+    "extractRoot": "assets/production/DA-VISUAL-R3",
+    "perAssetIntegrity": "104/104 assets and 7/7 atlases verified against ASSET_MANIFEST.json sha256 after placement",
     "problems": 0,
-    "r1Removed": "assets/production/DA-VISUAL-R1 deleted; R2 fully replaces it as the runtime pack"
+    "r2Removed": "assets/production/DA-VISUAL-R2 deleted; R3 is the only production pack in the runtime repo",
+    "independentChecks": {
+      "atlasFramePaddingPx": "4 confirmed on all 7 atlases (minimum gap between adjacent frame edges on both axes)",
+      "vipMaleSockets": "5/5 published, distinct, radius > 0.1 (enlarged clean cut-outs)",
+      "bodySocketDistinctness": "21 distinct sockets across 22 bodies"
+    }
   },
   "assetTrackingPolicy": {
     "decidedBy": "owner",
-    "tracked": "R2 runtime WebP atlases + individual WebP + JSON metadata + manifest + QA contact/geometry sheets + release notes (124 files, 7.2 MB)",
+    "tracked": "R3 runtime WebP atlases + individual WebP + JSON metadata + manifest + QA sheets/report + release notes",
     "untracked": "PNG editing sources, ignored via .gitignore; authoritative copy stays in the locked ZIP recorded in DANCE_LOCK",
     "rationale": "Runtime prefers WebP (locked rule 5); keeps git history from carrying every revision twice"
+  },
+  "revisionSwap": {
+    "changedFiles": [
+      "packages/assets/src/index.ts — LOCKED_VISUAL_REVISION R2 → R3 (single source for the pack path)",
+      "packages/assets/src/theme/neonKawaiiArena.ts — theme visualRevision R2 → R3",
+      "packages/assets/src/assetSystem.test.ts — atlas-frame assertion now compares against JSON metadata instead of literal coordinates; added padding and VIP-male socket coverage",
+      "apps/stage + packages/assets doc comments — revision-neutral wording"
+    ],
+    "note": "R3 kept the same 104 logical ids, so no theme binding, registry lookup or renderer code needed changing. Production root, runtime atlas paths and per-asset geometry all resolve from the R3 manifest."
+  },
+  "acceptedBehaviourPreserved": {
+    "DA-QA-001": "per-asset headSocket.normalized still the only socket source; R3's updated VIP-male values are consumed automatically",
+    "DA-QA-003": "crown 0.44x / badge 0.27x body width unchanged (ThemeDefinition.rankLayout)",
+    "DA-QA-005": "LOW tier1to3Max 0.62, tier4Min 0.82, tier5Min 1.00 unchanged; particleScale still cannot shrink a takeover",
+    "retuned": "nothing — no code path for these three defects was modified in R3"
   },
   "defectsAddressed": [
     {
       "defectId": "DA-QA-001",
-      "status": "FIXED_PENDING_QA",
-      "by": "asset revision + implementation",
-      "detail": "R2 ships a distinct headSocket per body; the implementation already read per-asset headSocket.normalized and now consumes the R2 values. No global socket is used anywhere. Test asserts >15 distinct sockets across the 22 bodies and that a dancer's socket equals its own body's socket."
+      "status": "CLOSED",
+      "by": "QA round 2",
+      "detail": "Implementation accepted; R3 changes no code here."
     },
     {
       "defectId": "DA-QA-002",
       "status": "FIXED_PENDING_QA",
-      "by": "asset revision",
-      "detail": "R2 VIP male bodies consumed as shipped; nothing recoloured or edited."
+      "by": "asset revision (ChatGPT/System Architect)",
+      "detail": "R3 VIP male bodies consumed as shipped: baked facial identity removed, enlarged clean transparent sockets, updated per-asset headSocket values read straight from the R3 manifest. No code hides or compensates for artwork."
     },
     {
       "defectId": "DA-QA-003",
-      "status": "FIXED_PENDING_QA",
-      "by": "implementation",
-      "detail": "Crown 0.44x and rank badge 0.27x body width, sourced from ThemeDefinition.rankLayout (contract data) instead of renderer constants (was 0.8x / 0.42x). Crown centred above the head silhouette; badge on the head side clear of the avatar circle."
+      "status": "CLOSED",
+      "by": "QA round 2",
+      "detail": "Crown/badge scale and placement accepted; unchanged in R3."
     },
     {
       "defectId": "DA-QA-004",
       "status": "FIXED_PENDING_QA",
-      "by": "asset revision",
-      "detail": "R2 cleaned sprites and rebuilt rank badges/atlases consumed as shipped; atlas frames still read from metadata, never hard-coded coordinates."
+      "by": "asset revision (ChatGPT/System Architect)",
+      "detail": "R3 cleaned sprites and rebuilt atlases consumed as shipped. Frames are read from the atlas JSON, so the new 4px transparent padding is honoured automatically; verified 4px minimum gap on all 7 atlases. A test that had hard-coded R2 frame coordinates was rewritten to compare against the metadata."
     },
     {
       "defectId": "DA-QA-005",
-      "status": "FIXED_PENDING_QA",
-      "by": "implementation",
-      "detail": "Coverage resolved per tier against PerformanceProfile.coverage: LOW tier1to3Max 0.62, tier4Min 0.82, tier5Min 1.00. particleScale now only shapes the base ramp and can no longer scale a takeover below its floor; the renderer applies resolved coverage verbatim."
+      "status": "CLOSED",
+      "by": "QA round 2",
+      "detail": "LOW takeover coverage accepted; unchanged in R3."
     }
-  ],
-  "implementedComponents": [
-    "packages/contracts/src/assets.ts — EffectCoverage + PerformanceProfile.coverage, TAKEOVER_COVERAGE_MIN",
-    "packages/assets/src/index.ts — LOCKED_VISUAL_REVISION / productionRootFor(): single source for the pack path",
-    "packages/assets/src/theme/themeSchema.ts — RankLayout (crown/badge body ratios) as theme data",
-    "packages/assets/src/theme/neonKawaiiArena.ts — retargeted to DA-VISUAL-R2 with contract rank layout; R1 substitution notes removed since R2 names the real ids",
-    "packages/assets/src/theme/resolveTheme.ts — carries rankLayout through to renderers",
-    "apps/stage/src/stage/effectCoverage.ts — new per-tier coverage resolver enforcing the contract floors and cap",
-    "apps/stage/src/stage/stageScene.ts — resolves coverage per gift event, passes rankLayout in every DancerVisual",
-    "apps/stage/src/stage/pixi/dancerView.ts — crown/badge scaled from the contract ratios",
-    "apps/stage/src/stage/pixi/pixiRenderer.ts — applies resolved coverage verbatim, no second particleScale multiply"
   ],
   "validation": {
     "typecheck": "PASS",
     "test": "PASS",
     "build": "PASS",
     "validate": "PASS",
-    "testCount": 379,
-    "testCountBefore": 363,
-    "detail": "pnpm install --frozen-lockfile, format:check, lint (0 error/0 warning), arch:check (11 packages), typecheck (11/11), test (30 files / 379 tests), build all PASS on Windows 10, Node 24.18.0, pnpm 10.34.5"
+    "testCount": 381,
+    "testCountBefore": 379,
+    "detail": "pnpm install --frozen-lockfile, format:check, lint (0 error/0 warning), arch:check (11 packages), typecheck (11/11), test (30 files / 381 tests), build all PASS on Windows 10, Node 24.18.0, pnpm 10.34.5"
   },
   "geometryUsed": {
-    "headSocket": "per-asset headSocket.normalized from the R2 manifest; R2 values differ per body (x 0.455-0.578, y 0.245-0.335), so no global socket exists in the code path",
+    "headSocket": "per-asset headSocket.normalized from the R3 manifest; VIP male now x 0.452-0.550, y 0.348-0.357, radius 0.143-0.154",
     "crownWidthBodyRatio": 0.44,
     "rankBadgeWidthBodyRatio": 0.27,
     "lowTier4Coverage": 0.82,
     "lowTier5Coverage": 1.0,
     "lowTier1to3CoverageMax": 0.62,
+    "atlasPaddingPx": 4,
     "stage": "9:16, design 720x1280 with letterbox fit; zones from VISUAL_CONTRACT (normal 0.48-0.91, vip 0.23-0.48, dj 0.08-0.28)"
   },
   "openRequests": [],
   "closedRequests": [
     {
       "requestId": "DA-REQ-001",
-      "status": "RESOLVED by DA-VISUAL-R2",
-      "note": "R2 contract names the real production ids, so every theme slot is now a direct binding with no substitution. Ready to move to CONSUMED."
+      "status": "RESOLVED by DA-VISUAL-R2, still satisfied by R3",
+      "note": "Contract names the real production ids; every theme slot is a direct binding with no substitution."
     }
   ],
   "knownLimitations": [
@@ -103,15 +113,16 @@
     "Effect visuals are single-sprite plays with alpha/scale; no particle system yet (Task 13 performance work).",
     "PNG editing sources are not in the repository by owner decision; use the locked ZIP from the ChatGPT Library.",
     "No real-device FPS benchmark: the 30-dancer test asserts view lifecycle and no view leak, not measured frame time.",
-    "Crown/badge PLACEMENT (as opposed to scale) is implementation judgement within the contract wording 'centered above avatar without covering avatar' / 'upper shoulder-head side' — worth a visual check.",
+    "Artwork cleanliness (no baked faces, no sheet bleed) is verified by hash against the approved package and by the owner's own pre-integration QA report, not by pixel inspection in CI.",
     "Real EulerStream credential smoke test still pending owner (unchanged from Tasks 07/08)."
   ],
   "notesForChatGPT": [
-    "R2 SHA256 was verified BEFORE extraction, and every asset/atlas hash was re-verified after placement; R1 was then deleted so only R2 remains.",
-    "No approved asset was modified, recoloured, cropped or substituted; nothing was drawn by Claude.",
-    "DA-QA-003 and DA-QA-005 were the only defects in implementation scope; both are now data-driven from the contract rather than renderer constants, so a future retune is a contract edit.",
-    "`.dance/qa/DEFECTS.json` statuses for DA-QA-003/005 were set to FIXED_PENDING_QA at the owner's explicit instruction; the other three entries were left exactly as ChatGPT wrote them.",
-    "The pack path now derives from a single constant (LOCKED_VISUAL_REVISION); moving to R3 means changing that constant plus the theme's visualRevision.",
-    "Suggested QA round 2 focus: avatar circle centring inside each R2 socket at 720x1280 and 1080x1920 (sockets now differ per body), crown/badge scale and placement for Top 1-3, and tier-4/tier-5 takeover size in LOW mode."
+    "R3 ZIP SHA256 and byte size were both verified BEFORE extraction; every asset/atlas hash was re-verified after placement; R2 was then deleted so only R3 remains.",
+    "R3 was a genuine drop-in: because ids are stable and all geometry comes from the manifest, the swap touched one revision constant plus the theme's visualRevision.",
+    "No approved asset was modified, recoloured, cropped or redrawn; nothing was drawn by Claude.",
+    "DA-QA-001/003/005 were left untouched as instructed — no retune of socket logic, crown/badge ratios or coverage floors.",
+    "The only test changes were to expectations that had encoded R2 facts: one test literally hard-coded atlas frame coordinates, which R3's 4px padding correctly invalidated. It now asserts against the atlas metadata, so a future repack cannot silently break it.",
+    "`.dance/qa/DEFECTS.json` was taken from main's QA round-3 version during the merge (owner-owned file); DA-QA-002/004 were already FIXED_PENDING_QA there and the three accepted defects remain CLOSED.",
+    "Suggested final QA focus: VIP male avatar openings at 720x1280 and 1080x1920 (sockets moved and grew), and any residual edge halo around gift/FX sprites now that atlases carry 4px padding."
   ]
 }

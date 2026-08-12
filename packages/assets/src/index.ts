@@ -23,7 +23,7 @@ import { CONTRACTS_SCHEMA_VERSION, type WorkspaceModuleInfo } from '@dance-arena
  * and every path after that comes from `manifest.productionRoot`. Moving to R3 means changing this
  * constant and the theme's `visualRevision`, nothing else.
  */
-export const LOCKED_VISUAL_REVISION = 'DA-VISUAL-R2';
+export const LOCKED_VISUAL_REVISION = 'DA-VISUAL-R3';
 
 export function productionRootFor(revision: string = LOCKED_VISUAL_REVISION): string {
   return `assets/production/${revision}`;

@@ -1,0 +1,131 @@
+{
+  "atlas": "dancers-regular.webp",
+  "width": 1044,
+  "height": 1168,
+  "mime": "image/webp",
+  "sha256": "1855bf0c45677fdda36d67c838cc042e11f3faac3c1e4aba87c78e5536e0ecfd",
+  "byteSize": 982216,
+  "padding": 4,
+  "frames": {
+    "dancer-regular-01": {
+      "x": 4,
+      "y": 4,
+      "w": 256,
+      "h": 384,
+      "pivot": {
+        "x": 0.5,
+        "y": 1.0
+      }
+    },
+    "dancer-regular-02": {
+      "x": 264,
+      "y": 4,
+      "w": 256,
+      "h": 384,
+      "pivot": {
+        "x": 0.5,
+        "y": 1.0
+      }
+    },
+    "dancer-regular-03": {
+      "x": 524,
+      "y": 4,
+      "w": 256,
+      "h": 384,
+      "pivot": {
+        "x": 0.5,
+        "y": 1.0
+      }
+    },
+    "dancer-regular-04": {
+      "x": 784,
+      "y": 4,
+      "w": 256,
+      "h": 384,
+      "pivot": {
+        "x": 0.5,
+        "y": 1.0
+      }
+    },
+    "dancer-regular-05": {
+      "x": 4,
+      "y": 392,
+      "w": 256,
+      "h": 384,
+      "pivot": {
+        "x": 0.5,
+        "y": 1.0
+      }
+    },
+    "dancer-regular-06": {
+      "x": 264,
+      "y": 392,
+      "w": 256,
+      "h": 384,
+      "pivot": {
+        "x": 0.5,
+        "y": 1.0
+      }
+    },
+    "dancer-regular-07": {
+      "x": 524,
+      "y": 392,
+      "w": 256,
+      "h": 384,
+      "pivot": {
+        "x": 0.5,
+        "y": 1.0
+      }
+    },
+    "dancer-regular-08": {
+      "x": 784,
+      "y": 392,
+      "w": 256,
+      "h": 384,
+      "pivot": {
+        "x": 0.5,
+        "y": 1.0
+      }
+    },
+    "dancer-regular-09": {
+      "x": 4,
+      "y": 780,
+      "w": 256,
+      "h": 384,
+      "pivot": {
+        "x": 0.5,
+        "y": 1.0
+      }
+    },
+    "dancer-regular-10": {
+      "x": 264,
+      "y": 780,
+      "w": 256,
+      "h": 384,
+      "pivot": {
+        "x": 0.5,
+        "y": 1.0
+      }
+    },
+    "dancer-regular-11": {
+      "x": 524,
+      "y": 780,
+      "w": 256,
+      "h": 384,
+      "pivot": {
+        "x": 0.5,
+        "y": 1.0
+      }
+    },
+    "dancer-regular-12": {
+      "x": 784,
+      "y": 780,
+      "w": 256,
+      "h": 384,
+      "pivot": {
+        "x": 0.5,
+        "y": 1.0
+      }
+    }
+  }
+}

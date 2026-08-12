@@ -76,7 +76,7 @@ export interface AssetRegistry {
   readonly missing: readonly AssetId[];
 }
 
-/** `assets/production/DA-VISUAL-R1/runtime/dancers-regular.webp` → `dancers-regular`. */
+/** `assets/production/<revision>/runtime/dancers-regular.webp` → `dancers-regular`. */
 export function atlasNameFromPath(path: string): string {
   const file = path.split('/').at(-1) ?? path;
   return file.replace(/\.(webp|png)$/i, '');

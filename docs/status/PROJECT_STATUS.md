@@ -14,7 +14,7 @@ Execution plan: **B — approved**
 | 06 | STAGE Pixi Minimal | DONE — PR #2 merged |
 | 07 | EulerStream Connector & Normalizer | DONE — PR #2 merged |
 | 08 | End-to-End Gameplay Integration | DONE — PR #2 merged |
-| 09 | Asset, Theme & Visual System | PR OPEN — DA-VISUAL-R2 consumed, QA round 2 pending |
+| 09 | Asset, Theme & Visual System | PR OPEN — DA-VISUAL-R3 consumed, final visual QA pending |
 | 10 | Auto Host & TTS | TODO |
 | 11 | DJ & Audio Reactive | TODO |
 | 12 | Settings, Secrets & Licensing | TODO |
@@ -61,3 +61,12 @@ Trạng thái hợp lệ: `TODO`, `READY`, `IN PROGRESS`, `PR OPEN`, `BLOCKED`, 
 - Head socket dùng `headSocket.normalized` **per-asset** của R2 (x 0.455–0.578, y 0.245–0.335) — không có global socket trong code path.
 - Đường dẫn pack rút về một hằng số duy nhất (`LOCKED_VISUAL_REVISION`), đổi revision chỉ cần sửa một chỗ.
 - Tests: **379** (363 → 379, +16). `pnpm validate` PASS toàn bộ.
+
+### Task 09 — R3 final remediation (chờ visual QA cuối)
+- Handoff `DA-T09-R3-FINAL-REMEDIATION`. QA round 2 đã **accept implementation**: `DA-QA-001`, `DA-QA-003`, `DA-QA-005` → CLOSED, không retune. R3 chỉ thay artwork cho hai defect còn lại.
+- ZIP `DA-VISUAL-R3-production.zip`: SHA256 `3f10c2c8…3391d0` và size `40,297,364` bytes đều khớp lock, verify **trước khi** extract. Sau khi đặt vào `assets/production/DA-VISUAL-R3`: **104/104 asset + 7/7 atlas**, 0 problem. R2 đã xoá, R3 là pack duy nhất trong runtime repo.
+- Kiểm tra độc lập: padding **4px** đủ trên cả 7 atlas; 5/5 socket VIP male được publish, distinct, radius > 0.1; 21 socket khác nhau trên 22 body.
+- R3 là drop-in: 104 id không đổi nên chỉ cần sửa `LOCKED_VISUAL_REVISION` + `visualRevision` của theme; mọi path/geometry vẫn resolve từ manifest.
+- Defect: `DA-QA-002` và `DA-QA-004` → `FIXED_PENDING_QA` (asset owner). Ba defect implementation giữ CLOSED.
+- Tests: **381** (379 → 381). Một test cũ **hard-code toạ độ atlas của R2** nên bị padding 4px làm sai — đã viết lại để so với metadata, đúng locked rule 2.
+- `pnpm validate` PASS toàn bộ.
