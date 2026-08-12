@@ -1,21 +1,30 @@
 protocolVersion: 1
 project: Dance Arena V2
-phase: task-09-r2-remediation
+phase: task-09-r3-final-remediation
 visualOwner: ChatGPT
 implementationOwner: Claude
-visualRevision: DA-VISUAL-R2
+visualRevision: DA-VISUAL-R3
 visualSetupComplete: true
-baseImplementationCommit: c569780b8b328fdaa91e02ad2fca630ff99d6af6
-visualManifestCommit: 57394c7832cead4973d8e392bac8d1d6a0d03645
+baseImplementationCommit: 9ac4fab8ec109325182bafae9370e8f6b91d3ca0
+visualManifestCommit: 9eaf21bf14203ef880bb59792aee21fd462b1151
 status: READY_FOR_IMPLEMENTATION
 
 assetPackage:
-  fileName: DA-VISUAL-R2-production.zip
-  sha256: 42b2b47554def73a6fd611fa6cf449106e01cb0f432b582f2e1f59f1961c3559
-  byteSize: 35870901
+  fileName: DA-VISUAL-R3-production.zip
+  sha256: 3f10c2c8b75b163a7b168336a3524a6ce092cf2f06e9d6019e7d40fae73391d0
+  byteSize: 40297364
   logicalAssetCount: 104
-  libraryFileId: libfile_c4420f5e7cd88191b4478e23b77e7e2b
-  expectedExtractRoot: assets/production/DA-VISUAL-R2
+  libraryFileId: libfile_0a5d18b6cd9c819186f44f9411063b8c
+  expectedExtractRoot: assets/production/DA-VISUAL-R3
+
+qaState:
+  closed:
+    - DA-QA-001
+    - DA-QA-003
+    - DA-QA-005
+  fixedPendingFinalQA:
+    - DA-QA-002
+    - DA-QA-004
 
 ownership:
   chatgpt:
@@ -34,11 +43,11 @@ ownership:
     - .dance/requests/**
 
 hardRules:
-  - Claude must verify the locked R2 asset package SHA256 before extraction.
-  - Claude must not invent missing approved artwork.
+  - Claude must verify the locked R3 asset package SHA256 before extraction.
+  - Claude must not invent or redraw approved artwork.
   - Per-asset headSocket is authoritative.
-  - Claude must not alter ChatGPT-owned approved assets/contracts to simplify implementation.
-  - Missing visual resources must use the request lifecycle.
+  - Preserve R3 atlas frame metadata and 4px transparent padding.
+  - DA-QA-001, DA-QA-003 and DA-QA-005 implementation behavior is already accepted; do not retune it during R3 swap.
   - Core Engine gameplay state must remain independent from theme and asset choice.
   - Any approved visual replacement requires a new visual revision or explicit unlock.
 
