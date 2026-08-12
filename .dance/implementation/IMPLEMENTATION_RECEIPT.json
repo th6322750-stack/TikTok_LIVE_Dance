@@ -1,128 +1,50 @@
 {
   "task": 9,
-  "status": "IMPLEMENTED_PENDING_VISUAL_QA",
-  "remediationRound": 3,
+  "status": "ACCEPTED_MERGED",
   "handoffId": "DA-T09-R3-FINAL-REMEDIATION",
   "consumedVisualRevision": "DA-VISUAL-R3",
-  "consumedVisualCommit": "c378e31aa0353bb3f8973f211f8ec0d52a975503",
-  "consumedManifestCommit": "9eaf21bf14203ef880bb59792aee21fd462b1151",
-  "implementationBranch": "claude/task-09-asset-theme-visual-system",
-  "previousImplementationCommit": "9ac4fab8ec109325182bafae9370e8f6b91d3ca0",
+  "implementationCommit": "af1ce72a00b532b917836f76dafcd981d5141381",
+  "mergeCommit": "22bb2331422c51e429918c62ac4d3c429bbe2216",
   "assetPackageVerification": {
     "fileName": "DA-VISUAL-R3-production.zip",
-    "expectedSha256": "3f10c2c8b75b163a7b168336a3524a6ce092cf2f06e9d6019e7d40fae73391d0",
-    "actualSha256": "3f10c2c8b75b163a7b168336a3524a6ce092cf2f06e9d6019e7d40fae73391d0",
-    "expectedByteSize": 40297364,
-    "actualByteSize": 40297364,
-    "result": "MATCH",
+    "sha256": "3f10c2c8b75b163a7b168336a3524a6ce092cf2f06e9d6019e7d40fae73391d0",
+    "byteSize": 40297364,
     "verifiedBeforeExtraction": true,
-    "extractRoot": "assets/production/DA-VISUAL-R3",
-    "perAssetIntegrity": "104/104 assets and 7/7 atlases verified against ASSET_MANIFEST.json sha256 after placement",
+    "perAssetIntegrity": "104/104 assets",
+    "runtimeAtlasIntegrity": "7/7 atlases",
     "problems": 0,
-    "r2Removed": "assets/production/DA-VISUAL-R2 deleted; R3 is the only production pack in the runtime repo",
-    "independentChecks": {
-      "atlasFramePaddingPx": "4 confirmed on all 7 atlases (minimum gap between adjacent frame edges on both axes)",
-      "vipMaleSockets": "5/5 published, distinct, radius > 0.1 (enlarged clean cut-outs)",
-      "bodySocketDistinctness": "21 distinct sockets across 22 bodies"
-    }
+    "atlasPaddingPx": 4
   },
-  "assetTrackingPolicy": {
-    "decidedBy": "owner",
-    "tracked": "R3 runtime WebP atlases + individual WebP + JSON metadata + manifest + QA sheets/report + release notes",
-    "untracked": "PNG editing sources, ignored via .gitignore; authoritative copy stays in the locked ZIP recorded in DANCE_LOCK",
-    "rationale": "Runtime prefers WebP (locked rule 5); keeps git history from carrying every revision twice"
-  },
-  "revisionSwap": {
-    "changedFiles": [
-      "packages/assets/src/index.ts — LOCKED_VISUAL_REVISION R2 → R3 (single source for the pack path)",
-      "packages/assets/src/theme/neonKawaiiArena.ts — theme visualRevision R2 → R3",
-      "packages/assets/src/assetSystem.test.ts — atlas-frame assertion now compares against JSON metadata instead of literal coordinates; added padding and VIP-male socket coverage",
-      "apps/stage + packages/assets doc comments — revision-neutral wording"
-    ],
-    "note": "R3 kept the same 104 logical ids, so no theme binding, registry lookup or renderer code needed changing. Production root, runtime atlas paths and per-asset geometry all resolve from the R3 manifest."
-  },
-  "acceptedBehaviourPreserved": {
-    "DA-QA-001": "per-asset headSocket.normalized still the only socket source; R3's updated VIP-male values are consumed automatically",
-    "DA-QA-003": "crown 0.44x / badge 0.27x body width unchanged (ThemeDefinition.rankLayout)",
-    "DA-QA-005": "LOW tier1to3Max 0.62, tier4Min 0.82, tier5Min 1.00 unchanged; particleScale still cannot shrink a takeover",
-    "retuned": "nothing — no code path for these three defects was modified in R3"
-  },
-  "defectsAddressed": [
-    {
-      "defectId": "DA-QA-001",
-      "status": "CLOSED",
-      "by": "QA round 2",
-      "detail": "Implementation accepted; R3 changes no code here."
-    },
-    {
-      "defectId": "DA-QA-002",
-      "status": "FIXED_PENDING_QA",
-      "by": "asset revision (ChatGPT/System Architect)",
-      "detail": "R3 VIP male bodies consumed as shipped: baked facial identity removed, enlarged clean transparent sockets, updated per-asset headSocket values read straight from the R3 manifest. No code hides or compensates for artwork."
-    },
-    {
-      "defectId": "DA-QA-003",
-      "status": "CLOSED",
-      "by": "QA round 2",
-      "detail": "Crown/badge scale and placement accepted; unchanged in R3."
-    },
-    {
-      "defectId": "DA-QA-004",
-      "status": "FIXED_PENDING_QA",
-      "by": "asset revision (ChatGPT/System Architect)",
-      "detail": "R3 cleaned sprites and rebuilt atlases consumed as shipped. Frames are read from the atlas JSON, so the new 4px transparent padding is honoured automatically; verified 4px minimum gap on all 7 atlases. A test that had hard-coded R2 frame coordinates was rewritten to compare against the metadata."
-    },
-    {
-      "defectId": "DA-QA-005",
-      "status": "CLOSED",
-      "by": "QA round 2",
-      "detail": "LOW takeover coverage accepted; unchanged in R3."
-    }
-  ],
-  "validation": {
-    "typecheck": "PASS",
-    "test": "PASS",
-    "build": "PASS",
-    "validate": "PASS",
-    "testCount": 381,
-    "testCountBefore": 379,
-    "detail": "pnpm install --frozen-lockfile, format:check, lint (0 error/0 warning), arch:check (11 packages), typecheck (11/11), test (30 files / 381 tests), build all PASS on Windows 10, Node 24.18.0, pnpm 10.34.5"
-  },
-  "geometryUsed": {
-    "headSocket": "per-asset headSocket.normalized from the R3 manifest; VIP male now x 0.452-0.550, y 0.348-0.357, radius 0.143-0.154",
+  "acceptedBehaviour": {
+    "headSocket": "per-asset headSocket.normalized from the R3 manifest",
     "crownWidthBodyRatio": 0.44,
     "rankBadgeWidthBodyRatio": 0.27,
-    "lowTier4Coverage": 0.82,
-    "lowTier5Coverage": 1.0,
     "lowTier1to3CoverageMax": 0.62,
-    "atlasPaddingPx": 4,
-    "stage": "9:16, design 720x1280 with letterbox fit; zones from VISUAL_CONTRACT (normal 0.48-0.91, vip 0.23-0.48, dj 0.08-0.28)"
+    "lowTier4CoverageMin": 0.82,
+    "lowTier5CoverageMin": 1.0,
+    "assetResolution": "manifest/atlas metadata driven; no hard-coded frame coordinates"
   },
-  "openRequests": [],
-  "closedRequests": [
-    {
-      "requestId": "DA-REQ-001",
-      "status": "RESOLVED by DA-VISUAL-R2, still satisfied by R3",
-      "note": "Contract names the real production ids; every theme slot is a direct binding with no substitution."
-    }
-  ],
+  "finalVisualQA": {
+    "status": "PASS",
+    "qaRound": 3,
+    "closedDefects": ["DA-QA-001", "DA-QA-002", "DA-QA-003", "DA-QA-004", "DA-QA-005"],
+    "evidence": [
+      "All five VIP male bodies expose clean transparent avatar sockets with no baked facial identity in the socket region.",
+      "Crown and tier-5 FX samples are isolated on transparency with no R2 neighbor/tile bleed observed.",
+      "R3 stage composition preserves accepted Top-1/2/3 crown/badge placement and takeover hierarchy."
+    ]
+  },
+  "validation": {
+    "ci": "PASS",
+    "validate": "PASS",
+    "testCount": 381,
+    "typecheck": "PASS",
+    "build": "PASS"
+  },
   "knownLimitations": [
-    "AvatarCache disk backend is a port with an in-memory implementation; the filesystem backing belongs in Main (sandboxed renderer has no fs). Memory cache + TTL are active.",
-    "DJ artwork stays deferred to Task 11 per VISUAL_CONTRACT.dj; the dj layer draws a neutral primitive placeholder and is not treated as a final asset.",
-    "Reaction and command-bubble assets are resolved and available through the theme but not yet displayed on stage — they are driven by Auto Host (Task 10).",
-    "Effect visuals are single-sprite plays with alpha/scale; no particle system yet (Task 13 performance work).",
-    "PNG editing sources are not in the repository by owner decision; use the locked ZIP from the ChatGPT Library.",
-    "No real-device FPS benchmark: the 30-dancer test asserts view lifecycle and no view leak, not measured frame time.",
-    "Artwork cleanliness (no baked faces, no sheet bleed) is verified by hash against the approved package and by the owner's own pre-integration QA report, not by pixel inspection in CI.",
-    "Real EulerStream credential smoke test still pending owner (unchanged from Tasks 07/08)."
-  ],
-  "notesForChatGPT": [
-    "R3 ZIP SHA256 and byte size were both verified BEFORE extraction; every asset/atlas hash was re-verified after placement; R2 was then deleted so only R3 remains.",
-    "R3 was a genuine drop-in: because ids are stable and all geometry comes from the manifest, the swap touched one revision constant plus the theme's visualRevision.",
-    "No approved asset was modified, recoloured, cropped or redrawn; nothing was drawn by Claude.",
-    "DA-QA-001/003/005 were left untouched as instructed — no retune of socket logic, crown/badge ratios or coverage floors.",
-    "The only test changes were to expectations that had encoded R2 facts: one test literally hard-coded atlas frame coordinates, which R3's 4px padding correctly invalidated. It now asserts against the atlas metadata, so a future repack cannot silently break it.",
-    "`.dance/qa/DEFECTS.json` was taken from main's QA round-3 version during the merge (owner-owned file); DA-QA-002/004 were already FIXED_PENDING_QA there and the three accepted defects remain CLOSED.",
-    "Suggested final QA focus: VIP male avatar openings at 720x1280 and 1080x1920 (sockets moved and grew), and any residual edge halo around gift/FX sprites now that atlases carry 4px padding."
+    "Real EulerStream credential smoke test remains pending owner.",
+    "Dedicated DJ production artwork remains deferred to Task 11.",
+    "Reaction and command-bubble runtime behavior is handled by Task 10.",
+    "No real-device FPS benchmark has been recorded yet."
   ]
 }
