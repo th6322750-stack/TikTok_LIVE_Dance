@@ -1,18 +1,1 @@
-{
-  "protocolVersion": 1,
-  "visualRevision": "DA-VISUAL-R1",
-  "implementationCommit": null,
-  "defects": [],
-  "lifecycle": ["OPEN", "FIXED_PENDING_QA", "CLOSED", "REOPENED"],
-  "severity": ["BLOCKER", "HIGH", "MEDIUM", "LOW"],
-  "requiredFields": [
-    "defectId",
-    "implementationCommit",
-    "viewport",
-    "componentId",
-    "severity",
-    "observed",
-    "expected",
-    "status"
-  ]
-}
+{"protocolVersion":1,"visualRevision":"DA-VISUAL-R3","implementationCommit":"9ac4fab8ec109325182bafae9370e8f6b91d3ca0","qaRound":3,"defects":[{"defectId":"DA-QA-001","implementationCommit":"9ac4fab8ec109325182bafae9370e8f6b91d3ca0","viewport":"720x1280 and 1080x1920","componentId":"DancerView/headSocket","severity":"BLOCKER","observed":"R1 global socket metadata was invalid.","expected":"Use authoritative per-asset headSocket.normalized values.","status":"CLOSED","fixedInVisualRevision":"DA-VISUAL-R2","qaEvidence":"Implementation path accepted in QA round 2; R3 keeps per-asset geometry and only updates VIP-male socket values for the enlarged clean cutouts."},{"defectId":"DA-QA-002","implementationCommit":"9ac4fab8ec109325182bafae9370e8f6b91d3ca0","viewport":"720x1280 and 1080x1920","componentId":"DA-VISUAL-R3/vip-male","severity":"BLOCKER","observed":"R2 VIP male artwork retained baked facial identity around the avatar opening.","expected":"VIP male bodies expose a clean avatar socket; facial identity comes only from TikTok avatar.","status":"FIXED_PENDING_QA","fixedInVisualRevision":"DA-VISUAL-R3","owner":"ChatGPT/System Architect","fixDetail":"All five VIP male sprites were recut with larger transparent facial sockets. Original eyes/nose/mouth/skin-face identity inside the avatar region is removed; updated per-asset socket geometry is published in the R3 manifest."},{"defectId":"DA-QA-003","implementationCommit":"9ac4fab8ec109325182bafae9370e8f6b91d3ca0","viewport":"1080x1920 reference","componentId":"DancerView/rank accessory","severity":"HIGH","observed":"R1 implementation oversized crown/badge.","expected":"Crown 0.44x and rank badge 0.27x body width with accepted placement.","status":"CLOSED","fixedInVisualRevision":"DA-VISUAL-R2","fixedBy":"Claude","qaEvidence":"Scale and placement accepted in QA round 2; no R3 implementation retune requested."},{"defectId":"DA-QA-004","implementationCommit":"9ac4fab8ec109325182bafae9370e8f6b91d3ca0","viewport":"asset QA","componentId":"DA-VISUAL-R3/sprite-isolation-and-atlas","severity":"BLOCKER","observed":"R2 still contained hidden RGB/tile contamination and detached source fragments in production artwork.","expected":"Sprites and atlas frames are isolated on transparency with no neighboring-sheet bleed or detached source fragments.","status":"FIXED_PENDING_QA","fixedInVisualRevision":"DA-VISUAL-R3","owner":"ChatGPT/System Architect","fixDetail":"R3 zeroes RGB under transparent pixels, removes detached dancer edge fragments, isolates affected gift/FX sprites, regenerates individual WebP assets losslessly, and rebuilds all 7 atlases with 4px transparent frame padding. Independent package verification: 104/104 assets + 7/7 atlases, 0 hash problems."},{"defectId":"DA-QA-005","implementationCommit":"9ac4fab8ec109325182bafae9370e8f6b91d3ca0","viewport":"LOW performance mode","componentId":"GiftFXLayer/tier4-tier5","severity":"MEDIUM","observed":"R1 implementation shrank takeover effects with particleScale.","expected":"LOW tier-4 >=0.82 stage width; tier-5 >=1.00; tiers1-3 <=0.62.","status":"CLOSED","fixedInVisualRevision":"DA-VISUAL-R2","fixedBy":"Claude","qaEvidence":"Coverage implementation accepted in QA round 2; R3 keeps the same approved behavior."}],"lifecycle":["OPEN","FIXED_PENDING_QA","CLOSED","REOPENED"],"severity":["BLOCKER","HIGH","MEDIUM","LOW"],"requiredFields":["defectId","implementationCommit","viewport","componentId","severity","observed","expected","status"]}
