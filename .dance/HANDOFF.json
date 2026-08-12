@@ -1,1 +1,36 @@
-{"protocolVersion":1,"handoffId":"DA-T09-R3-FINAL-REMEDIATION","task":9,"title":"Asset, Theme & Visual System — R3 final artwork remediation","visualRevision":"DA-VISUAL-R3","createdBy":"ChatGPT/System Architect","status":"READY_FOR_IMPLEMENTATION","visualSetupComplete":true,"implementationBranch":"claude/task-09-asset-theme-visual-system","currentImplementationHead":"9ac4fab8ec109325182bafae9370e8f6b91d3ca0","qaRound2":{"implementationAccepted":true,"closedDefects":["DA-QA-001","DA-QA-003","DA-QA-005"],"assetDefectsToReplace":["DA-QA-002","DA-QA-004"]},"assetPackage":{"fileName":"DA-VISUAL-R3-production.zip","sha256":"3f10c2c8b75b163a7b168336a3524a6ce092cf2f06e9d6019e7d40fae73391d0","byteSize":40297364,"libraryFileId":"libfile_0a5d18b6cd9c819186f44f9411063b8c","expectedExtractRoot":"assets/production/DA-VISUAL-R3"},"hardGate":{"claudeMayStart":true,"precondition":"Owner places DA-VISUAL-R3-production.zip in the local repo/workspace; Claude verifies the exact SHA256 before extraction.","reason":"R3 package passed System Architect pre-integration artwork QA and fixes the only remaining asset-owned blockers."},"requiredRemediation":["merge latest main metadata into the existing Task 09 branch without rewriting history","verify R3 ZIP SHA256 before extraction","remove R2 production pack and consume R3 with the same stable 104 asset IDs","update visual revision/production root/runtime atlas metadata from R2 to R3","preserve R3 4px atlas padding and use JSON frame coordinates exactly","use the updated per-asset VIP-male headSocket values from R3 manifest","do not retune crown/badge scale or effect coverage; DA-QA-003/005 are already accepted","run pnpm validate and update implementation receipt to R3"],"doNotDo":["do not start Task 10","do not redraw or modify R3 artwork","do not change Core Engine gameplay","do not reopen accepted DA-QA-001/003/005 without a new observed regression"],"stopCondition":"Push R3 revision/package swap to PR #3, CI green, then stop for final ChatGPT visual QA."}
+{
+  "protocolVersion": 1,
+  "handoffId": "DA-T09-COMPLETE-R3",
+  "task": 9,
+  "title": "Asset, Theme & Visual System — complete",
+  "visualRevision": "DA-VISUAL-R3",
+  "createdBy": "ChatGPT/System Architect",
+  "status": "TASK_09_COMPLETE",
+  "visualSetupComplete": true,
+  "implementationCommit": "af1ce72a00b532b917836f76dafcd981d5141381",
+  "mergeCommit": "22bb2331422c51e429918c62ac4d3c429bbe2216",
+  "finalVisualQA": {
+    "status": "PASS",
+    "closedDefects": ["DA-QA-001", "DA-QA-002", "DA-QA-003", "DA-QA-004", "DA-QA-005"]
+  },
+  "assetPackage": {
+    "fileName": "DA-VISUAL-R3-production.zip",
+    "sha256": "3f10c2c8b75b163a7b168336a3524a6ce092cf2f06e9d6019e7d40fae73391d0",
+    "byteSize": 40297364,
+    "expectedExtractRoot": "assets/production/DA-VISUAL-R3"
+  },
+  "nextTask": {
+    "task": 10,
+    "title": "Auto Host & TTS",
+    "status": "READY_WAITING_OWNER_HANDOFF"
+  },
+  "hardGate": {
+    "claudeMayStart": false,
+    "reason": "Task 09 is complete. Task 10 requires a new explicit owner/System Architect handoff before implementation begins."
+  },
+  "doNotDo": [
+    "do not start Task 10 without a new explicit handoff",
+    "do not modify DA-VISUAL-R3 artwork or accepted Task 09 render tuning",
+    "do not reopen closed Task 09 QA defects without a newly observed regression"
+  ]
+}
