@@ -7,6 +7,8 @@
 
 import { ManualScheduler, MockConnector, type Scheduler } from '@dance-arena/connectors';
 import type {
+  AutoHostConfig,
+  AutoHostStatus,
   ConnectorStatusEvent,
   ControlEvent,
   DiagnosticsErrorPayload,
@@ -15,6 +17,8 @@ import type {
   StageLayoutRequest,
   StageSnapshot,
   StageWindowState,
+  TtsCancelRequest,
+  TtsSpeakRequest,
 } from '@dance-arena/contracts';
 import { createFixedClock, createSequentialIdGenerator } from '@dance-arena/core-engine';
 
@@ -65,6 +69,17 @@ export interface RuntimeHarness {
   readonly connectorStatuses: ConnectorStatusEvent[];
   readonly diagnostics: DiagnosticsErrorPayload[];
   readonly connectors: MockConnector[];
+  readonly autoHostStatuses: AutoHostStatus[];
+  /** Utterances Main handed to the STAGE speech device, in order. */
+  readonly ttsRequests: TtsSpeakRequest[];
+  readonly ttsCancels: TtsCancelRequest[];
+  /** Simulates the STAGE renderer announcing whether Web Speech exists. */
+  reportTtsAvailability(available: boolean, detail?: string): Promise<void>;
+  /** Simulates the STAGE renderer acknowledging how one utterance ended. */
+  reportTtsResult(
+    requestId: string,
+    status: 'completed' | 'interrupted' | 'unavailable' | 'error',
+  ): Promise<void>;
   advance(ms: number): void;
   dispose(): Promise<void>;
 }
@@ -80,6 +95,9 @@ export interface RuntimeHarnessOptions {
     provider: string,
     scheduler: ManualScheduler,
   ) => LiveConnector | undefined;
+  readonly autoHostConfig?: AutoHostConfig;
+  /** When true the harness pretends no STAGE window is listening for speech. */
+  readonly ttsUnreachable?: boolean;
 }
 
 export function createRuntimeHarness(options: RuntimeHarnessOptions = {}): RuntimeHarness {
@@ -94,6 +112,9 @@ export function createRuntimeHarness(options: RuntimeHarnessOptions = {}): Runti
   const connectorStatuses: ConnectorStatusEvent[] = [];
   const diagnostics: DiagnosticsErrorPayload[] = [];
   const connectors: MockConnector[] = [];
+  const autoHostStatuses: AutoHostStatus[] = [];
+  const ttsRequests: TtsSpeakRequest[] = [];
+  const ttsCancels: TtsCancelRequest[] = [];
 
   const sinks: RuntimeSinks = {
     connectorStatus: (status) => connectorStatuses.push(status),
@@ -102,6 +123,15 @@ export function createRuntimeHarness(options: RuntimeHarnessOptions = {}): Runti
     stageEvent: (event) => stageEvents.push(event),
     stageWindowState: () => undefined,
     diagnosticsError: (error) => diagnostics.push(error),
+    autoHostStatus: (status) => autoHostStatuses.push(status),
+    // Stands in for the STAGE window: records the utterance and reports whether it was delivered.
+    ttsSpeak: (request) => {
+      if (options.ttsUnreachable === true) return false;
+
+      ttsRequests.push(request);
+      return true;
+    },
+    ttsCancel: (request) => ttsCancels.push(request),
   };
 
   const secrets: SecretStore = {
@@ -127,6 +157,7 @@ export function createRuntimeHarness(options: RuntimeHarnessOptions = {}): Runti
     secrets,
     sinks,
     defaultProvider: 'mock',
+    ...(options.autoHostConfig === undefined ? {} : { autoHostConfig: options.autoHostConfig }),
   });
 
   return {
@@ -140,6 +171,28 @@ export function createRuntimeHarness(options: RuntimeHarnessOptions = {}): Runti
     connectorStatuses,
     diagnostics,
     connectors,
+    autoHostStatuses,
+    ttsRequests,
+    ttsCancels,
+
+    async reportTtsAvailability(available: boolean, detail?: string): Promise<void> {
+      await runtime.handleStageInvoke('autohost:tts-ready', {
+        available,
+        ...(detail === undefined ? {} : { detail }),
+      });
+    },
+
+    async reportTtsResult(
+      requestId: string,
+      status: 'completed' | 'interrupted' | 'unavailable' | 'error',
+    ): Promise<void> {
+      await runtime.handleStageInvoke('autohost:tts-result', { requestId, status });
+      // Let the queue's `.then` microtask run so the next utterance is already dispatched when a
+      // test inspects `ttsRequests`.
+      await Promise.resolve();
+      await Promise.resolve();
+    },
+
     advance(ms: number): void {
       clock.advance(ms);
       scheduler.advance(ms);

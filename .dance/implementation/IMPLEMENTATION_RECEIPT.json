@@ -1,50 +1,131 @@
 {
-  "task": 9,
-  "status": "ACCEPTED_MERGED",
-  "handoffId": "DA-T09-R3-FINAL-REMEDIATION",
+  "task": 10,
+  "status": "READY_FOR_REVIEW",
+  "handoffId": "DA-T10-AUTOHOST-TTS",
+  "branch": "claude/task-10-auto-host-tts",
+  "taskSpec": "docs/tasks/TASK_10_AUTO_HOST_TTS.md",
   "consumedVisualRevision": "DA-VISUAL-R3",
-  "implementationCommit": "af1ce72a00b532b917836f76dafcd981d5141381",
-  "mergeCommit": "22bb2331422c51e429918c62ac4d3c429bbe2216",
-  "assetPackageVerification": {
-    "fileName": "DA-VISUAL-R3-production.zip",
-    "sha256": "3f10c2c8b75b163a7b168336a3524a6ce092cf2f06e9d6019e7d40fae73391d0",
-    "byteSize": 40297364,
-    "verifiedBeforeExtraction": true,
-    "perAssetIntegrity": "104/104 assets",
-    "runtimeAtlasIntegrity": "7/7 atlases",
-    "problems": 0,
-    "atlasPaddingPx": 4
+  "visualPackageUnchanged": true,
+  "architecture": {
+    "coreOwns": [
+      "AutoHostRuleEngine: trigger match, declarative conditions, cooldown (global/per-user/group), safe template rendering, action intents",
+      "Auto Host triggers emitted from REAL Core transitions on the host: namespace"
+    ],
+    "mainOwns": [
+      "TtsQueueService: bounded priority queue, FIFO within priority, duplicate suppression, per-priority TTL, deterministic drop policy, bounded retry, metrics",
+      "reminder timer (~120s default)",
+      "intent dispatch: stage events, canonical game:start-spotlight command, typed mini-game hook",
+      "throttled autohost:status publishing"
+    ],
+    "stageOwns": [
+      "render-only Auto Host reaction/bubble/effect overlays resolved through DA-VISUAL-R3 semantic theme slots",
+      "dumb Web Speech adapter: one utterance at a time plus one completion/error acknowledgement"
+    ],
+    "controlOwns": ["runtime Auto Host configuration UI, observation and test/clear actions"]
   },
-  "acceptedBehaviour": {
-    "headSocket": "per-asset headSocket.normalized from the R3 manifest",
-    "crownWidthBodyRatio": 0.44,
-    "rankBadgeWidthBodyRatio": 0.27,
-    "lowTier1to3CoverageMax": 0.62,
-    "lowTier4CoverageMin": 0.82,
-    "lowTier5CoverageMin": 1.0,
-    "assetResolution": "manifest/atlas metadata driven; no hard-coded frame coordinates"
-  },
-  "finalVisualQA": {
-    "status": "PASS",
-    "qaRound": 3,
-    "closedDefects": ["DA-QA-001", "DA-QA-002", "DA-QA-003", "DA-QA-004", "DA-QA-005"],
-    "evidence": [
-      "All five VIP male bodies expose clean transparent avatar sockets with no baked facial identity in the socket region.",
-      "Crown and tier-5 FX samples are isolated on transparency with no R2 neighbor/tile bleed observed.",
-      "R3 stage composition preserves accepted Top-1/2/3 crown/badge placement and takeover hierarchy."
+  "newContracts": {
+    "module": "packages/contracts/src/auto-host.ts",
+    "triggerKinds": [
+      "live:join",
+      "live:follow",
+      "live:share",
+      "live:comment",
+      "live:gift",
+      "game:party-goal-complete",
+      "game:rank-promotion",
+      "game:command-accepted",
+      "timer:reminder"
+    ],
+    "actions": [
+      "SHOW_ANNOUNCEMENT",
+      "TTS",
+      "START_SPOTLIGHT",
+      "SHOW_EFFECT",
+      "SHOW_REACTION",
+      "SHOW_BUBBLE",
+      "START_MINIGAME_HOOK"
+    ],
+    "stageEvents": ["stage:host-reaction", "stage:host-bubble", "stage:host-effect"],
+    "ipcNamespace": "autohost:",
+    "templateVariables": [
+      "user.id",
+      "user.nickname",
+      "gift.name",
+      "gift.diamonds",
+      "gift.tierId",
+      "rank.current",
+      "rank.previous",
+      "partyGoal.current",
+      "partyGoal.target",
+      "command.type"
     ]
   },
+  "themeBinding": {
+    "note": "Semantic Auto Host slots bound to APPROVED DA-VISUAL-R3 asset ids only. No artwork was added, recoloured, cropped or re-exported.",
+    "reactionAlias": { "party": "reaction-party" },
+    "bubbleAliases": { "go": "bubble-go", "vip": "bubble-vip" },
+    "hostEffects": {
+      "celebration": "fx-tier3-confetti-burst",
+      "party": "fx-tier2-confetti",
+      "sparkle": "fx-tier1-spark"
+    }
+  },
+  "ttsPolicyDefaults": {
+    "provider": "local Web Speech in STAGE (no credential)",
+    "maxQueued": 20,
+    "maxTextLength": 180,
+    "duplicateWindowMs": 8000,
+    "ttlMs": { "critical": 30000, "high": 25000, "normal": 20000, "low": 15000 },
+    "interruptPolicy": "lower-priority-only",
+    "maxRetries": 1
+  },
+  "safetyCompliance": {
+    "noTikTokOutboundCommentOrMessage": true,
+    "noOutboundChatEndpointAdded": true,
+    "noRawProviderPayloadInTemplatesOrRenderers": true,
+    "noCloudTtsCredential": true,
+    "noEvalOrFunctionConstructor": true,
+    "noRawCommentTtsInDefaultPreset": true,
+    "textSanitizedAndBounded": true,
+    "cannotMutateGiftScoreRankingQueueOrVip": true,
+    "showEffectIsVisualOnly": true,
+    "enforcedBy": "scripts/check-dependency-direction.mjs product-safety rules (pnpm arch:check) + unit/integration tests"
+  },
   "validation": {
-    "ci": "PASS",
-    "validate": "PASS",
-    "testCount": 381,
+    "installFrozenLockfile": "PASS",
+    "formatCheck": "PASS",
+    "lint": "PASS",
+    "archCheck": "PASS",
     "typecheck": "PASS",
-    "build": "PASS"
+    "test": "PASS",
+    "build": "PASS",
+    "validate": "PASS",
+    "testCount": 567,
+    "testCountBefore": 381
   },
   "knownLimitations": [
+    "Auto Host runtime configuration is IN-MEMORY ONLY and resets on restart; persistence and migration belong to Task 12.",
+    "Web Speech voice selection is not exposed: Task 10 sets language/rate/pitch/volume and lets the OS pick the vi-VN voice.",
+    "A completed party goal produces the engine's existing generic 'PARTY GOAL COMPLETED!' banner followed by the localized Auto Host announcement; the later text replaces the earlier one on STAGE.",
+    "START_MINIGAME_HOOK emits a typed hook only; the shipped rule that uses it is disabled by default and no mini-game exists (Task 14).",
+    "DJ production artwork remains deferred to Task 11.",
     "Real EulerStream credential smoke test remains pending owner.",
-    "Dedicated DJ production artwork remains deferred to Task 11.",
-    "Reaction and command-bubble runtime behavior is handled by Task 10.",
-    "No real-device FPS benchmark has been recorded yet."
-  ]
+    "No real-device FPS or audio-latency benchmark has been recorded yet."
+  ],
+  "previousTask": {
+    "task": 9,
+    "status": "ACCEPTED_MERGED",
+    "consumedVisualRevision": "DA-VISUAL-R3",
+    "implementationCommit": "af1ce72a00b532b917836f76dafcd981d5141381",
+    "mergeCommit": "22bb2331422c51e429918c62ac4d3c429bbe2216",
+    "closedDefects": ["DA-QA-001", "DA-QA-002", "DA-QA-003", "DA-QA-004", "DA-QA-005"],
+    "acceptedBehaviourPreserved": {
+      "headSocket": "per-asset headSocket.normalized from the R3 manifest",
+      "crownWidthBodyRatio": 0.44,
+      "rankBadgeWidthBodyRatio": 0.27,
+      "lowTier1to3CoverageMax": 0.62,
+      "lowTier4CoverageMin": 0.82,
+      "lowTier5CoverageMin": 1.0
+    }
+  }
 }

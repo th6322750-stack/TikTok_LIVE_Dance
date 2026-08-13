@@ -20,7 +20,13 @@ import { Container, Graphics, Sprite, Text, Texture, type Application } from 'pi
 import { STAGE_LAYERS, type StageLayerName } from '../layers.js';
 import { computeStageFit, type StageFit } from '../slotLayout.js';
 import { DEFAULT_STAGE_SIZE, type StageSize } from '../stageSize.js';
-import type { DancerView, DancerVisual, GiftEffectVisual, StageRenderer } from '../stageScene.js';
+import type {
+  DancerView,
+  DancerVisual,
+  GiftEffectVisual,
+  HostOverlayVisual,
+  StageRenderer,
+} from '../stageScene.js';
 import { createPixiDancerView } from './dancerView.js';
 import { createTextureCache, type TextureCache } from './textureCache.js';
 
@@ -116,6 +122,8 @@ export function createPixiStageRenderer(options: PixiStageRendererOptions): Pixi
 
   /** Live effect sprites keyed by scheduler effect id, so the scheduler can stop them. */
   const activeEffects = new Map<string, Sprite>();
+  /** Auto Host overlays keyed by overlay id; the scene guarantees each one is hidden again. */
+  const hostOverlays = new Map<string, Sprite | Graphics>();
   let announcementTimer: ReturnType<typeof setTimeout> | undefined;
   let currentTheme: ResolvedTheme | undefined;
 
@@ -268,6 +276,65 @@ export function createPixiStageRenderer(options: PixiStageRendererOptions): Pixi
       );
     },
 
+    /**
+     * Draws one Auto Host overlay on the announcement layer.
+     *
+     * The scene owns the lifetime and the concurrency cap; this method only creates the display
+     * object and `hideHostOverlay` destroys it, so repeated reactions cannot leak sprites.
+     */
+    showHostOverlay(overlayId: string, visual: HostOverlayVisual): void {
+      const anchor = visual.anchor ?? { x: 0.5, y: 0.35 };
+      const width = design.width * visual.coverage;
+
+      if (visual.asset === undefined) {
+        // Unresolved theme slot: a visible defect marker, never invented artwork (Task 10 §8).
+        const marker = new Graphics();
+        marker
+          .rect(
+            anchor.x * design.width - width / 2,
+            anchor.y * design.height - width / 2,
+            width,
+            width,
+          )
+          .stroke({ color: currentTheme?.palette.magenta ?? '#FF4FD8', width: 3, alpha: 0.9 });
+
+        layerOf('announcement').addChild(marker);
+        hostOverlays.set(overlayId, marker);
+        return;
+      }
+
+      const sprite = new Sprite();
+      sprite.anchor.set(0.5);
+      sprite.x = anchor.x * design.width;
+      sprite.y = anchor.y * design.height;
+      sprite.width = width;
+      sprite.height = width;
+      sprite.alpha = 0;
+
+      layerOf(visual.kind === 'effect' ? 'particle' : 'announcement').addChild(sprite);
+      hostOverlays.set(overlayId, sprite);
+
+      void textures.textureFor(visual.asset).then((texture) => {
+        if (sprite.destroyed) return;
+        if (texture === undefined) {
+          sprite.destroy();
+          hostOverlays.delete(overlayId);
+          return;
+        }
+
+        sprite.texture = texture;
+        sprite.alpha = 1;
+      });
+    },
+
+    hideHostOverlay(overlayId: string): void {
+      const view = hostOverlays.get(overlayId);
+      if (view === undefined) return;
+
+      hostOverlays.delete(overlayId);
+      if (!view.destroyed) view.destroy();
+    },
+
     setSpotlight(userId: string | undefined): void {
       spotlight.clear();
       spotlight.visible = userId !== undefined;
@@ -285,6 +352,12 @@ export function createPixiStageRenderer(options: PixiStageRendererOptions): Pixi
       layerOf('vip').removeChildren();
       layerOf('giftFx').removeChildren();
       activeEffects.clear();
+
+      for (const view of hostOverlays.values()) {
+        if (!view.destroyed) view.destroy();
+      }
+      hostOverlays.clear();
+
       rankingText.text = '';
       announcementText.visible = false;
       announcementBanner.visible = false;

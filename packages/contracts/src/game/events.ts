@@ -8,6 +8,7 @@
 
 import { z } from 'zod';
 
+import { AutoHostTriggerSchema } from '../auto-host.js';
 import { NonEmptyStringSchema, NonNegativeIntSchema, TimestampSchema } from '../common.js';
 import { LIVE_EVENT_TYPES } from '../live/events.js';
 import { StageEventSchema } from '../stage/events.js';
@@ -92,8 +93,27 @@ export type ControlEventType = ControlEvent['type'];
 
 export type ControlEventOf<T extends ControlEventType> = Extract<ControlEvent, { type: T }>;
 
+/**
+ * Auto Host trigger emitted from a REAL Core transition (Task 10 §3.1).
+ *
+ * This namespace never crosses an IPC boundary: the composition root routes `host:*` to the
+ * Auto Host rule engine, exactly as it routes `stage:*` to STAGE and `game:*` to CONTROL. Keeping
+ * it in the same flat stream is what guarantees a rank promotion or a completed party goal can
+ * only be observed at the moment the engine actually performed it.
+ */
+export const HostTriggerEventSchema = z.object({
+  type: z.literal('host:trigger'),
+  trigger: AutoHostTriggerSchema,
+});
+
+export type HostTriggerEvent = z.infer<typeof HostTriggerEventSchema>;
+
 /** Everything the engine can emit. */
-export const EngineEventSchema = z.union([ControlEventSchema, StageEventSchema]);
+export const EngineEventSchema = z.union([
+  ControlEventSchema,
+  StageEventSchema,
+  HostTriggerEventSchema,
+]);
 
 export type EngineEvent = z.infer<typeof EngineEventSchema>;
 
@@ -105,4 +125,8 @@ export function isStageEvent(
 
 export function isControlEvent(event: EngineEvent): event is ControlEvent {
   return event.type.startsWith('game:');
+}
+
+export function isHostTriggerEvent(event: EngineEvent): event is HostTriggerEvent {
+  return event.type === 'host:trigger';
 }

@@ -13,8 +13,8 @@
  * Usage: node scripts/check-dependency-direction.mjs
  */
 
-import { readdirSync, readFileSync, existsSync } from 'node:fs';
-import { dirname, join, resolve } from 'node:path';
+import { readdirSync, readFileSync, existsSync, statSync } from 'node:fs';
+import { dirname, join, relative, resolve, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
@@ -207,6 +207,122 @@ function findCycles(workspace) {
   return cycles;
 }
 
+// ── Product safety guard (Task 10 §10) ─────────────────────────────────────────────────────────
+
+/**
+ * Source-level rules that are PRODUCT requirements, not style preferences.
+ *
+ * Task 10 §10 forbids an outbound TikTok chat path, cloud TTS credentials and any executable rule
+ * condition. Those are exactly the things a reviewer cannot verify by reading a diff, so they are
+ * asserted here and run as part of `pnpm arch:check`.
+ *
+ * @type {{ id: string, pattern: RegExp, message: string }[]}
+ */
+const FORBIDDEN_SOURCE_PATTERNS = [
+  {
+    id: 'dynamic-code',
+    pattern: /\beval\s*\(|new\s+Function\s*\(|\bFunction\s*\(\s*['"`]/,
+    message:
+      'dynamic code execution is forbidden — Auto Host conditions are declarative data (Task 10 §10.6)',
+  },
+  {
+    id: 'tiktok-outbound',
+    pattern:
+      /\bsendComment\b|\bpostComment\b|\bsendChatMessage\b|webcast\/im\/send|\/chat\/send\b/i,
+    message:
+      'no outbound TikTok comment/message path may exist — Auto Host output is overlay + audio only (Task 10 §10.2, §10.3)',
+  },
+  {
+    id: 'cloud-tts',
+    pattern:
+      /api\.openai\.com|texttospeech\.googleapis\.com|tts\.speech\.microsoft\.com|api\.elevenlabs\.io|speech\.platform\.bing\.com/i,
+    message:
+      'no cloud TTS endpoint may be referenced — Task 10 ships the local Web Speech path only (Task 10 §10.5)',
+  },
+];
+
+const SOURCE_EXTENSIONS = ['.ts', '.tsx', '.mts'];
+
+/**
+ * Collects every source file under the workspace, excluding tests and build output.
+ * @param {string} root
+ * @returns {string[]} absolute paths
+ */
+function collectSourceFiles(root) {
+  /** @type {string[]} */
+  const files = [];
+
+  /** @param {string} dir */
+  const walk = (dir) => {
+    if (!existsSync(dir)) return;
+
+    for (const entry of readdirSync(dir, { withFileTypes: true })) {
+      const full = join(dir, entry.name);
+
+      if (entry.isDirectory()) {
+        if (['node_modules', 'dist', 'out', 'coverage'].includes(entry.name)) continue;
+        walk(full);
+        continue;
+      }
+
+      if (!SOURCE_EXTENSIONS.some((extension) => entry.name.endsWith(extension))) continue;
+      // Tests deliberately NAME the forbidden things in order to assert they are absent.
+      if (/\.test\.(ts|tsx)$/.test(entry.name)) continue;
+
+      files.push(full);
+    }
+  };
+
+  for (const group of ['apps', 'packages']) {
+    const groupDir = join(root, group);
+    if (!existsSync(groupDir) || !statSync(groupDir).isDirectory()) continue;
+
+    for (const entry of readdirSync(groupDir, { withFileTypes: true })) {
+      if (entry.isDirectory()) walk(join(groupDir, entry.name, 'src'));
+    }
+  }
+
+  return files;
+}
+
+/**
+ * Removes comments so a doc block that DESCRIBES a rule does not trip the rule.
+ *
+ * Only block comments and whole-line `//` comments are stripped: an inline `//` is left alone so a
+ * url inside a string literal is still scanned.
+ * @param {string} source
+ * @returns {string}
+ */
+function stripComments(source) {
+  return source
+    .replace(/\/\*[\s\S]*?\*\//g, '')
+    .split('\n')
+    .filter((line) => !/^\s*\/\//.test(line))
+    .join('\n');
+}
+
+/**
+ * @param {string} root
+ * @returns {string[]} human readable violations
+ */
+export function findSafetyViolations(root = ROOT) {
+  /** @type {string[]} */
+  const violations = [];
+
+  for (const file of collectSourceFiles(root)) {
+    const source = stripComments(readFileSync(file, 'utf8'));
+    const relativePath = relative(root, file).split(sep).join('/');
+
+    for (const rule of FORBIDDEN_SOURCE_PATTERNS) {
+      if (rule.pattern.test(source)) {
+        violations.push(`${relativePath}: ${rule.message} [${rule.id}]`);
+      }
+    }
+  }
+
+  return violations;
+}
+
 export function main() {
   const workspace = readWorkspace();
 
@@ -216,19 +332,23 @@ export function main() {
     return;
   }
 
-  const violations = findViolations(workspace);
+  const violations = [...findViolations(workspace), ...findSafetyViolations()];
 
   if (violations.length > 0) {
     console.error(`✖ architecture check failed (${violations.length} violation(s)):\n`);
     for (const violation of violations) console.error(`  • ${violation}`);
     console.error(
-      '\nSee docs/architecture/A_BLUEPRINT_DANCE_ARENA_V2.md §67 (Dependency Direction).',
+      '\nSee docs/architecture/A_BLUEPRINT_DANCE_ARENA_V2.md §67 (Dependency Direction)' +
+        ' and docs/tasks/TASK_10_AUTO_HOST_TTS.md §10 (Safety / product rules).',
     );
     process.exitCode = 1;
     return;
   }
 
-  console.log(`✔ architecture check passed for ${workspace.length} workspace packages`);
+  console.log(
+    `✔ architecture check passed for ${workspace.length} workspace packages ` +
+      `(+ ${FORBIDDEN_SOURCE_PATTERNS.length} product-safety rules)`,
+  );
 }
 
 const invokedDirectly =

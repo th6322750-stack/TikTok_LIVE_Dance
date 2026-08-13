@@ -27,7 +27,14 @@ import type {
 } from '@dance-arena/contracts';
 import { DEFAULT_PERFORMANCE_PROFILES } from '@dance-arena/contracts';
 import type { RankLayout, ResolvedAsset, ResolvedTheme } from '@dance-arena/assets';
-import { costumeFor, giftTierFor, rankTierFor } from '@dance-arena/assets';
+import {
+  bubbleFor,
+  costumeFor,
+  giftTierFor,
+  hostEffectFor,
+  rankTierFor,
+  reactionFor,
+} from '@dance-arena/assets';
 
 import { resolveEffectCoverage } from './effectCoverage.js';
 import { createEffectScheduler, type EffectScheduler } from './effectScheduler.js';
@@ -60,6 +67,25 @@ export interface GiftEffectVisual {
   readonly coverage: number;
 }
 
+/**
+ * One Auto Host overlay: a reaction face, a command bubble or a celebration effect (Task 10 §8).
+ *
+ * The variant is SEMANTIC and the asset is already resolved through the theme. `asset` may be
+ * undefined when the theme does not bind that slot — the renderer then degrades visibly instead of
+ * substituting artwork of its own.
+ */
+export interface HostOverlayVisual {
+  readonly kind: 'reaction' | 'bubble' | 'effect';
+  readonly variant: string;
+  readonly asset?: ResolvedAsset;
+  readonly durationMs: number;
+  /** Anchor near the user's dancer when they are on stage; otherwise a stage-level default. */
+  readonly anchor?: NormalizedPosition;
+  /** Width as a fraction of stage width. */
+  readonly coverage: number;
+  readonly ruleId: string;
+}
+
 export interface DancerView {
   moveTo(position: NormalizedPosition, dancer: StageDancer): void;
   setRank(rank: number | undefined, visual: DancerVisual): void;
@@ -78,6 +104,9 @@ export interface StageRenderer {
     durationMs: number,
   ): void;
   setSpotlight(userId: string | undefined): void;
+  /** Shows one Auto Host overlay. The scene guarantees a later `hideHostOverlay` for the same id. */
+  showHostOverlay(overlayId: string, visual: HostOverlayVisual): void;
+  hideHostOverlay(overlayId: string): void;
   /** Applies the theme's background/environment/UI artwork. */
   applyTheme(theme: ResolvedTheme, profile: PerformanceProfile): void;
   clear(): void;
@@ -107,6 +136,10 @@ export interface StageScene {
   hasDancer(dancerId: string): boolean;
   positionOf(dancerId: string): NormalizedPosition | undefined;
   visualOf(dancerId: string): DancerVisual | undefined;
+  /** Auto Host overlays currently on screen. Bounded and self-cleaning (Task 10 §8). */
+  readonly hostOverlayCount: number;
+  /** Theme slots an Auto Host event asked for and the theme could not bind. */
+  readonly unresolvedHostSlots: readonly string[];
 }
 
 interface TrackedDancer {
@@ -116,12 +149,27 @@ interface TrackedDancer {
   visual: DancerVisual;
 }
 
+/**
+ * Concurrency cap for Auto Host overlays.
+ *
+ * A spam burst must not stack hundreds of sprites: the oldest overlay is retired to make room, so
+ * repeated events can never grow the display list (Task 10 §8 "must not leak Pixi display
+ * objects").
+ */
+const MAX_HOST_OVERLAYS = 6;
+
+/** Overlay size as a fraction of stage width, by kind. */
+const HOST_OVERLAY_COVERAGE = { reaction: 0.18, bubble: 0.22, effect: 0.55 } as const;
+
+/** Where an overlay sits when the triggering viewer has no dancer on stage. */
+const HOST_OVERLAY_DEFAULT_ANCHOR = { reaction: 0.34, bubble: 0.3, effect: 0.5 } as const;
+
 export function createStageScene(options: StageSceneOptions): StageScene {
   const dancers = new Map<string, TrackedDancer>();
 
   let theme = options.theme;
   let profile = options.profile ?? DEFAULT_PERFORMANCE_PROFILES.BALANCED;
-  const now = options.now ?? (() => Date.now());
+  const now = options.now ?? ((): number => Date.now());
 
   /** Payloads parked until the scheduler decides to play them. */
   const queuedEffects = new Map<
@@ -202,10 +250,76 @@ export function createStageScene(options: StageSceneOptions): StageScene {
     }
   }
 
+  // ── Auto Host overlays (Task 10 §8) ─────────────────────────────────────────────────────────
+
+  /** `overlayId -> expiry`. Every entry is retired by `update()` or by the concurrency cap. */
+  const hostOverlays = new Map<string, number>();
+  const unresolvedHostSlots: string[] = [];
+
+  function dancerAnchorOf(userId: string | undefined): NormalizedPosition | undefined {
+    if (userId === undefined) return undefined;
+
+    for (const tracked of dancers.values()) {
+      if (tracked.dancer.userId === userId) return tracked.position;
+    }
+
+    return undefined;
+  }
+
+  function retireHostOverlay(overlayId: string): void {
+    if (!hostOverlays.delete(overlayId)) return;
+
+    options.renderer.hideHostOverlay(overlayId);
+  }
+
+  function showHostOverlay(
+    overlayId: string,
+    kind: HostOverlayVisual['kind'],
+    variant: string,
+    asset: ResolvedAsset | undefined,
+    durationMs: number,
+    userId: string | undefined,
+    at: number,
+    ruleId: string,
+  ): void {
+    if (asset === undefined) {
+      // Visible degradation, never a silent substitution: the renderer draws a defect marker and
+      // the slot is reported so QA can see it (Task 10 §8).
+      const slot = `${kind}.${variant}`;
+      if (!unresolvedHostSlots.includes(slot)) unresolvedHostSlots.push(slot);
+      console.warn(`[stage] unresolved Auto Host slot: ${slot}`);
+    }
+
+    // Retire the oldest overlay when the cap is reached, so a burst cannot grow the display list.
+    while (hostOverlays.size >= MAX_HOST_OVERLAYS) {
+      const oldest = [...hostOverlays.entries()].sort((left, right) => left[1] - right[1])[0];
+      if (oldest === undefined) break;
+
+      retireHostOverlay(oldest[0]);
+    }
+
+    const anchor = dancerAnchorOf(userId);
+    const visual: HostOverlayVisual = {
+      kind,
+      variant,
+      durationMs,
+      ruleId,
+      coverage: HOST_OVERLAY_COVERAGE[kind],
+      ...(asset === undefined ? {} : { asset }),
+      ...(anchor === undefined
+        ? { anchor: { x: 0.5, y: HOST_OVERLAY_DEFAULT_ANCHOR[kind] } }
+        : { anchor }),
+    };
+
+    hostOverlays.set(overlayId, at + Math.max(1, durationMs));
+    options.renderer.showHostOverlay(overlayId, visual);
+  }
+
   return {
     /** Full rebuild — the ONLY operation that recreates the scene (Blueprint §29). */
     applySnapshot(snapshot: StageSnapshot): void {
       for (const dancerId of [...dancers.keys()]) remove(dancerId);
+      for (const overlayId of [...hostOverlays.keys()]) retireHostOverlay(overlayId);
       effects.clear();
       options.renderer.clear();
 
@@ -297,11 +411,59 @@ export function createStageScene(options: StageSceneOptions): StageScene {
         case 'stage:party-goal':
           options.renderer.setPartyGoal(event.state, event.completed);
           break;
+
+        // Auto Host visuals. STAGE resolves the SEMANTIC variant through the theme; it never
+        // receives an asset id and never decides whether the host should have reacted.
+        case 'stage:host-reaction':
+          showHostOverlay(
+            event.overlayId,
+            'reaction',
+            event.variant,
+            reactionFor(theme, event.variant),
+            event.durationMs,
+            event.userId,
+            event.at,
+            event.ruleId,
+          );
+          break;
+
+        case 'stage:host-bubble':
+          showHostOverlay(
+            event.overlayId,
+            'bubble',
+            event.variant,
+            bubbleFor(theme, event.variant),
+            event.durationMs,
+            event.userId,
+            event.at,
+            event.ruleId,
+          );
+          break;
+
+        case 'stage:host-effect':
+          // Visual only: no tier, no diamonds, no score. It does not enter the gift effect budget
+          // because it is not a gift (Task 10 §10.10).
+          showHostOverlay(
+            event.overlayId,
+            'effect',
+            event.slot,
+            hostEffectFor(theme, event.slot),
+            event.durationMs,
+            event.userId,
+            event.at,
+            event.ruleId,
+          );
+          break;
       }
     },
 
     update(): void {
       effects.update();
+
+      const at = now();
+      for (const [overlayId, expiresAt] of [...hostOverlays]) {
+        if (at >= expiresAt) retireHostOverlay(overlayId);
+      }
     },
 
     /**
@@ -343,5 +505,13 @@ export function createStageScene(options: StageSceneOptions): StageScene {
       dancers.get(dancerId)?.position,
 
     visualOf: (dancerId: string): DancerVisual | undefined => dancers.get(dancerId)?.visual,
+
+    get hostOverlayCount(): number {
+      return hostOverlays.size;
+    },
+
+    get unresolvedHostSlots(): readonly string[] {
+      return [...unresolvedHostSlots];
+    },
   };
 }

@@ -10,6 +10,12 @@
  */
 
 import type {
+  AutoHostConfigPatch,
+  AutoHostRulePatch,
+  AutoHostRuntimeState,
+  AutoHostSetEnabledRequest,
+  AutoHostStatus,
+  AutoHostTestTtsRequest,
   CommandResult,
   ConnectorConnectRequest,
   ConnectorStatusEvent,
@@ -64,6 +70,21 @@ const bridge: DanceArenaControlBridge = {
     stop: (): Promise<CommandResult> => ipcRenderer.invoke('simulator:stop', {}),
   },
 
+  autoHost: {
+    getState: (): Promise<AutoHostRuntimeState> => ipcRenderer.invoke('autohost:get-state', {}),
+    updateConfig: (patch: AutoHostConfigPatch): Promise<AutoHostRuntimeState> =>
+      ipcRenderer.invoke('autohost:update-config', patch),
+    setEnabled: (request: AutoHostSetEnabledRequest): Promise<AutoHostRuntimeState> =>
+      ipcRenderer.invoke('autohost:set-enabled', request),
+    setTtsEnabled: (request: AutoHostSetEnabledRequest): Promise<AutoHostRuntimeState> =>
+      ipcRenderer.invoke('autohost:set-tts-enabled', request),
+    updateRule: (patch: AutoHostRulePatch): Promise<AutoHostRuntimeState> =>
+      ipcRenderer.invoke('autohost:update-rule', patch),
+    testTts: (request: AutoHostTestTtsRequest): Promise<CommandResult> =>
+      ipcRenderer.invoke('autohost:test-tts', request),
+    clearTtsQueue: (): Promise<CommandResult> => ipcRenderer.invoke('autohost:clear-tts-queue', {}),
+  },
+
   onConnectorStatus: (listener: (status: ConnectorStatusEvent) => void): Unsubscribe =>
     subscribe('connector:status', listener),
 
@@ -75,6 +96,9 @@ const bridge: DanceArenaControlBridge = {
 
   onDiagnosticsError: (listener: (error: DiagnosticsErrorPayload) => void): Unsubscribe =>
     subscribe('diagnostics:error', listener),
+
+  onAutoHostStatus: (listener: (status: AutoHostStatus) => void): Unsubscribe =>
+    subscribe('autohost:status', listener),
 };
 
 contextBridge.exposeInMainWorld('danceArena', bridge);

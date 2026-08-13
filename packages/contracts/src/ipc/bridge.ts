@@ -10,6 +10,18 @@
  * (Blueprint §67).
  */
 
+import type {
+  AutoHostConfigPatch,
+  AutoHostRulePatch,
+  AutoHostRuntimeState,
+  AutoHostSetEnabledRequest,
+  AutoHostStatus,
+  AutoHostTestTtsRequest,
+  TtsAvailability,
+  TtsCancelRequest,
+  TtsSpeakRequest,
+  TtsSpeakResult,
+} from '../auto-host.js';
 import type { CommandResult, Unsubscribe } from '../common.js';
 import type { ConnectorStatusEvent } from '../connector.js';
 import type { ControlCommand } from '../game/commands.js';
@@ -56,10 +68,27 @@ export interface DanceArenaControlBridge {
     stop(): Promise<CommandResult>;
   };
 
+  /**
+   * Auto Host runtime controls (Task 10 §9).
+   *
+   * Every method returns the state Main holds AFTER applying the change — CONTROL renders that
+   * answer instead of predicting it, exactly as it does for game state.
+   */
+  readonly autoHost: {
+    getState(): Promise<AutoHostRuntimeState>;
+    updateConfig(patch: AutoHostConfigPatch): Promise<AutoHostRuntimeState>;
+    setEnabled(request: AutoHostSetEnabledRequest): Promise<AutoHostRuntimeState>;
+    setTtsEnabled(request: AutoHostSetEnabledRequest): Promise<AutoHostRuntimeState>;
+    updateRule(patch: AutoHostRulePatch): Promise<AutoHostRuntimeState>;
+    testTts(request: AutoHostTestTtsRequest): Promise<CommandResult>;
+    clearTtsQueue(): Promise<CommandResult>;
+  };
+
   onConnectorStatus(listener: (status: ConnectorStatusEvent) => void): Unsubscribe;
   onGameEvent(listener: (event: ControlEvent) => void): Unsubscribe;
   onStageWindowState(listener: (state: StageWindowState) => void): Unsubscribe;
   onDiagnosticsError(listener: (error: DiagnosticsErrorPayload) => void): Unsubscribe;
+  onAutoHostStatus(listener: (status: AutoHostStatus) => void): Unsubscribe;
 }
 
 /** Exposed to the STAGE renderer as `window.danceArenaStage`. */
@@ -74,4 +103,17 @@ export interface DanceArenaStageBridge {
 
   onSnapshot(listener: (snapshot: StageSnapshot) => void): Unsubscribe;
   onEvent(listener: (event: StageEvent) => void): Unsubscribe;
+
+  /**
+   * Speech DEVICE surface (Task 10 §6).
+   *
+   * STAGE receives one utterance at a time and acknowledges the outcome. It cannot enqueue, cannot
+   * reorder and cannot read the queue — the canonical queue never leaves Main.
+   */
+  readonly tts: {
+    reportAvailability(availability: TtsAvailability): Promise<CommandResult>;
+    reportResult(result: TtsSpeakResult): Promise<CommandResult>;
+    onSpeak(listener: (request: TtsSpeakRequest) => void): Unsubscribe;
+    onCancel(listener: (request: TtsCancelRequest) => void): Unsubscribe;
+  };
 }

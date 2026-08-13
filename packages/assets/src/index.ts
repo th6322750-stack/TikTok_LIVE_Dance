@@ -65,9 +65,12 @@ export {
 } from './theme/themeSchema.js';
 export { NEON_KAWAII_ARENA_THEME } from './theme/neonKawaiiArena.js';
 export {
+  bubbleFor,
   costumeFor,
   giftTierFor,
+  hostEffectFor,
   rankTierFor,
+  reactionFor,
   resolveTheme,
   type ResolvedGiftTier,
   type ResolvedRankTier,

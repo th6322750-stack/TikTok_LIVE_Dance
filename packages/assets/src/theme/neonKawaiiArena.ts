@@ -144,10 +144,18 @@ export const NEON_KAWAII_ARENA_THEME: ThemeDefinition = {
     },
   ],
 
-  /** Keyed by the engine's `GameCommand` / feed intent, not by artwork filename. */
+  /**
+   * Keyed by the engine's `GameCommand` / feed intent, not by artwork filename.
+   *
+   * `go` / `vip` are the SEMANTIC Auto Host variants (Task 10 §3.4); `JOIN_STAGE` / `MOVE_VIP` are
+   * the engine's command names. Both point at the same approved artwork, so neither the rule data
+   * nor the renderer has to know the other's vocabulary.
+   */
   commandBubbles: {
     JOIN_STAGE: 'bubble-go',
     MOVE_VIP: 'bubble-vip',
+    go: 'bubble-go',
+    vip: 'bubble-vip',
     join: 'bubble-join',
     vao: 'bubble-vao',
     dance: 'bubble-dance',
@@ -162,18 +170,34 @@ export const NEON_KAWAII_ARENA_THEME: ThemeDefinition = {
     'support-me': 'bubble-support-me',
   },
 
-  /** Contract slots `face-happy/love/wow/fire/dance` mapped onto approved R1 reaction ids. */
+  /**
+   * Contract slots `face-happy/love/wow/fire/dance` mapped onto approved R1 reaction ids.
+   *
+   * `party` is the Auto Host semantic name for the same approved `reaction-party` artwork that
+   * `dance` already binds — an alias, not a new asset (Task 10 §3.4).
+   */
   reactions: {
     happy: 'reaction-happy',
     love: 'reaction-heart-eyes',
     wow: 'reaction-wow',
     fire: 'reaction-fire-angry',
     dance: 'reaction-party',
+    party: 'reaction-party',
     cheer: 'reaction-cheer',
     cry: 'reaction-cry',
     gg: 'reaction-gg',
     excited: 'reaction-excited',
     shy: 'reaction-shy',
+  },
+
+  /**
+   * Auto Host celebration slots (Task 10 §8), bound to APPROVED effect ids from the same locked
+   * manifest. No new artwork, no recolour, no crop — only a new semantic binding.
+   */
+  hostEffects: {
+    celebration: 'fx-tier3-confetti-burst',
+    party: 'fx-tier2-confetti',
+    sparkle: 'fx-tier1-spark',
   },
 
   ui: {

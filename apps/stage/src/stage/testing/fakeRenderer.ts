@@ -16,7 +16,13 @@ import type {
   StageRankingEntry,
 } from '@dance-arena/contracts';
 
-import type { DancerView, DancerVisual, GiftEffectVisual, StageRenderer } from '../stageScene.js';
+import type {
+  DancerView,
+  DancerVisual,
+  GiftEffectVisual,
+  HostOverlayVisual,
+  StageRenderer,
+} from '../stageScene.js';
 
 export interface FakeDancerRecord {
   dancer: StageDancer;
@@ -34,10 +40,17 @@ export interface FakeEffectRecord {
   stopped: boolean;
 }
 
+export interface FakeHostOverlayRecord {
+  readonly overlayId: string;
+  readonly visual: HostOverlayVisual;
+  hidden: boolean;
+}
+
 export interface FakeRenderer extends StageRenderer {
   readonly created: FakeDancerRecord[];
   readonly effects: FakeEffectRecord[];
   readonly announcements: string[];
+  readonly hostOverlays: FakeHostOverlayRecord[];
   readonly themeApplications: { theme: ResolvedTheme; profile: PerformanceProfile }[];
   clears: number;
   ranking: readonly StageRankingEntry[];
@@ -45,6 +58,7 @@ export interface FakeRenderer extends StageRenderer {
   spotlightUserId: string | undefined;
   liveDancers(): FakeDancerRecord[];
   playingEffects(): FakeEffectRecord[];
+  visibleHostOverlays(): FakeHostOverlayRecord[];
   recordFor(userId: string): FakeDancerRecord | undefined;
 }
 
@@ -52,12 +66,14 @@ export function createFakeRenderer(): FakeRenderer {
   const created: FakeDancerRecord[] = [];
   const effects: FakeEffectRecord[] = [];
   const announcements: string[] = [];
+  const hostOverlays: FakeHostOverlayRecord[] = [];
   const themeApplications: { theme: ResolvedTheme; profile: PerformanceProfile }[] = [];
 
   const renderer: FakeRenderer = {
     created,
     effects,
     announcements,
+    hostOverlays,
     themeApplications,
     clears: 0,
     ranking: [],
@@ -128,12 +144,23 @@ export function createFakeRenderer(): FakeRenderer {
       renderer.spotlightUserId = userId;
     },
 
+    showHostOverlay(overlayId, visual) {
+      hostOverlays.push({ overlayId, visual, hidden: false });
+    },
+
+    hideHostOverlay(overlayId) {
+      for (const overlay of hostOverlays) {
+        if (overlay.overlayId === overlayId) overlay.hidden = true;
+      }
+    },
+
     clear() {
       renderer.clears += 1;
     },
 
     liveDancers: () => created.filter((record) => !record.destroyed),
     playingEffects: () => effects.filter((effect) => !effect.stopped),
+    visibleHostOverlays: () => hostOverlays.filter((overlay) => !overlay.hidden),
     recordFor: (userId) =>
       created.find((record) => !record.destroyed && record.dancer.userId === userId),
   };

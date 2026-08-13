@@ -11,6 +11,18 @@
 
 import { z } from 'zod';
 
+import {
+  AutoHostConfigPatchSchema,
+  AutoHostRulePatchSchema,
+  AutoHostSetEnabledRequestSchema,
+  AutoHostStatusSchema,
+  AutoHostTestTtsRequestSchema,
+  TtsAvailabilitySchema,
+  TtsCancelRequestSchema,
+  TtsSpeakRequestSchema,
+  TtsSpeakResultSchema,
+} from '../auto-host.js';
+import type { AutoHostRuntimeState } from '../auto-host.js';
 import { NonEmptyStringSchema, NonNegativeIntSchema } from '../common.js';
 import type { CommandResult } from '../common.js';
 import { ConnectorStatusEventSchema } from '../connector.js';
@@ -120,6 +132,15 @@ export const controlInvokeSchemas = {
   'simulator:emit-event': SimulatorEmitRequestSchema,
   'simulator:start-scenario': SimulatorScenarioRequestSchema,
   'simulator:stop': EmptyRequestSchema,
+  // Auto Host runtime configuration (Task 10 §7). CONTROL edits and observes; it never owns the
+  // rule/cooldown state or the TTS queue.
+  'autohost:get-state': EmptyRequestSchema,
+  'autohost:update-config': AutoHostConfigPatchSchema,
+  'autohost:set-enabled': AutoHostSetEnabledRequestSchema,
+  'autohost:set-tts-enabled': AutoHostSetEnabledRequestSchema,
+  'autohost:update-rule': AutoHostRulePatchSchema,
+  'autohost:test-tts': AutoHostTestTtsRequestSchema,
+  'autohost:clear-tts-queue': EmptyRequestSchema,
 } as const;
 
 export type ControlInvokeChannel = keyof typeof controlInvokeSchemas;
@@ -140,6 +161,13 @@ export interface ControlInvokeResponseMap {
   'simulator:emit-event': CommandResult;
   'simulator:start-scenario': CommandResult;
   'simulator:stop': CommandResult;
+  'autohost:get-state': AutoHostRuntimeState;
+  'autohost:update-config': AutoHostRuntimeState;
+  'autohost:set-enabled': AutoHostRuntimeState;
+  'autohost:set-tts-enabled': AutoHostRuntimeState;
+  'autohost:update-rule': AutoHostRuntimeState;
+  'autohost:test-tts': CommandResult;
+  'autohost:clear-tts-queue': CommandResult;
 }
 
 export type ControlInvokeResponse<C extends ControlInvokeChannel> = ControlInvokeResponseMap[C];
@@ -151,6 +179,10 @@ export const CONTROL_INVOKE_CHANNELS = Object.keys(controlInvokeSchemas) as Cont
 export const stageInvokeSchemas = {
   /** Sent after every STAGE load/reload; Main answers with a fresh snapshot (Blueprint §60). */
   'stage:ready': EmptyRequestSchema,
+  /** STAGE reports whether a local Web Speech device exists. Main owns what to do about it. */
+  'autohost:tts-ready': TtsAvailabilitySchema,
+  /** Completion/error acknowledgement for exactly one utterance (Task 10 §6). */
+  'autohost:tts-result': TtsSpeakResultSchema,
 } as const;
 
 export type StageInvokeChannel = keyof typeof stageInvokeSchemas;
@@ -161,6 +193,8 @@ export type StageInvokeRequest<C extends StageInvokeChannel> = z.infer<
 
 export interface StageInvokeResponseMap {
   'stage:ready': StageSnapshotEnvelope;
+  'autohost:tts-ready': CommandResult;
+  'autohost:tts-result': CommandResult;
 }
 
 export type StageInvokeResponse<C extends StageInvokeChannel> = StageInvokeResponseMap[C];
@@ -184,6 +218,8 @@ export const controlPushSchemas = {
     message: z.string(),
   }),
   'stage:window-state': StageWindowStateSchema,
+  /** Throttled Auto Host summary — never pushed at audio-frame rate (Task 10 §7). */
+  'autohost:status': AutoHostStatusSchema,
 } as const;
 
 export type ControlPushChannel = keyof typeof controlPushSchemas;
@@ -199,6 +235,9 @@ export const CONTROL_PUSH_CHANNELS = Object.keys(controlPushSchemas) as ControlP
 export const stagePushSchemas = {
   'stage:snapshot': StageSnapshotSchema,
   'stage:event': StageEventSchema,
+  /** One utterance at a time. Main picks it; STAGE is only the speech device (Task 10 §6). */
+  'autohost:tts-speak': TtsSpeakRequestSchema,
+  'autohost:tts-cancel': TtsCancelRequestSchema,
 } as const;
 
 export type StagePushChannel = keyof typeof stagePushSchemas;

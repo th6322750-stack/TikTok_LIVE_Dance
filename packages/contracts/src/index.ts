@@ -17,6 +17,7 @@
 
 export * from './common.js';
 export * from './assets.js';
+export * from './auto-host.js';
 export * from './connector.js';
 export * from './license.js';
 export * from './settings.js';
