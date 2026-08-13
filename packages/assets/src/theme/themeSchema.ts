@@ -72,6 +72,14 @@ export const ThemeDefinitionSchema = z.object({
   giftTiers: z.array(GiftTierThemeSchema).min(1),
   commandBubbles: z.record(z.string(), AssetIdSchema),
   reactions: z.record(z.string(), AssetIdSchema),
+  /**
+   * Auto Host celebration slots (Task 10 §8).
+   *
+   * Bound to APPROVED effect ids, exactly like every other slot. They are a separate slot family
+   * from `giftTiers` so a host celebration can never be resolved as — or mistaken for — a gift
+   * effect.
+   */
+  hostEffects: z.record(z.string(), AssetIdSchema),
   ui: z.object({
     partyGoalFrame: AssetIdSchema.optional(),
     newVip: AssetIdSchema.optional(),

@@ -18,6 +18,8 @@ import {
   type Scheduler,
 } from '@dance-arena/connectors';
 import type {
+  AutoHostConfig,
+  AutoHostTrigger,
   CommandResult,
   ControlInitialState,
   ControlInvokeChannel,
@@ -26,18 +28,26 @@ import type {
   EngineEvent,
   EventLogEntry,
   LiveEvent,
+  StageInvokeChannel,
+  StageInvokeRequest,
+  StageInvokeResponse,
   StageSnapshot,
   StageWindowState,
+  TtsAvailability,
+  TtsSpeakResult,
 } from '@dance-arena/contracts';
-import { isStageEvent } from '@dance-arena/contracts';
+import { isHostTriggerEvent, isStageEvent } from '@dance-arena/contracts';
 import {
   createGameEngine,
+  createSequentialIdGenerator,
   type Clock,
   type GameEngine,
   type IdGenerator,
 } from '@dance-arena/core-engine';
 import { createSimulator, type Simulator } from '@dance-arena/simulator';
 
+import { createAutoHostService, type AutoHostService } from './autohost/autoHostService.js';
+import { createStageTtsProvider, type StageTtsProvider } from './autohost/stageTtsProvider.js';
 import {
   ConnectorManager,
   type ConnectorFactory,
@@ -67,16 +77,25 @@ export interface CoreRuntimeOptions {
   readonly sinks?: RuntimeSinks;
   /** Provider used when CONTROL does not name one. */
   readonly defaultProvider?: ConnectorProvider;
+  /** Overrides the shipped Vietnamese Auto Host preset (tests, future persistence in Task 12). */
+  readonly autoHostConfig?: AutoHostConfig;
 }
 
 export interface CoreRuntime {
   readonly engine: GameEngine;
   readonly simulator: Simulator;
+  readonly autoHost: AutoHostService;
   handleControlInvoke<C extends ControlInvokeChannel>(
     channel: C,
     request: ControlInvokeRequest<C>,
   ): Promise<ControlInvokeResponse<C>>;
+  handleStageInvoke<C extends StageInvokeChannel>(
+    channel: C,
+    request: StageInvokeRequest<C>,
+  ): Promise<StageInvokeResponse<C>>;
   handleStageReady(): Promise<{ snapshot: StageSnapshot }>;
+  /** STAGE window closed or started reloading: settle any utterance waiting on it. */
+  handleStageGone(reason: string): void;
   setSinks(sinks: RuntimeSinks): void;
   getStageSnapshot(): StageSnapshot;
   start(): void;
@@ -90,16 +109,21 @@ type ControlHandlers = {
   ) => Promise<ControlInvokeResponse<C>>;
 };
 
+type StageHandlers = {
+  [C in StageInvokeChannel]: (request: StageInvokeRequest<C>) => Promise<StageInvokeResponse<C>>;
+};
+
 export function createCoreRuntime(options: CoreRuntimeOptions): CoreRuntime {
   let sinks = options.sinks ?? NULL_SINKS;
   const eventLog: EventLogEntry[] = [];
   let statsCancel: (() => void) | undefined;
   let disposed = false;
 
-  const engine = createGameEngine({
-    clock: options.clock,
-    ...(options.ids === undefined ? {} : { ids: options.ids }),
-  });
+  // One id source for the whole composition: counters are per prefix, so engine ids
+  // (`dancer-…`, `queue-…`) and Auto Host ids (`tts-…`, `host-overlay-…`) never collide.
+  const ids = options.ids ?? createSequentialIdGenerator();
+
+  const engine = createGameEngine({ clock: options.clock, ids });
 
   const connectors = new ConnectorManager({
     scheduler: options.scheduler,
@@ -119,10 +143,69 @@ export function createCoreRuntime(options: CoreRuntimeOptions): CoreRuntime {
     },
   });
 
+  // ── Auto Host (Task 10) ─────────────────────────────────────────────────────────────────────
+  //
+  // The speech device is the STAGE window; the QUEUE stays here in Main. `ttsSpeak` returns false
+  // when no STAGE window is listening, which is how a closed stage becomes a typed `unavailable`
+  // result instead of a stalled queue.
+  const ttsProvider: StageTtsProvider = createStageTtsProvider({
+    scheduler: options.scheduler,
+    send: (request) => sinks.ttsSpeak(request),
+    sendCancel: (request) => sinks.ttsCancel(request),
+  });
+
+  const autoHost = createAutoHostService({
+    clock: options.clock,
+    ids,
+    scheduler: options.scheduler,
+    provider: ttsProvider,
+    ...(options.autoHostConfig === undefined ? {} : { config: options.autoHostConfig }),
+    emitStageEvent: (event) => sinks.stageEvent(event),
+    // A spotlight is requested through the CANONICAL command path, so the engine keeps ownership
+    // of spotlight state and Auto Host never writes game state itself (Task 10 §10.9).
+    startSpotlight: (userId, durationMs) => {
+      engine.dispatchCommand({ type: 'game:start-spotlight', userId, durationMs });
+    },
+    publishStatus: (status) => sinks.autoHostStatus(status),
+    isSessionActive: () => connectors.getStatus().status === 'connected',
+  });
+
+  /**
+   * Triggers are drained through a queue rather than handled inline.
+   *
+   * A trigger arrives while the engine is flushing its event batch, and dispatching an intent may
+   * send another command back into the engine (a spotlight). Draining keeps that re-entrancy
+   * deterministic instead of interleaving two flushes.
+   */
+  const pendingTriggers: AutoHostTrigger[] = [];
+  let drainingTriggers = false;
+
+  function enqueueTrigger(trigger: AutoHostTrigger): void {
+    pendingTriggers.push(trigger);
+    if (drainingTriggers) return;
+
+    drainingTriggers = true;
+    try {
+      for (;;) {
+        const next = pendingTriggers.shift();
+        if (next === undefined) break;
+        autoHost.handleTrigger(next);
+      }
+    } finally {
+      drainingTriggers = false;
+    }
+  }
+
   // Engine output routing — by namespace only.
   engine.subscribe((event: EngineEvent) => {
     if (isStageEvent(event)) {
       sinks.stageEvent(event);
+      return;
+    }
+
+    // `host:*` never crosses an IPC boundary: it is consumed by the Auto Host rule engine here.
+    if (isHostTriggerEvent(event)) {
+      enqueueTrigger(event.trigger);
       return;
     }
 
@@ -169,7 +252,11 @@ export function createCoreRuntime(options: CoreRuntimeOptions): CoreRuntime {
     if (disposed) return;
 
     statsCancel = options.scheduler.schedule(STATS_INTERVAL_MS, () => {
-      engine.tick(options.clock.now());
+      const now = options.clock.now();
+      engine.tick(now);
+      // Same cadence drives the TTS TTL sweep and the throttled Auto Host status push, so no
+      // extra timer is introduced for UI metrics (Task 10 §7).
+      autoHost.tick(now);
       publishStats();
       scheduleStats();
     });
@@ -212,11 +299,20 @@ export function createCoreRuntime(options: CoreRuntimeOptions): CoreRuntime {
 
     'connector:disconnect': async () => {
       await connectors.disconnect();
+      // An operator disconnect ends the session's host work: a thank-you queued seconds ago must
+      // not be spoken after the LIVE is over (Task 10 §6 "Reload/disconnect"). A short connector
+      // reconnect does NOT come through here, so canonical state survives it untouched.
+      autoHost.clearTtsQueue();
       return { ok: true };
     },
 
     'game:command': (request) => {
       const result: CommandResult = engine.dispatchCommand(request);
+
+      // A session reset clears canonical state; the host's cooldowns and pending speech belong to
+      // that session and go with it.
+      if (request.type === 'game:reset-session') autoHost.resetSession();
+
       return Promise.resolve(result);
     },
 
@@ -227,12 +323,17 @@ export function createCoreRuntime(options: CoreRuntimeOptions): CoreRuntime {
     },
 
     'stage:close': async () => {
+      // Settle before the window goes: the queue must never wait on a device that is gone.
+      ttsProvider.handleStageGone('stage window closed');
       const state = await options.stageWindow.close();
       sinks.stageWindowState(state);
       return state;
     },
 
     'stage:reload': async () => {
+      // A STAGE reload interrupts the current utterance; the queue decides whether to retry it
+      // once or drop it, and canonical Core state is untouched (Task 10 §6).
+      ttsProvider.handleStageGone('stage window reloading');
       const state = await options.stageWindow.reload();
       sinks.stageWindowState(state);
       return state;
@@ -261,10 +362,40 @@ export function createCoreRuntime(options: CoreRuntimeOptions): CoreRuntime {
       simulator.stop();
       return Promise.resolve({ ok: true });
     },
+
+    // ── Auto Host runtime configuration (Task 10 §7) ──────────────────────────────────────────
+    'autohost:get-state': () => Promise.resolve(autoHost.getState()),
+    'autohost:update-config': (request) => Promise.resolve(autoHost.updateConfig(request)),
+    'autohost:set-enabled': (request) => Promise.resolve(autoHost.setEnabled(request.enabled)),
+    'autohost:set-tts-enabled': (request) =>
+      Promise.resolve(autoHost.setTtsEnabled(request.enabled)),
+    'autohost:update-rule': (request) => Promise.resolve(autoHost.updateRule(request)),
+    'autohost:test-tts': (request) => Promise.resolve(autoHost.testTts(request)),
+    'autohost:clear-tts-queue': () => Promise.resolve(autoHost.clearTtsQueue()),
+  };
+
+  const stageHandlers: StageHandlers = {
+    /**
+     * STAGE handshake: every load/reload gets a fresh snapshot, which is why a STAGE reload can
+     * never lose game state — the state was never in STAGE (Blueprint §60).
+     */
+    'stage:ready': () => Promise.resolve({ snapshot: engine.getStageSnapshot() }),
+
+    'autohost:tts-ready': (request: TtsAvailability) => {
+      ttsProvider.setAvailability(request);
+      return Promise.resolve({ ok: true });
+    },
+
+    'autohost:tts-result': (request: TtsSpeakResult) => {
+      // The ONLY thing STAGE may say about speech: how one utterance ended.
+      ttsProvider.resolve(request);
+      return Promise.resolve({ ok: true });
+    },
   };
 
   return {
     engine,
+    autoHost,
     get simulator(): Simulator {
       return simulator;
     },
@@ -280,12 +411,23 @@ export function createCoreRuntime(options: CoreRuntimeOptions): CoreRuntime {
       return handler(request);
     },
 
-    /**
-     * STAGE handshake: every load/reload gets a fresh snapshot, which is why a STAGE reload can
-     * never lose game state — the state was never in STAGE (Blueprint §60).
-     */
+    handleStageInvoke<C extends StageInvokeChannel>(
+      channel: C,
+      request: StageInvokeRequest<C>,
+    ): Promise<StageInvokeResponse<C>> {
+      const handler = stageHandlers[channel] as (
+        request: StageInvokeRequest<C>,
+      ) => Promise<StageInvokeResponse<C>>;
+
+      return handler(request);
+    },
+
     handleStageReady(): Promise<{ snapshot: StageSnapshot }> {
       return Promise.resolve({ snapshot: engine.getStageSnapshot() });
+    },
+
+    handleStageGone(reason: string): void {
+      ttsProvider.handleStageGone(reason);
     },
 
     getStageSnapshot: () => engine.getStageSnapshot(),
@@ -296,11 +438,14 @@ export function createCoreRuntime(options: CoreRuntimeOptions): CoreRuntime {
 
     start(): void {
       scheduleStats();
+      autoHost.start();
     },
 
     async dispose(): Promise<void> {
       disposed = true;
       statsCancel?.();
+      autoHost.dispose();
+      ttsProvider.dispose();
       simulator.stop();
       await connectors.disconnect();
     },

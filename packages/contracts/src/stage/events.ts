@@ -11,6 +11,11 @@
 import { z } from 'zod';
 
 import {
+  AutoHostBubbleSchema,
+  AutoHostEffectSlotSchema,
+  AutoHostReactionSchema,
+} from '../auto-host.js';
+import {
   NonEmptyStringSchema,
   NonNegativeIntSchema,
   NormalizedPositionSchema,
@@ -143,6 +148,43 @@ export const StageEventSchema = z.discriminatedUnion('type', [
     at: TimestampSchema,
     state: PartyGoalStateSchema,
     completed: z.boolean(),
+  }),
+
+  // ── Auto Host visuals (Task 10 §8) ──────────────────────────────────────────────────────────
+  // Semantic variants only. STAGE resolves them to DA-VISUAL-R3 artwork through the theme, so a
+  // revision swap never touches these events. `overlayId` is assigned by the runtime so repeated
+  // reactions are addressable and self-cleaning instead of leaking display objects.
+  z.object({
+    type: z.literal('stage:host-reaction'),
+    at: TimestampSchema,
+    overlayId: NonEmptyStringSchema,
+    ruleId: NonEmptyStringSchema,
+    variant: AutoHostReactionSchema,
+    durationMs: NonNegativeIntSchema,
+    /** Anchors the overlay near that viewer's dancer when they are on stage. */
+    userId: z.string().optional(),
+  }),
+  z.object({
+    type: z.literal('stage:host-bubble'),
+    at: TimestampSchema,
+    overlayId: NonEmptyStringSchema,
+    ruleId: NonEmptyStringSchema,
+    variant: AutoHostBubbleSchema,
+    durationMs: NonNegativeIntSchema,
+    userId: z.string().optional(),
+  }),
+  /**
+   * Auto Host celebration visual. Deliberately NOT `stage:gift-effect`: it carries no diamonds,
+   * no tier and no score, so it can never masquerade as a gift (Task 10 §10.10).
+   */
+  z.object({
+    type: z.literal('stage:host-effect'),
+    at: TimestampSchema,
+    overlayId: NonEmptyStringSchema,
+    ruleId: NonEmptyStringSchema,
+    slot: AutoHostEffectSlotSchema,
+    durationMs: NonNegativeIntSchema,
+    userId: z.string().optional(),
   }),
 ]);
 

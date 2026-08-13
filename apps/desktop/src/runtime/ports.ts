@@ -6,6 +6,7 @@
  */
 
 import type {
+  AutoHostStatus,
   ConnectorStatusEvent,
   ControlEvent,
   DiagnosticsErrorPayload,
@@ -13,6 +14,8 @@ import type {
   StageLayoutRequest,
   StageSnapshot,
   StageWindowState,
+  TtsCancelRequest,
+  TtsSpeakRequest,
 } from '@dance-arena/contracts';
 
 /** Where runtime output goes. Implemented by the Electron window layer in production. */
@@ -23,6 +26,16 @@ export interface RuntimeSinks {
   stageEvent(event: StageEvent): void;
   stageWindowState(state: StageWindowState): void;
   diagnosticsError(error: DiagnosticsErrorPayload): void;
+  /** Throttled Auto Host summary for CONTROL. */
+  autoHostStatus(status: AutoHostStatus): void;
+  /**
+   * Hands ONE utterance to the STAGE speech device.
+   *
+   * Returns false when no STAGE window can receive it, so the Main-owned queue can settle the item
+   * as `unavailable` instead of waiting for an acknowledgement that will never arrive.
+   */
+  ttsSpeak(request: TtsSpeakRequest): boolean;
+  ttsCancel(request: TtsCancelRequest): void;
 }
 
 /** Window operations the runtime may request. Implemented by WindowManager. */
@@ -52,4 +65,7 @@ export const NULL_SINKS: RuntimeSinks = {
   stageEvent: () => undefined,
   stageWindowState: () => undefined,
   diagnosticsError: () => undefined,
+  autoHostStatus: () => undefined,
+  ttsSpeak: () => false,
+  ttsCancel: () => undefined,
 };

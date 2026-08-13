@@ -22,6 +22,8 @@ const NAMESPACES = [
   'diagnostics:',
   'simulator:',
   'control:',
+  // Task 10 §7: Auto Host runtime configuration and the Main ↔ STAGE speech bridge.
+  'autohost:',
 ];
 
 describe('IPC channel naming', () => {

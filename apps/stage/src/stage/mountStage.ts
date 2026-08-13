@@ -27,6 +27,7 @@ import type { DanceArenaStageBridge, PerformanceMode } from '@dance-arena/contra
 import { DEFAULT_PERFORMANCE_PROFILES } from '@dance-arena/contracts';
 import { Application, Texture } from 'pixi.js';
 
+import { mountTts, type MountedTts } from '../tts/mountTts.js';
 import { createPixiStageRenderer, criticalThemeAssets } from './pixi/pixiRenderer.js';
 import { createTextureCache } from './pixi/textureCache.js';
 import { createDefaultSlotLayout } from './slotLayout.js';
@@ -181,10 +182,15 @@ export async function mountStage(options: MountStageOptions): Promise<MountedSta
 
   const unsubscribes: (() => void)[] = [];
   const bridge = options.bridge;
+  let tts: MountedTts | undefined;
 
   if (bridge !== undefined) {
     unsubscribes.push(bridge.onSnapshot((snapshot) => scene.applySnapshot(snapshot)));
     unsubscribes.push(bridge.onEvent((event) => scene.applyEvent(event)));
+
+    // The speech device attaches before the handshake so Main learns whether Web Speech exists as
+    // soon as this STAGE load is ready to speak (Task 10 §6).
+    tts = mountTts({ bridge });
 
     // Handshake last, so no event that arrives during startup is missed.
     const { snapshot } = await bridge.ready();
@@ -200,6 +206,7 @@ export async function mountStage(options: MountStageOptions): Promise<MountedSta
       globalThis.removeEventListener('resize', applyViewport);
       app.ticker.remove(tick);
       for (const unsubscribe of unsubscribes) unsubscribe();
+      tts?.destroy();
       textures.clear();
       app.destroy(true, { children: true });
     },

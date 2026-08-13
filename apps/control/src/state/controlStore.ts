@@ -9,6 +9,9 @@
  */
 
 import type {
+  AutoHostConfig,
+  AutoHostRuntimeState,
+  AutoHostStatus,
   ConnectorStatusEvent,
   ControlEvent,
   ControlInitialState,
@@ -35,6 +38,13 @@ export interface ControlViewState {
   readonly stageWindow: StageWindowState;
   readonly apiKeyConfigured: boolean;
   readonly lastError: string | undefined;
+  /**
+   * Auto Host runtime configuration as MAIN holds it (Task 10 §9).
+   *
+   * CONTROL renders this; it never edits a local copy and never owns rule or cooldown state.
+   */
+  readonly autoHostConfig: AutoHostConfig | undefined;
+  readonly autoHostStatus: AutoHostStatus | undefined;
 }
 
 export const INITIAL_CONTROL_STATE: ControlViewState = {
@@ -48,6 +58,8 @@ export const INITIAL_CONTROL_STATE: ControlViewState = {
   stageWindow: { open: false, alwaysOnTop: false },
   apiKeyConfigured: false,
   lastError: undefined,
+  autoHostConfig: undefined,
+  autoHostStatus: undefined,
 };
 
 export type ControlAction =
@@ -56,7 +68,9 @@ export type ControlAction =
   | { readonly type: 'connector-status'; readonly status: ConnectorStatusEvent }
   | { readonly type: 'game-event'; readonly event: ControlEvent }
   | { readonly type: 'stage-window'; readonly state: StageWindowState }
-  | { readonly type: 'diagnostics'; readonly error: DiagnosticsErrorPayload };
+  | { readonly type: 'diagnostics'; readonly error: DiagnosticsErrorPayload }
+  | { readonly type: 'autohost-state'; readonly state: AutoHostRuntimeState }
+  | { readonly type: 'autohost-status'; readonly status: AutoHostStatus };
 
 function appendFeed(
   feed: readonly EventLogEntry[],
@@ -94,6 +108,16 @@ export function controlReducer(state: ControlViewState, action: ControlAction): 
 
     case 'diagnostics':
       return { ...state, lastError: action.error.message };
+
+    case 'autohost-state':
+      return {
+        ...state,
+        autoHostConfig: action.state.config,
+        autoHostStatus: action.state.status,
+      };
+
+    case 'autohost-status':
+      return { ...state, autoHostStatus: action.status };
 
     case 'game-event':
       return applyGameEvent(state, action.event);

@@ -50,9 +50,11 @@ describe('CONTROL preload', () => {
 
     expect(Object.keys(bridge).sort()).toEqual(
       [
+        'autoHost',
         'bridgeVersion',
         'connect',
         'disconnect',
+        'onAutoHostStatus',
         'onConnectorStatus',
         'onDiagnosticsError',
         'onGameEvent',
@@ -127,14 +129,30 @@ describe('CONTROL preload', () => {
 });
 
 describe('STAGE preload', () => {
-  it('exposes a render-only surface with no command channel', async () => {
+  it('exposes a render-and-speak surface with no command channel', async () => {
     await import('./stage.js');
     const bridge = exposed.get('danceArenaStage') as Record<string, unknown>;
 
-    expect(Object.keys(bridge).sort()).toEqual(['bridgeVersion', 'onEvent', 'onSnapshot', 'ready']);
+    expect(Object.keys(bridge).sort()).toEqual(
+      ['bridgeVersion', 'onEvent', 'onSnapshot', 'ready', 'tts'].sort(),
+    );
     expect(bridge.sendCommand).toBeUndefined();
     expect(bridge.connect).toBeUndefined();
     expect(bridge.simulator).toBeUndefined();
+  });
+
+  it('gives STAGE a speech DEVICE, never queue control (Task 10 §6)', async () => {
+    await import('./stage.js');
+    const bridge = exposed.get('danceArenaStage') as { tts: Record<string, unknown> };
+
+    expect(Object.keys(bridge.tts).sort()).toEqual(
+      ['onCancel', 'onSpeak', 'reportAvailability', 'reportResult'].sort(),
+    );
+
+    // Nothing on the STAGE surface can enqueue, reorder, replay or read the Main-owned queue.
+    for (const forbidden of ['enqueue', 'clear', 'getQueue', 'setPriority', 'speak']) {
+      expect(bridge.tts[forbidden]).toBeUndefined();
+    }
   });
 
   it('does not share the CONTROL bridge key', async () => {

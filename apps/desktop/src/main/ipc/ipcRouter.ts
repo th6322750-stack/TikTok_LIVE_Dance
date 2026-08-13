@@ -12,6 +12,7 @@ import {
   type ControlInvokeChannel,
   type ControlInvokeRequest,
   type StageInvokeChannel,
+  type StageInvokeRequest,
 } from '@dance-arena/contracts';
 import { ipcMain, type IpcMainInvokeEvent, type WebContents } from 'electron';
 
@@ -61,7 +62,12 @@ export class IpcRouter {
           throw new Error(`invalid payload for ${channel}: ${formatIssues(parsed.error.issues)}`);
         }
 
-        return this.options.runtime.handleStageReady();
+        // Every STAGE channel — including the Auto Host speech acknowledgement — is validated
+        // with its contract schema before the runtime sees it (Task 10 §7).
+        return this.options.runtime.handleStageInvoke(
+          channel,
+          parsed.data as StageInvokeRequest<typeof channel>,
+        );
       });
     }
   }

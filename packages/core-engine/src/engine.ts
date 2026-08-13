@@ -10,6 +10,9 @@
 
 import {
   displayNameOf,
+  type AutoHostTriggerContext,
+  type AutoHostTriggerKind,
+  type AutoHostUserContext,
   type CommandRejection,
   type CommandResult,
   type ControlCommand,
@@ -25,6 +28,7 @@ import {
   type LiveUser,
   type PartyGoalState,
   type QueueEntry,
+  type RankingEntry,
   type RankingState,
   type SessionCounters,
   type SessionState,
@@ -140,6 +144,41 @@ export function createGameEngine(options: GameEngineOptions): GameEngine {
         ...(extra.nickname === undefined ? {} : { nickname: extra.nickname }),
       },
     });
+  }
+
+  // ── Auto Host triggers (Task 10 §3.1) ───────────────────────────────────────────────────────
+
+  /**
+   * Publishes an Auto Host trigger on the `host:` namespace.
+   *
+   * The engine does not evaluate rules and does not know what a rule is: it only reports that a
+   * transition ACTUALLY happened, at the moment it happened. That is what makes "party goal fires
+   * once per completion" and "rank promotion fires only on a real promotion" properties of the
+   * engine rather than of a renderer's guess.
+   */
+  function emitTrigger(
+    kind: AutoHostTriggerKind,
+    at: number,
+    context: Omit<AutoHostTriggerContext, 'sessionElapsedMs'>,
+  ): void {
+    emit({
+      type: 'host:trigger',
+      trigger: {
+        kind,
+        at,
+        context: { ...context, sessionElapsedMs: Math.max(0, at - session.startedAt) },
+      },
+    });
+  }
+
+  /** The whitelisted user facts a rule may see — never the raw provider user object. */
+  function hostUser(user: UserState): AutoHostUserContext {
+    return {
+      id: user.id,
+      nickname: user.nickname,
+      isDancing: user.activeDancerId !== undefined,
+      isVip: vip.userIds.includes(user.id),
+    };
   }
 
   // ── projections ─────────────────────────────────────────────────────────────────────────────
@@ -433,6 +472,10 @@ export function createGameEngine(options: GameEngineOptions): GameEngine {
 
     cooldowns.record(user.id, kind, at);
     emit({ type: 'game:command-accepted', at, command, userId: user.id });
+
+    // Only ACCEPTED commands become a host trigger — a rejected or cooled-down "GO" must not
+    // produce a bubble (Task 10 §3.1).
+    emitTrigger('game:command-accepted', at, { user: hostUser(user), command: { type: command } });
   }
 
   // ── ranking / VIP ───────────────────────────────────────────────────────────────────────────
@@ -464,7 +507,36 @@ export function createGameEngine(options: GameEngineOptions): GameEngine {
       demoted: [...result.demoted],
     });
 
+    emitRankPromotions(result.entries, result.promoted, at);
     applyVipZones(result.promoted, result.demoted, at);
+  }
+
+  /**
+   * Emits one `game:rank-promotion` trigger per user that ACTUALLY moved up.
+   *
+   * A ranking refresh that leaves a user where they were produces nothing, which is what stops a
+   * promotion rule from re-firing on every gift (Task 10 §3.1).
+   */
+  function emitRankPromotions(entries: RankingEntry[], promoted: string[], at: number): void {
+    const promotedToVip = new Set(promoted);
+
+    for (const entry of entries) {
+      const improved = entry.previousRank === undefined || entry.rank < entry.previousRank;
+      const enteredVip = promotedToVip.has(entry.userId);
+      if (!improved && !enteredVip) continue;
+
+      const user = users.get(entry.userId);
+      if (user === undefined) continue;
+
+      emitTrigger('game:rank-promotion', at, {
+        user: hostUser(user),
+        rank: {
+          current: entry.rank,
+          ...(entry.previousRank === undefined ? {} : { previous: entry.previousRank }),
+          enteredVip,
+        },
+      });
+    }
   }
 
   /** VIP membership is decided here; STAGE only animates the resulting move (Blueprint §24). */
@@ -528,6 +600,17 @@ export function createGameEngine(options: GameEngineOptions): GameEngine {
         level: 'celebration',
         durationMs: 5_000,
       });
+
+      // ONE trigger per completion transition, even when a single mega gift rolled the goal over
+      // more than once. The goal is reset immediately, so it never "stays complete" and cannot
+      // re-fire on later events (Task 10 §3.1).
+      emitTrigger('game:party-goal-complete', at, {
+        partyGoal: {
+          current: partyGoal.current,
+          target: partyGoal.target,
+          completedCount: partyGoal.completedCount,
+        },
+      });
     }
   }
 
@@ -580,6 +663,22 @@ export function createGameEngine(options: GameEngineOptions): GameEngine {
       });
     }
 
+    /*
+     * The trigger is emitted only on the CREDITED path, after deduplication. A replayed streak
+     * frame or a duplicate transaction returns 0 diamonds above and never reaches this line, so a
+     * duplicate gift can never produce a second thank-you (Task 10 §11 integration case 3).
+     *
+     * `diamonds` is what was actually credited, not the provider's cumulative streak total.
+     */
+    emitTrigger('live:gift', at, {
+      user: hostUser(user),
+      gift: {
+        name: event.gift.name,
+        diamonds: credit.diamonds,
+        ...(tier === undefined ? {} : { tierId: tier.id }),
+      },
+    });
+
     updateRanking(at);
     addToPartyGoal(credit.diamonds, at);
   }
@@ -597,6 +696,13 @@ export function createGameEngine(options: GameEngineOptions): GameEngine {
         counters.commentCount += 1;
         const match = parseCommand(event.normalizedComment, config.aliases);
         if (match !== undefined) applyGameCommand(user, match.command, at);
+
+        // Only the NORMALIZED comment travels with the trigger, and it is not a template
+        // variable — a rule may match keywords, never speak the text (Task 10 §3.2, §10.7).
+        emitTrigger('live:comment', at, {
+          user: hostUser(user),
+          comment: { normalized: event.normalizedComment },
+        });
         break;
       }
 
@@ -607,14 +713,17 @@ export function createGameEngine(options: GameEngineOptions): GameEngine {
       case 'follow':
         counters.followCount += 1;
         user.follow = true;
+        emitTrigger('live:follow', at, { user: hostUser(user) });
         break;
 
       case 'share':
         counters.shareCount += 1;
+        emitTrigger('live:share', at, { user: hostUser(user) });
         break;
 
       case 'join':
         counters.joinCount += 1;
+        emitTrigger('live:join', at, { user: hostUser(user) });
         break;
 
       case 'like':

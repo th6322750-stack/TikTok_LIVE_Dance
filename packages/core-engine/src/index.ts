@@ -42,6 +42,27 @@ export {
 } from './modules/queue.js';
 export { neighbourSlot, positionOf, SlotAllocator } from './modules/slots.js';
 
+// ── Auto Host (Blueprint §49, Task 10) ────────────────────────────────────────────────────────
+export {
+  createAutoHostRuleEngine,
+  type AutoHostRuleEngine,
+  type AutoHostRuleEngineOptions,
+} from './autohost/ruleEngine.js';
+export { conditionsMatch, evaluateCondition } from './autohost/conditions.js';
+export {
+  dedupKeyFor,
+  renderTemplate,
+  sanitizeText,
+  templateVariablesFor,
+  type TemplateRenderOptions,
+  type TemplateRenderResult,
+} from './autohost/templates.js';
+export {
+  createDefaultAutoHostConfig,
+  DEFAULT_AUTO_HOST_CONFIG,
+  VIETNAMESE_DEFAULT_RULES,
+} from './autohost/defaultPreset.js';
+
 export const CORE_ENGINE_MODULE = {
   id: '@dance-arena/core-engine',
   layer: 'domain',

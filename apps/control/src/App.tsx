@@ -6,9 +6,14 @@
  * ranking or dancers locally.
  */
 
-import type { DanceArenaControlBridge, StagePreset } from '@dance-arena/contracts';
+import type {
+  AutoHostRuntimeState,
+  DanceArenaControlBridge,
+  StagePreset,
+} from '@dance-arena/contracts';
 import { useState, type JSX } from 'react';
 
+import { AutoHostPanel } from './components/autoHostPanel.js';
 import {
   ConnectionPanel,
   Dashboard,
@@ -28,6 +33,7 @@ const SECTIONS = [
   'Stage',
   'Queue',
   'Ranking',
+  'Auto Host',
   'Simulator',
   'Session',
 ] as const;
@@ -38,12 +44,20 @@ export interface AppProps {
 }
 
 export function App({ bridge: bridgeOverride }: AppProps = {}): JSX.Element {
-  const { state, bridge } = useControlState(bridgeOverride);
+  const { state, bridge, applyAutoHostState } = useControlState(bridgeOverride);
   const [target, setTarget] = useState('');
 
   const send = (action: (available: DanceArenaControlBridge) => Promise<unknown>): void => {
     if (bridge === undefined) return;
     void action(bridge);
+  };
+
+  /** Auto Host mutations answer with the state Main kept; CONTROL renders that answer. */
+  const sendAutoHost = (
+    action: (available: DanceArenaControlBridge) => Promise<AutoHostRuntimeState>,
+  ): void => {
+    if (bridge === undefined) return;
+    void action(bridge).then(applyAutoHostState);
   };
 
   return (
@@ -112,6 +126,21 @@ export function App({ bridge: bridgeOverride }: AppProps = {}): JSX.Element {
           />
 
           <RankingPanel ranking={state.ranking} state={state} />
+
+          <AutoHostPanel
+            config={state.autoHostConfig}
+            status={state.autoHostStatus}
+            onSetEnabled={(enabled) => sendAutoHost((api) => api.autoHost.setEnabled({ enabled }))}
+            onSetTtsEnabled={(enabled) =>
+              sendAutoHost((api) => api.autoHost.setTtsEnabled({ enabled }))
+            }
+            onVoiceChange={(patch) =>
+              sendAutoHost((api) => api.autoHost.updateConfig({ tts: patch }))
+            }
+            onRulePatch={(patch) => sendAutoHost((api) => api.autoHost.updateRule(patch))}
+            onTestTts={() => send((api) => api.autoHost.testTts({}))}
+            onClearQueue={() => send((api) => api.autoHost.clearTtsQueue())}
+          />
 
           <EventFeed feed={state.feed} />
         </div>

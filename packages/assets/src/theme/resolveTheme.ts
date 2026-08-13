@@ -40,6 +40,8 @@ export interface ResolvedTheme {
   readonly giftTiers: readonly ResolvedGiftTier[];
   readonly commandBubbles: Readonly<Record<string, ResolvedAsset>>;
   readonly reactions: Readonly<Record<string, ResolvedAsset>>;
+  /** Auto Host celebration slots, kept separate from `giftTiers` on purpose (Task 10 §10.10). */
+  readonly hostEffects: Readonly<Record<string, ResolvedAsset>>;
   readonly ui: Readonly<Record<string, ResolvedAsset>>;
   readonly palette: Readonly<Record<string, string>>;
   readonly zones: ThemeDefinition['zones'];
@@ -135,6 +137,7 @@ export function resolveTheme(theme: ThemeDefinition, registry: AssetRegistry): R
 
   const commandBubbles = resolveRecord('commandBubbles', theme.commandBubbles, 'command-bubble');
   const reactions = resolveRecord('reactions', theme.reactions, 'reaction');
+  const hostEffects = resolveRecord('hostEffects', theme.hostEffects, 'effect');
 
   const ui = resolveRecord(
     'ui',
@@ -170,6 +173,7 @@ export function resolveTheme(theme: ThemeDefinition, registry: AssetRegistry): R
     giftTiers,
     commandBubbles,
     reactions,
+    hostEffects,
     ui,
     palette: theme.palette,
     zones: theme.zones,
@@ -209,6 +213,24 @@ export function giftTierFor(
       ? undefined
       : theme.giftTiers.find((tier) => tier.effectPreset === effectPreset))
   );
+}
+
+/**
+ * Auto Host semantic lookups.
+ *
+ * Each returns `undefined` when the theme does not bind the slot, so STAGE can degrade visibly
+ * instead of substituting artwork of its own (Task 10 §8).
+ */
+export function reactionFor(theme: ResolvedTheme, variant: string): ResolvedAsset | undefined {
+  return theme.reactions[variant];
+}
+
+export function bubbleFor(theme: ResolvedTheme, variant: string): ResolvedAsset | undefined {
+  return theme.commandBubbles[variant];
+}
+
+export function hostEffectFor(theme: ResolvedTheme, slot: string): ResolvedAsset | undefined {
+  return theme.hostEffects[slot];
 }
 
 /**
